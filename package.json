@@ -1,0 +1,51 @@
+{
+  "name": "vega",
+  "version": "1.8.0",
+  "description": "Personal productivity app — tasks, notes, bookmarks",
+  "main": "main.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "ELECTRON_RUN_AS_NODE= electron .",
+    "build": "node build.mjs",
+    "build:host": "node build.mjs --host",
+    "build:electron": "electron-builder --mac",
+    "build:electron:all": "electron-builder --mac --win --linux"
+  },
+  "devDependencies": {
+    "@yao-pkg/pkg": "^5.12.0",
+    "electron": "^36.9.5",
+    "electron-builder": "^25.0.0",
+    "esbuild": "^0.25.0"
+  },
+  "build": {
+    "appId": "com.vega.productivity",
+    "productName": "Vega",
+    "files": [
+      "main.js",
+      "preload.js",
+      "server.js",
+      "renderer/**/*",
+      "assets/**/*",
+      "lib/**/*"
+    ],
+    "directories": {
+      "output": "dist-electron"
+    },
+    "mac": {
+      "category": "public.app-category.productivity",
+      "icon": "assets/icon.png",
+      "target": "dmg"
+    },
+    "win": {
+      "icon": "assets/icon.png",
+      "target": "nsis"
+    },
+    "linux": {
+      "icon": "assets/icon.png",
+      "target": "AppImage"
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1024" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#13111f"/>
+      <stop offset="100%" stop-color="#1a1040"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="512" cy="480" r="360" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#6366f1" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+    <clipPath id="round">
+      <rect width="1024" height="1024" rx="220" ry="220"/>
+    </clipPath>
+  </defs>
+
+  <g clip-path="url(#round)">
+    <!-- Background with rounded corners -->
+    <rect width="1024" height="1024" fill="url(#bg)"/>
+    <rect width="1024" height="1024" fill="url(#glow)"/>
+
+    <!-- Large 4-pointed sparkle (✦), outer radius 330, inner concave radius 55 at 45° -->
+    <!-- Outer points: top(512,182), right(842,512), bottom(512,842), left(182,512) -->
+    <!-- Inner corners at 45°, r=55: ±39 from center → (551,473),(551,551),(473,551),(473,473) -->
+    <path d="M512,182 L551,473 L842,512 L551,551 L512,842 L473,551 L182,512 L473,473 Z"
+          fill="white" opacity="0.96"/>
+
+    <!-- Small accent dot above -->
+    <circle cx="512" cy="118" r="22" fill="#a5b4fc" opacity="0.7"/>
+  </g>
+</svg>

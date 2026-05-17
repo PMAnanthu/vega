@@ -1,0 +1,9 @@
+node_modules/
+dist/
+dist-electron/
+
+# Generated files
+icon.png
+
+# Local dev data — do not commit personal data
+data/
