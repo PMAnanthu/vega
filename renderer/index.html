@@ -2400,7 +2400,7 @@
   }
 
   // ── ChartCanvas ──────────────────────────────────────────────────────────────
-  function ChartCanvas({ id, config, onDblClick }) {
+  function ChartCanvas({ id, config, onDblClick, onClick }) {
     const ref = useRef(null);
     const inst = useRef(null);
     useEffect(() => {
@@ -2416,7 +2416,13 @@
       if (els.length > 0) onDblClick(els[0].index);
     };
 
-    return <canvas ref={ref} id={id} onDoubleClick={handleDblClick} style={onDblClick ? { cursor: 'pointer' } : {}} />;
+    const handleClick = (e) => {
+      if (!onClick || !inst.current) return;
+      const els = inst.current.getElementsAtEventForMode(e.nativeEvent, 'nearest', { intersect: true }, false);
+      if (els.length > 0) onClick(els[0].index);
+    };
+
+    return <canvas ref={ref} id={id} onDoubleClick={handleDblClick} onClick={handleClick} style={(onDblClick || onClick) ? { cursor: 'pointer' } : {}} />;
   }
 
   // ── AnalysisTab ──────────────────────────────────────────────────────────────
@@ -3891,6 +3897,10 @@
     }, [completedRoots]);
 
     const [doneSearch, setDoneSearch] = useState('');
+    const [dayTypeFilter, setDayTypeFilter] = useState({});
+
+    const toggleDayType = (date, type) =>
+      setDayTypeFilter(f => ({ ...f, [date]: f[date] === type ? null : type }));
 
     const doneFilter = useMemo(() => {
       const q = doneSearch.trim().toLowerCase();
@@ -4116,11 +4126,17 @@
                     const typeEntries = Object.entries(typeMap).sort((a, b) => b[1].act - a[1].act);
                     const hasTypes = typeEntries.some(([k, v]) => k !== '(no type)' && v.act > 0);
 
+                    const activeType = dayTypeFilter[date] || null;
+                    const visibleItems = activeType ? items.filter(t => (t.type || '(no type)') === activeType) : items;
+
                     return (
                     <div key={date} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                       <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100 flex items-center gap-3 flex-wrap">
                         <span className="text-xs font-semibold text-gray-600 flex-1">{fmtDate(date)}</span>
-                        <span className="text-xs text-gray-400">{items.length} task{items.length !== 1 ? 's' : ''}</span>
+                        <span className="text-xs text-gray-400">
+                          {activeType ? `${visibleItems.length} of ${items.length}` : items.length} task{items.length !== 1 ? 's' : ''}
+                          {activeType && <button onClick={() => toggleDayType(date, activeType)} className="ml-1.5 text-indigo-400 hover:text-indigo-600">✕</button>}
+                        </span>
                         {dayAct > 0 && (
                           <span className="text-xs text-gray-400">
                             <span className="font-semibold text-indigo-600">{dayAct.toFixed(1)}h</span> actual
@@ -4134,7 +4150,7 @@
                               type: 'doughnut',
                               data: {
                                 labels: typeEntries.map(([k]) => k),
-                                datasets: [{ data: typeEntries.map(([,v]) => v.act), backgroundColor: TYPE_COLORS, borderWidth: 1, borderColor: '#fff' }],
+                                datasets: [{ data: typeEntries.map(([,v]) => v.act), backgroundColor: TYPE_COLORS.map((c, i) => activeType && typeEntries[i]?.[0] !== activeType ? c + '44' : c), borderWidth: 1, borderColor: '#fff' }],
                               },
                               options: {
                                 responsive: true,
@@ -4146,15 +4162,18 @@
                                   return ` ${ctx.label}: ${v.act.toFixed(1)}h (${pct}%) · ${v.count} task${v.count !== 1 ? 's' : ''}`;
                                 } } } },
                               },
-                            }} />
+                            }} onClick={i => toggleDayType(date, typeEntries[i][0])} />
                           </div>
                           <div className="flex flex-wrap gap-x-4 gap-y-1.5">
                             {typeEntries.map(([label, v], i) => {
                               const pct = dayAct > 0 ? Math.round(v.act / dayAct * 100) : 0;
+                              const isActive = activeType === label;
+                              const isDimmed = activeType && !isActive;
                               return (
-                              <div key={label} className="flex items-center gap-1.5">
+                              <div key={label} onClick={() => toggleDayType(date, label)}
+                                className={`flex items-center gap-1.5 cursor-pointer rounded px-1 -mx-1 transition-opacity ${isDimmed ? 'opacity-35' : ''}`}>
                                 <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: TYPE_COLORS[i % TYPE_COLORS.length] }} />
-                                <span className="text-xs text-gray-700 font-medium">{label}</span>
+                                <span className={`text-xs font-medium ${isActive ? 'text-indigo-600' : 'text-gray-700'}`}>{label}</span>
                                 <span className="text-xs text-gray-400">{v.act > 0 ? `${v.act.toFixed(1)}h · ` : ''}{pct}% · {v.count}</span>
                               </div>
                               );
@@ -4162,7 +4181,7 @@
                           </div>
                         </div>
                       )}
-                      {items.map(t => (
+                      {visibleItems.map(t => (
                         <CompletedRow key={t.id} task={t} tasks={tasks} onSetStatus={setTaskStatus}
                           onOpen={id => setStack([id])} onDelete={deleteTask} />
                       ))}
