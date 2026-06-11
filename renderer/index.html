@@ -67,12 +67,12 @@
     html.dark .bg-gray-100               { background-color: #1e293b !important; }
     html.dark .bg-gray-200               { background-color: #334155 !important; }
     html.dark .border-gray-200           { border-color: #334155 !important; }
-    html.dark .border-gray-100           { border-color: #1e293b !important; }
-    html.dark .text-gray-800             { color: #e2e8f0 !important; }
-    html.dark .text-gray-700             { color: #cbd5e1 !important; }
-    html.dark .text-gray-600             { color: #94a3b8 !important; }
-    html.dark .text-gray-500             { color: #64748b !important; }
-    html.dark .text-gray-400             { color: #475569 !important; }
+    html.dark .border-gray-100           { border-color: #283548 !important; }
+    html.dark .text-gray-800             { color: #f1f5f9 !important; }
+    html.dark .text-gray-700             { color: #e2e8f0 !important; }
+    html.dark .text-gray-600             { color: #cbd5e1 !important; }
+    html.dark .text-gray-500             { color: #94a3b8 !important; }
+    html.dark .text-gray-400             { color: #7c8fa3 !important; }
     html.dark .hover\:bg-gray-100:hover  { background-color: #334155 !important; }
     html.dark .hover\:bg-gray-50:hover   { background-color: #1e293b !important; }
     html.dark input, html.dark textarea, html.dark select {
@@ -85,6 +85,7 @@
     html.dark .md-preview td, html.dark .md-preview th { border-color: #334155; }
     html.dark .md-preview blockquote     { border-color: #334155; color: #94a3b8; }
     html.dark .md-preview hr             { border-color: #334155; }
+    html.dark .placeholder-gray-300::placeholder { color: #475569 !important; }
     aside { transition: width 0.2s ease; }
   </style>
 </head>
@@ -103,6 +104,7 @@
     analysis:  <svg viewBox="0 0 20 20" fill="currentColor"><path d="M15.5 2A1.5 1.5 0 0014 3.5v13a1.5 1.5 0 003 0v-13A1.5 1.5 0 0015.5 2zM9.5 6A1.5 1.5 0 008 7.5v9a1.5 1.5 0 003 0v-9A1.5 1.5 0 009.5 6zM3.5 10A1.5 1.5 0 002 11.5v5a1.5 1.5 0 003 0v-5A1.5 1.5 0 003.5 10z"/></svg>,
     notes:     <svg viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a.75.75 0 01.75-.75h6.5a.75.75 0 010 1.5h-6.5A.75.75 0 016 10zm.75 2.25a.75.75 0 000 1.5h6.5a.75.75 0 000-1.5h-6.5z" clipRule="evenodd"/></svg>,
     links:     <svg viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 2c-1.716 0-3.408.106-5.07.31C3.806 2.45 3 3.414 3 4.517V17.25a.75.75 0 001.075.676L10 15.082l5.925 2.844A.75.75 0 0017 17.25V4.517c0-1.103-.806-2.068-1.93-2.207A41.403 41.403 0 0010 2z" clipRule="evenodd"/></svg>,
+    secrets:   <svg viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd"/></svg>,
     recurring: <svg viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311h2.433a.75.75 0 000-1.5H3.989a.75.75 0 00-.75.75v4.242a.75.75 0 001.5 0v-2.43l.31.31a7 7 0 0011.712-3.138.75.75 0 00-1.449-.39zm1.23-3.723a.75.75 0 00.219-.53V2.929a.75.75 0 00-1.5 0V5.36l-.31-.31A7 7 0 003.239 8.188a.75.75 0 101.448.389A5.5 5.5 0 0113.89 6.11l.311.31h-2.432a.75.75 0 000 1.5h4.243a.75.75 0 00.53-.219z" clipRule="evenodd"/></svg>,
     settings:  <svg viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M7.84 1.804A1 1 0 018.82 1h2.36a1 1 0 01.98.804l.331 1.652a6.993 6.993 0 011.929 1.115l1.598-.54a1 1 0 011.186.447l1.18 2.044a1 1 0 01-.205 1.251l-1.267 1.113a7.047 7.047 0 010 2.228l1.267 1.113a1 1 0 01.206 1.25l-1.18 2.045a1 1 0 01-1.187.447l-1.598-.54a6.993 6.993 0 01-1.929 1.115l-.33 1.652a1 1 0 01-.98.804H8.82a1 1 0 01-.98-.804l-.331-1.652a6.993 6.993 0 01-1.929-1.115l-1.598.54a1 1 0 01-1.186-.447l-1.18-2.044a1 1 0 01.205-1.251l1.267-1.114a7.05 7.05 0 010-2.227L1.821 7.773a1 1 0 01-.206-1.25l1.18-2.045a1 1 0 011.187-.447l1.598.54A6.993 6.993 0 017.51 3.456l.33-1.652zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd"/></svg>,
     views:     <svg viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M.99 5.24A2.25 2.25 0 013.25 3h13.5A2.25 2.25 0 0119 5.25l.01 9.5A2.25 2.25 0 0116.76 17H3.26A2.25 2.25 0 011 14.74l-.01-9.5zm8.26 9.52v-.001a.75.75 0 00.75.75h4.5a.75.75 0 00.75-.75V8.76a.75.75 0 00-.75-.75h-4.5a.75.75 0 00-.75.75v5.99zm-8.25 0a.75.75 0 00.75.75H6a.75.75 0 00.75-.75V8.76A.75.75 0 006 8.01H1.75a.75.75 0 00-.75.75v5.99zm7.5-10.5v-.75h-6v.75h6zm8.25 0v-.75h-6v.75h6z" clipRule="evenodd"/></svg>,
@@ -166,6 +168,10 @@
   const postFolders     = (f) => apiPost('/api/folders', f);
   const fetchRecurring  = ()  => apiGet('/api/recurring');
   const postRecurring   = (r) => apiPost('/api/recurring', r);
+  const fetchSecrets    = ()  => apiGet('/api/secrets');
+  const postSecrets     = (s) => apiPost('/api/secrets', s);
+  const fetchSecretsConfig = () => apiGet('/api/secrets-config');
+  const postSecretsPassphrase = (p, c) => apiPost('/api/secrets-passphrase', { passphrase: p, currentPassphrase: c });
   const fetchTitle = (url) =>
     fetch(`/api/fetch-title?url=${encodeURIComponent(url)}`).then(r => r.json()).catch(() => ({ title: '' }));
 
@@ -183,8 +189,15 @@
     createdAt: new Date().toISOString(),
   });
 
+  const makeSecret = (name = '') => ({
+    id: uid(), name, tags: [], bookmark: '',
+    items: [{ id: uid(), name: '', value: '' }],
+    createdAt: new Date().toISOString(),
+  });
+
   const makeNote = (folderId = null) => ({
     id: uid(), title: '', content: '', tags: [], pinned: false, folderId,
+    language: 'markdown',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   });
@@ -297,15 +310,20 @@
   // ── recurring helpers ────────────────────────────────────────────────────────
   const WDAY_NAMES = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
-  // Returns an array of field labels that must be filled before a task can be completed
-  const missingFields = (task) => {
-    const m = [];
-    const s = getStatus(task);
-    if (!task.planStartDate) m.push('Start Date');
-    if (!task.planEndDate)   m.push('End Date');
-    if (!task.estimate)      m.push('Estimate');
-    if (!task.actualTime && s !== 'skipped') m.push('Actual Time');
-    return m;
+  const CONFIGURABLE_FIELDS = [
+    { key: 'planStartDate', label: 'Start Date' },
+    { key: 'planEndDate',   label: 'End Date' },
+    { key: 'estimate',      label: 'Estimate' },
+    { key: 'actualTime',    label: 'Actual Time' },
+  ];
+  const DEFAULT_REQUIRED_FIELDS = {
+    completed: { planStartDate: true, planEndDate: true, estimate: true, actualTime: true },
+  };
+
+  const missingFields = (task, settings, targetStatus = 'completed') => {
+    const cfg = settings?.todoRequiredFields ?? DEFAULT_REQUIRED_FIELDS;
+    const req = cfg[targetStatus] || {};
+    return CONFIGURABLE_FIELDS.filter(f => req[f.key] && !task[f.key]).map(f => f.label);
   };
 
   const STATUS_REMAP  = { started: 'in_progress', continue: 'in_progress', inprogress: 'in_progress', blocked: 'paused', skip: 'skipped' };
@@ -377,7 +395,7 @@
   };
 
   // ── StatusBadge ─────────────────────────────────────────────────────────────
-  function StatusBadge({ status, onChange, blocked = false }) {
+  function StatusBadge({ status, onChange, blocked = false, getBlocked }) {
     const [open, setOpen] = useState(false);
     const ref = useRef(null);
     const cfg = STATUS_CONFIG[status] || STATUS_CONFIG.ready;
@@ -400,7 +418,7 @@
           <div className="absolute top-full left-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-30 py-1 min-w-[130px]">
             {ALL_STATUSES.map(s => {
               const c = STATUS_CONFIG[s];
-              const isBlocked = s === 'completed' && blocked;
+              const isBlocked = getBlocked ? getBlocked(s) : (s === 'completed' && blocked);
               return (
                 <button key={s} disabled={isBlocked}
                   onClick={() => { if (!isBlocked) { onChange(s); setOpen(false); } }}
@@ -418,7 +436,7 @@
   }
 
   // ── TaskRow ─────────────────────────────────────────────────────────────────
-  function TaskRow({ task, tasks, onSetStatus, onPriority, onOpen, onDelete }) {
+  function TaskRow({ task, tasks, onSetStatus, onPriority, onOpen, onDelete, settings }) {
     const subs        = tasks.filter(t => t.parentId === task.id);
     const activeSubs  = subs.filter(t => !['completed','skipped'].includes(getStatus(t)));
     const doneSubs    = subs.filter(t => getStatus(t) === 'completed');
@@ -428,12 +446,11 @@
     const selfDueToday = !selfOverdue && isDueToday(task);
     const subOverdue   = !selfOverdue ? overdueDescendant(task.id, tasks) : null;
     const subDueToday  = !selfOverdue && !selfDueToday && !subOverdue ? dueTodayDescendant(task.id, tasks) : false;
-    const missing  = !hasOpenSubs ? missingFields(task) : [];
-    const blocked  = hasOpenSubs || missing.length > 0;
     const status   = getStatus(task);
     return (
       <div className="task-row group flex items-center gap-2.5 px-4 py-3 border-b border-gray-100 hover:bg-gray-50 cursor-pointer select-none" onClick={() => onOpen(task.id)}>
-        <StatusBadge status={status} onChange={s => onSetStatus(task.id, s)} blocked={blocked} />
+        <StatusBadge status={status} onChange={s => onSetStatus(task.id, s)}
+          getBlocked={s => (s === 'completed' && hasOpenSubs) || missingFields(task, settings, s).length > 0} />
         <span className={`shrink-0 w-2 h-2 rounded-full ${dot}`} />
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
@@ -505,7 +522,7 @@
   }
 
   // ── SubTaskRow ──────────────────────────────────────────────────────────────
-  function SubTaskRow({ task, tasks, onSetStatus, onNavigate, onDelete }) {
+  function SubTaskRow({ task, tasks, onSetStatus, onNavigate, onDelete, settings }) {
     const subs       = tasks.filter(t => t.parentId === task.id);
     const hasOpenSubs = subs.some(t => !['completed','skipped'].includes(getStatus(t)));
     const { dot }    = pconf(task.priority);
@@ -515,11 +532,10 @@
     const selfDueToday = !isDone && !selfOverdue && isDueToday(task);
     const subOverdue   = !isDone && !selfOverdue ? overdueDescendant(task.id, tasks) : null;
     const subDueToday  = !isDone && !selfOverdue && !selfDueToday && !subOverdue ? dueTodayDescendant(task.id, tasks) : false;
-    const missing  = !hasOpenSubs ? missingFields(task) : [];
-    const blocked  = hasOpenSubs || missing.length > 0;
     return (
       <div className="task-row group flex items-center gap-2 py-2 border-b border-gray-50 last:border-0">
-        <StatusBadge status={status} onChange={s => onSetStatus(task.id, s)} blocked={blocked} />
+        <StatusBadge status={status} onChange={s => onSetStatus(task.id, s)}
+          getBlocked={s => (s === 'completed' && hasOpenSubs) || missingFields(task, settings, s).length > 0} />
         <span className={`shrink-0 w-1.5 h-1.5 rounded-full ${dot}`} />
         <div className="flex-1 min-w-0 flex items-center gap-1.5 flex-wrap cursor-pointer" onClick={() => onNavigate(task.id)}>
           <span className={`text-sm truncate hover:text-indigo-600 transition-colors ${isDone ? 'line-through text-gray-400' : 'text-gray-700'}`}>
@@ -796,7 +812,7 @@
   }
 
   // ── DetailPanel (task) ──────────────────────────────────────────────────────
-  function DetailPanel({ stack, tasks, onClose, onUpdate, onAddTask, onSetStatus, onDelete, onNavigate, onBack }) {
+  function DetailPanel({ stack, tasks, onClose, onUpdate, onAddTask, onSetStatus, onDelete, onNavigate, onBack, settings }) {
     const [collapsedGroups, setCollapsedGroups] = useState(() => new Set(['completed', 'skipped']));
     const toggleGroup = s => setCollapsedGroups(g => { const n = new Set(g); n.has(s) ? n.delete(s) : n.add(s); return n; });
 
@@ -846,15 +862,16 @@
           {/* Status */}
           <div>
             <div className="flex items-center gap-3 flex-wrap">
-              <StatusBadge status={getStatus(task)} onChange={s => onSetStatus(taskId, s)} blocked={hasOpenSubs || missingFields(task).length > 0} />
+              <StatusBadge status={getStatus(task)} onChange={s => onSetStatus(taskId, s)}
+                getBlocked={s => (s === 'completed' && hasOpenSubs) || missingFields(task, settings, s).length > 0} />
               {hasOpenSubs && (
                 <span className="text-xs text-amber-600 border border-amber-200 bg-amber-50 rounded-full px-2 py-0.5">
                   ⚠ Complete sub-tasks first
                 </span>
               )}
-              {!hasOpenSubs && missingFields(task).length > 0 && (
+              {!hasOpenSubs && missingFields(task, settings, 'completed').length > 0 && (
                 <div className="flex flex-wrap gap-1.5">
-                  {missingFields(task).map(f => (
+                  {missingFields(task, settings, 'completed').map(f => (
                     <span key={f} className="text-xs font-medium text-red-500 bg-red-50 border border-red-200 px-2 py-0.5 rounded-full">{f}</span>
                   ))}
                 </div>
@@ -1041,7 +1058,7 @@
                   {isOpen && (
                     <div className="ml-1 mt-0.5">
                       {group.map(sub => (
-                        <SubTaskRow key={sub.id} task={sub} tasks={tasks} onSetStatus={onSetStatus} onNavigate={onNavigate} onDelete={onDelete} />
+                        <SubTaskRow key={sub.id} task={sub} tasks={tasks} onSetStatus={onSetStatus} onNavigate={onNavigate} onDelete={onDelete} settings={settings} />
                       ))}
                     </div>
                   )}
@@ -1084,14 +1101,46 @@
   }
 
   // ── NotePanel ───────────────────────────────────────────────────────────────
+  const NOTE_LANGUAGES = [
+    { value: 'markdown',   label: 'Markdown' },
+    { value: 'plain',      label: 'Plain Text' },
+    { value: 'javascript', label: 'JavaScript' },
+    { value: 'typescript', label: 'TypeScript' },
+    { value: 'python',     label: 'Python' },
+    { value: 'java',       label: 'Java' },
+    { value: 'sql',        label: 'SQL' },
+    { value: 'html',       label: 'HTML' },
+    { value: 'css',        label: 'CSS' },
+    { value: 'json',       label: 'JSON' },
+    { value: 'yaml',       label: 'YAML' },
+    { value: 'bash',       label: 'Bash' },
+    { value: 'xml',        label: 'XML' },
+  ];
+
   function NotePanel({ note, onUpdate, onClose, onDelete }) {
     if (!note) return null;
-    const [preview, setPreview]     = useState(!!note.content);
-    const [showAtt, setShowAtt]     = useState(false);
+    const lang = note.language || 'markdown';
+    const isMarkdown = lang === 'markdown';
+    const [preview, setPreview]   = useState(isMarkdown && !!note.content);
+    const [showAtt, setShowAtt]   = useState(false);
     const previewRef = useRef(null);
     const taRef      = useRef(null);
-    const wordCount = note.content.split(/\s+/).filter(Boolean).length;
-    const html = useMemo(() => preview ? marked.parse(note.content || '') : '', [preview, note.content]);
+    const gutterRef  = useRef(null);
+    const wordCount  = note.content.split(/\s+/).filter(Boolean).length;
+    const html = useMemo(() => (isMarkdown && preview) ? marked.parse(note.content || '') : '', [isMarkdown, preview, note.content]);
+
+    // When language changes to non-markdown, exit preview mode
+    useEffect(() => {
+      if (!isMarkdown) setPreview(false);
+    }, [isMarkdown]);
+
+    // Line numbers
+    const lineCount = (note.content || '').split('\n').length;
+    const syncGutterScroll = () => {
+      if (taRef.current && gutterRef.current) {
+        gutterRef.current.scrollTop = taRef.current.scrollTop;
+      }
+    };
 
     const insertIntoNote = useCallback(text => {
       const ta = taRef.current;
@@ -1163,27 +1212,40 @@
     }, [preview, html]);
 
     return (
-      <div className="slide-panel w-full h-full bg-white shadow-2xl flex flex-col rounded-2xl border border-gray-200 overflow-hidden">
+      <div className="slide-panel w-full h-full bg-white flex flex-col overflow-hidden">
         {/* header */}
         <div className="shrink-0 px-5 pt-4 pb-3 border-b border-gray-100">
           <div className="flex items-center gap-2 mb-2">
+            <button onClick={onClose}
+              className="shrink-0 flex items-center gap-1 text-sm text-gray-400 hover:text-indigo-600 transition-colors mr-1">
+              ← Notes
+            </button>
             <input
               className="flex-1 font-bold text-gray-900 text-lg bg-transparent outline-none placeholder-gray-300 leading-snug"
               value={note.title}
               onChange={e => onUpdate(note.id, { title: e.target.value })}
               placeholder="Note title"
             />
-            {/* edit / preview toggle */}
-            <div className="flex shrink-0 bg-gray-100 rounded-md p-0.5 text-xs font-medium">
-              <button onClick={() => setPreview(false)}
-                className={`px-2.5 py-1 rounded transition-colors ${!preview ? 'bg-white text-gray-800 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}>
-                Edit
-              </button>
-              <button onClick={() => setPreview(true)}
-                className={`px-2.5 py-1 rounded transition-colors ${preview ? 'bg-white text-gray-800 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}>
-                Preview
-              </button>
-            </div>
+            {/* language selector */}
+            <select
+              value={lang}
+              onChange={e => onUpdate(note.id, { language: e.target.value })}
+              className="shrink-0 text-xs border border-gray-200 rounded-md px-2 py-1 bg-white text-gray-600 outline-none focus:border-indigo-400 transition-colors cursor-pointer">
+              {NOTE_LANGUAGES.map(l => <option key={l.value} value={l.value}>{l.label}</option>)}
+            </select>
+            {/* edit / preview toggle — only for markdown */}
+            {isMarkdown && (
+              <div className="flex shrink-0 bg-gray-100 rounded-md p-0.5 text-xs font-medium">
+                <button onClick={() => setPreview(false)}
+                  className={`px-2.5 py-1 rounded transition-colors ${!preview ? 'bg-white text-gray-800 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}>
+                  Edit
+                </button>
+                <button onClick={() => setPreview(true)}
+                  className={`px-2.5 py-1 rounded transition-colors ${preview ? 'bg-white text-gray-800 shadow-sm' : 'text-gray-400 hover:text-gray-600'}`}>
+                  Preview
+                </button>
+              </div>
+            )}
             {/* image upload */}
             <label className="shrink-0 cursor-pointer text-gray-400 hover:text-indigo-500 transition-colors" title="Upload image (or paste a screenshot into the editor)">
               <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor">
@@ -1196,7 +1258,6 @@
               className="shrink-0 text-xs text-red-400 hover:text-red-600 border border-red-200 hover:border-red-300 rounded-md px-2 py-1 transition-colors">
               Delete
             </button>
-            <button onClick={onClose} className="shrink-0 text-gray-400 hover:text-gray-600 text-2xl leading-none">×</button>
           </div>
           <TagChips
             tags={note.tags || []}
@@ -1220,28 +1281,48 @@
         </div>
 
         {/* content */}
-        <div className="flex-1 overflow-y-auto px-5 py-4">
-          {preview ? (
-            note.content
-              ? <div ref={previewRef} className="md-preview text-sm text-gray-700" dangerouslySetInnerHTML={{ __html: html }} />
-              : <p className="text-sm text-gray-300 italic">Nothing to preview.</p>
+        <div className="flex-1 overflow-hidden flex flex-col">
+          {isMarkdown && preview ? (
+            <div className="flex-1 overflow-y-auto px-5 py-4">
+              {note.content
+                ? <div ref={previewRef} className="md-preview text-sm text-gray-700" dangerouslySetInnerHTML={{ __html: html }} />
+                : <p className="text-sm text-gray-300 italic">Nothing to preview.</p>
+              }
+            </div>
           ) : (
-            <textarea
-              ref={taRef}
-              className="w-full h-full text-sm text-gray-700 leading-relaxed resize-none outline-none placeholder-gray-300 font-mono"
-              value={note.content}
-              onChange={e => onUpdate(note.id, { content: e.target.value, updatedAt: new Date().toISOString() })}
-              onPaste={handlePaste}
-              placeholder={"Start writing… (Markdown supported)\n\n# Heading\n**bold**, *italic*, `code`\n- list item"}
-              style={{ minHeight: '400px' }}
-            />
+            <div className="flex-1 overflow-hidden flex" style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: '13px', lineHeight: '1.6' }}>
+              {/* line numbers gutter */}
+              <div
+                ref={gutterRef}
+                className="shrink-0 select-none overflow-hidden text-right bg-gray-50 border-r border-gray-100"
+                style={{ width: `${Math.max(String(lineCount).length + 1, 3)}ch`, paddingTop: '1rem', paddingBottom: '1rem', paddingRight: '0.5rem', paddingLeft: '0.25rem', color: '#9ca3af', lineHeight: '1.6', fontSize: '13px' }}>
+                {Array.from({ length: lineCount }, (_, i) => (
+                  <div key={i}>{i + 1}</div>
+                ))}
+              </div>
+              {/* editor */}
+              <textarea
+                ref={taRef}
+                className="flex-1 text-gray-700 resize-none outline-none bg-white"
+                style={{ padding: '1rem 1.25rem', lineHeight: '1.6', fontSize: '13px', minHeight: '100%' }}
+                value={note.content}
+                onChange={e => onUpdate(note.id, { content: e.target.value, updatedAt: new Date().toISOString() })}
+                onScroll={syncGutterScroll}
+                onPaste={handlePaste}
+                placeholder={isMarkdown ? "Start writing… (Markdown supported)\n\n# Heading\n**bold**, *italic*, `code`\n- list item" : `Start writing…`}
+                spellCheck={lang === 'markdown' || lang === 'plain'}
+              />
+            </div>
           )}
         </div>
 
         {/* footer */}
         <div className="shrink-0 px-5 py-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-400">
           <span>Updated {fmtDate(note.updatedAt.split('T')[0])}</span>
-          <span>{wordCount} word{wordCount !== 1 ? 's' : ''}</span>
+          <div className="flex items-center gap-3">
+            <span className="text-gray-300">{NOTE_LANGUAGES.find(l => l.value === lang)?.label || 'Markdown'}</span>
+            <span>{wordCount} word{wordCount !== 1 ? 's' : ''} · {lineCount} line{lineCount !== 1 ? 's' : ''}</span>
+          </div>
         </div>
       </div>
     );
@@ -1622,7 +1703,234 @@
     );
   }
 
-  // ── CalendarTab ─────────────────────────────────────────────────────────────
+  // ── SecretsTab ───────────────────────────────────────────────────────────────
+  function SecretsTab({ secrets, links, onUpdate, onDelete }) {
+    const [filterTag, setFilter] = useState('');
+    const [selected, setSelected] = useState(null);
+
+    const allTags = useMemo(() =>
+      [...new Set(secrets.flatMap(s => s.tags ?? []))].sort(), [secrets]);
+
+    const filtered = useMemo(() =>
+      secrets.filter(s => !filterTag || (s.tags ?? []).includes(filterTag)),
+      [secrets, filterTag]);
+
+    const selectedSecret = selected ? secrets.find(s => s.id === selected) : null;
+
+    return (
+      <div className="flex gap-4 h-full" style={{minHeight: 0}}>
+        {/* list */}
+        <div className="flex-1 space-y-3 min-w-0">
+          {allTags.length > 0 && (
+            <div className="flex flex-wrap gap-1.5">
+              <button onClick={() => setFilter('')}
+                className={`text-xs px-2.5 py-1 rounded-full border font-medium transition-colors ${!filterTag ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'}`}>
+                All
+              </button>
+              {allTags.map(t => (
+                <button key={t} onClick={() => setFilter(t === filterTag ? '' : t)}
+                  className={`text-xs px-2.5 py-1 rounded-full border font-medium transition-colors ${filterTag === t ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300'}`}>
+                  {t}
+                </button>
+              ))}
+            </div>
+          )}
+          {filtered.length === 0
+            ? <div className="bg-white rounded-xl border border-gray-200 py-16 text-center text-gray-400 text-sm">
+                {secrets.length === 0 ? 'No secrets yet. Click "+ New Secret" to add one.' : 'No secrets match this tag.'}
+              </div>
+            : <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {filtered.map(s => (
+                  <SecretCard key={s.id} secret={s}
+                    active={selected === s.id}
+                    links={links}
+                    onClick={() => setSelected(id => id === s.id ? null : s.id)}
+                    onDelete={onDelete} />
+                ))}
+              </div>
+          }
+        </div>
+        {/* detail panel */}
+        {selectedSecret && (
+          <div className="w-96 shrink-0">
+            <SecretDetail secret={selectedSecret} links={links} onUpdate={onUpdate} onClose={() => setSelected(null)} />
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  function SecretCard({ secret, active, onClick, onDelete, links }) {
+    const tagList = secret.tags ?? [];
+    const bookmarkLink = secret.bookmark ? (links ?? []).find(l => l.url === secret.bookmark) : null;
+    return (
+      <div onClick={onClick}
+        className={`bg-white rounded-xl border p-4 cursor-pointer transition-all ${active ? 'border-indigo-400 shadow-md' : 'border-gray-200 hover:border-gray-300 hover:shadow-sm'}`}>
+        <div className="flex items-start justify-between gap-2">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-gray-400 shrink-0">
+              <svg className="w-4 h-4" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd"/></svg>
+            </span>
+            <span className="font-semibold text-gray-800 text-sm truncate">{secret.name || 'Untitled Secret'}</span>
+          </div>
+          <button onClick={e => { e.stopPropagation(); if (confirm('Delete this secret?')) onDelete(secret.id); }}
+            className="shrink-0 text-gray-300 hover:text-red-400 transition-colors text-xs">✕</button>
+        </div>
+        <div className="mt-2 text-xs text-gray-400">{(secret.items ?? []).length} field{(secret.items ?? []).length !== 1 ? 's' : ''}</div>
+        {tagList.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-1">
+            {tagList.map(t => <span key={t} className="text-xs bg-indigo-50 text-indigo-600 border border-indigo-100 px-2 py-0.5 rounded-full">{t}</span>)}
+          </div>
+        )}
+        {secret.bookmark && (
+          <div className="mt-2">
+            <a href={secret.bookmark} onClick={e => { e.stopPropagation(); openUrl(secret.bookmark); e.preventDefault(); }}
+              className="text-xs text-indigo-500 hover:underline truncate block">
+              {bookmarkLink ? bookmarkLink.title || secret.bookmark : secret.bookmark}
+            </a>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  function SecretDetail({ secret, links, onUpdate, onClose }) {
+    const [name, setName] = useState(secret.name || '');
+    const [tags, setTags] = useState((secret.tags ?? []).join(', '));
+    const [bookmark, setBookmark] = useState(secret.bookmark || '');
+    const [items, setItems] = useState(secret.items ?? []);
+    const [revealed, setRevealed] = useState({});
+
+    useEffect(() => {
+      setName(secret.name || '');
+      setTags((secret.tags ?? []).join(', '));
+      setBookmark(secret.bookmark || '');
+      setItems(secret.items ?? []);
+      setRevealed({});
+    }, [secret.id]);
+
+    const save = (patch) => {
+      const merged = {
+        name: patch.name ?? name,
+        tags: patch.tags ?? tags.split(',').map(t => t.trim()).filter(Boolean),
+        bookmark: patch.bookmark ?? bookmark,
+        items: patch.items ?? items,
+      };
+      onUpdate(secret.id, merged);
+    };
+
+    const updateItem = (idx, field, value) => {
+      const next = items.map((it, i) => i === idx ? { ...it, [field]: value } : it);
+      setItems(next);
+      save({ items: next });
+    };
+
+    const addItem = () => {
+      const next = [...items, { id: uid(), name: '', value: '' }];
+      setItems(next);
+      save({ items: next });
+    };
+
+    const removeItem = (idx) => {
+      const next = items.filter((_, i) => i !== idx);
+      setItems(next);
+      save({ items: next });
+    };
+
+    const copyToClipboard = (text) => {
+      navigator.clipboard.writeText(text).catch(() => {});
+    };
+
+    return (
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm flex flex-col h-full overflow-hidden">
+        {/* header */}
+        <div className="shrink-0 px-4 pt-4 pb-3 border-b border-gray-100 flex items-center justify-between">
+          <span className="text-sm font-semibold text-gray-700">Secret Details</span>
+          <button onClick={onClose} className="text-gray-300 hover:text-gray-500 text-sm transition-colors">✕</button>
+        </div>
+        <div className="flex-1 overflow-y-auto p-4 space-y-4">
+          {/* name */}
+          <div>
+            <label className="block text-xs font-medium text-gray-500 mb-1">Name</label>
+            <input className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-indigo-400 transition-colors"
+              value={name}
+              onChange={e => setName(e.target.value)}
+              onBlur={() => save({ name })}
+              placeholder="Secret name" />
+          </div>
+          {/* tags */}
+          <div>
+            <label className="block text-xs font-medium text-gray-500 mb-1">Tags <span className="font-normal text-gray-400">(comma separated)</span></label>
+            <input className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-indigo-400 transition-colors"
+              value={tags}
+              onChange={e => setTags(e.target.value)}
+              onBlur={() => save({ tags: tags.split(',').map(t => t.trim()).filter(Boolean) })}
+              placeholder="e.g. work, aws" />
+          </div>
+          {/* bookmark */}
+          <div>
+            <label className="block text-xs font-medium text-gray-500 mb-1">Bookmark <span className="font-normal text-gray-400">(optional)</span></label>
+            <div className="flex items-center gap-1">
+              <select
+                className="flex-1 text-sm border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-indigo-400 bg-white transition-colors"
+                value={bookmark}
+                onChange={e => { setBookmark(e.target.value); save({ bookmark: e.target.value }); }}>
+                <option value="">— None —</option>
+                {(links ?? []).map(l => (
+                  <option key={l.id} value={l.url}>{l.title || l.url}</option>
+                ))}
+              </select>
+              {bookmark && (
+                <button onClick={() => openUrl(bookmark)}
+                  className="shrink-0 text-indigo-500 hover:text-indigo-700 text-xs border border-indigo-200 rounded-lg px-2 py-2 transition-colors">↗</button>
+              )}
+            </div>
+          </div>
+          {/* fields */}
+          <div>
+            <div className="flex items-center justify-between mb-2">
+              <label className="text-xs font-medium text-gray-500">Fields</label>
+              <button onClick={addItem} className="text-xs text-indigo-600 hover:text-indigo-800 font-medium transition-colors">+ Add Field</button>
+            </div>
+            <div className="space-y-2">
+              {items.map((item, idx) => (
+                <div key={item.id || idx} className="flex items-center gap-1.5">
+                  <input className="w-28 shrink-0 text-xs border border-gray-200 rounded-lg px-2 py-1.5 outline-none focus:border-indigo-300 bg-gray-50"
+                    value={item.name}
+                    onChange={e => updateItem(idx, 'name', e.target.value)}
+                    placeholder="Field name" />
+                  <div className="flex-1 relative flex items-center">
+                    <input
+                      type={revealed[idx] ? 'text' : 'password'}
+                      className="w-full text-xs border border-gray-200 rounded-lg pl-2 pr-14 py-1.5 outline-none focus:border-indigo-300 font-mono"
+                      value={item.value}
+                      onChange={e => updateItem(idx, 'value', e.target.value)}
+                      placeholder="Value" />
+                    <div className="absolute right-1 flex items-center gap-0.5">
+                      <button title={revealed[idx] ? 'Hide' : 'Reveal'}
+                        onClick={() => setRevealed(r => ({ ...r, [idx]: !r[idx] }))}
+                        className="p-1 text-gray-400 hover:text-gray-600 transition-colors">
+                        {revealed[idx]
+                          ? <svg className="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor"><path d="M10 12.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"/><path fillRule="evenodd" d="M.664 10.59a1.651 1.651 0 010-1.186A10.004 10.004 0 0110 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0110 17c-4.257 0-7.893-2.66-9.336-6.41zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd"/></svg>
+                          : <svg className="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M3.28 2.22a.75.75 0 00-1.06 1.06l14.5 14.5a.75.75 0 101.06-1.06l-1.745-1.745a10.029 10.029 0 003.3-4.38 1.651 1.651 0 000-1.185A10.004 10.004 0 009.999 3a9.956 9.956 0 00-4.744 1.194L3.28 2.22zM7.752 6.69l1.092 1.092a2.5 2.5 0 013.374 3.373l1.091 1.092a4 4 0 00-5.557-5.557z" clipRule="evenodd"/><path d="M10.748 13.93l2.523 2.523a10.003 10.003 0 01-8.737-1.892L5.822 13.27A2.5 2.5 0 0110 12a2.5 2.5 0 01.748.128l-.001-.198zm-3.003-3.476l.414.414A2.5 2.5 0 0110 7.5a2.5 2.5 0 01.997 4.806l.417.417A4 4 0 016 10a4 4 0 011.745-3.546z"/></svg>
+                        }
+                      </button>
+                      <button title="Copy value"
+                        onClick={() => copyToClipboard(item.value)}
+                        className="p-1 text-gray-400 hover:text-indigo-600 transition-colors">
+                        <svg className="w-3.5 h-3.5" viewBox="0 0 20 20" fill="currentColor"><path d="M7 3.5A1.5 1.5 0 018.5 2h3.879a1.5 1.5 0 011.06.44l3.122 3.12A1.5 1.5 0 0117 6.622V12.5a1.5 1.5 0 01-1.5 1.5h-1v-3.379a3 3 0 00-.879-2.121L10.5 5.379A3 3 0 008.379 4.5H7v-1z"/><path d="M4.5 6A1.5 1.5 0 003 7.5v9A1.5 1.5 0 004.5 18h7a1.5 1.5 0 001.5-1.5v-5.879a1.5 1.5 0 00-.44-1.06L9.44 6.439A1.5 1.5 0 008.378 6H4.5z"/></svg>
+                      </button>
+                    </div>
+                  </div>
+                  <button onClick={() => removeItem(idx)} className="shrink-0 text-gray-300 hover:text-red-400 transition-colors text-xs">✕</button>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
   const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   const DAY_NAMES   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 
@@ -2180,8 +2488,8 @@
     const completedInRange = completed.filter(t => t.completedAt.slice(0,10) >= effectiveStart && t.completedAt.slice(0,10) <= effectiveEnd).length;
     const totalOpen        = tasks.filter(t => !['completed','skipped'].includes(getStatus(t))).length;
     const overdueCount     = tasks.filter(t => getStatus(t) !== 'completed' && isOverdue(t)).length;
-    const totalEstimate    = tasks.filter(t => t.estimate  && getStatus(t) !== 'skipped').reduce((s,t) => s + parseFloat(t.estimate||0), 0);
-    const totalActual      = tasks.filter(t => t.actualTime && getStatus(t) !== 'skipped').reduce((s,t) => s + parseFloat(t.actualTime||0), 0);
+    const totalEstimate    = completed.filter(t => t.estimate).reduce((s,t) => s + parseFloat(t.estimate||0), 0);
+    const totalActual      = completed.filter(t => t.actualTime).reduce((s,t) => s + parseFloat(t.actualTime||0), 0);
     const rangeLabel       = isCustom ? 'Done (range)' : `Done (${range}d)`;
 
     const cardCls = "bg-white rounded-xl border border-gray-200 p-5";
@@ -2233,8 +2541,8 @@
             { label: rangeLabel,        value: completedInRange, color: 'text-green-600' },
             { label: 'Total Done',     value: totalCompleted,     color: 'text-gray-700' },
             { label: 'Overdue',        value: overdueCount,       color: 'text-red-500' },
-            { label: 'Est. hrs',       value: totalEstimate.toFixed(1), color: 'text-gray-700' },
-            { label: 'Actual hrs',     value: totalActual.toFixed(1),   color: 'text-orange-600' },
+            { label: 'Est. hrs (done)',    value: totalEstimate.toFixed(1), color: 'text-gray-700' },
+            { label: 'Actual hrs (done)',  value: totalActual.toFixed(1),   color: 'text-indigo-600' },
           ].map(k => (
             <div key={k.label} className={`${cardCls} text-center`}>
               <div className={`text-2xl font-bold ${k.color}`}>{k.value}</div>
@@ -2432,8 +2740,9 @@
 
           {!c && <div className="pt-3 pb-1 px-3"><span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Workspace</span></div>}
           {c && <div className="my-1 border-t border-gray-100" />}
-          <NavItem label="Notes"     icon={NAV_ICONS.notes} count={counts.notes} active={tab === 'notes'} onClick={() => setTab('notes')} collapsed={c} />
-          <NavItem label="Bookmarks" icon={NAV_ICONS.links} count={counts.links} active={tab === 'links'} onClick={() => setTab('links')} collapsed={c} />
+          <NavItem label="Notes"     icon={NAV_ICONS.notes}   count={counts.notes}   active={tab === 'notes'}   onClick={() => setTab('notes')}   collapsed={c} />
+          <NavItem label="Bookmarks" icon={NAV_ICONS.links}   count={counts.links}   active={tab === 'links'}   onClick={() => setTab('links')}   collapsed={c} />
+          <NavItem label="Secrets"   icon={NAV_ICONS.secrets} count={counts.secrets} active={tab === 'secrets'} onClick={() => setTab('secrets')} collapsed={c} />
 
           {dynamicViewCount > 0 && (
             <NavItem label="Views" icon={NAV_ICONS.views} count={dynamicViewCount} active={tab === 'views'} onClick={() => setTab('views')} collapsed={c} />
@@ -2678,6 +2987,132 @@
     );
   }
 
+  // ── SecretsPassphraseSection ─────────────────────────────────────────────────
+  function SecretsPassphraseSection() {
+    const [hasPassphrase, setHasPassphrase] = React.useState(false);
+    const [current, setCurrent]   = React.useState('');
+    const [next, setNext]         = React.useState('');
+    const [confirm, setConfirm]   = React.useState('');
+    const [msg, setMsg]           = React.useState('');
+    const [showCurrent, setShowCurrent] = React.useState(false);
+    const [showNext, setShowNext]       = React.useState(false);
+
+    React.useEffect(() => {
+      fetchSecretsConfig().then(r => r && setHasPassphrase(!!r.hasPassphrase));
+    }, []);
+
+    const save = async () => {
+      if (next !== confirm) { setMsg('Passphrases do not match.'); return; }
+      const res = await fetch('/api/secrets-passphrase', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ passphrase: next, currentPassphrase: current }),
+      }).catch(() => null);
+      if (!res) { setMsg('Server error.'); return; }
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        setMsg(err.error || 'Failed to update passphrase.');
+        return;
+      }
+      setHasPassphrase(!!next);
+      setCurrent(''); setNext(''); setConfirm('');
+      setMsg(next ? 'Passphrase saved. Secrets are now encrypted.' : 'Passphrase removed. Secrets stored as plaintext.');
+      setTimeout(() => setMsg(''), 4000);
+    };
+
+    return (
+      <div className="p-4 bg-white rounded-xl border border-gray-200 shadow-sm space-y-3">
+        <p className="text-xs text-gray-500">
+          {hasPassphrase
+            ? 'Secrets are encrypted at rest with AES-256-GCM. Set a new passphrase or clear it to disable encryption.'
+            : 'Secrets are stored as plaintext. Set a passphrase to enable AES-256-GCM encryption.'}
+        </p>
+        {hasPassphrase && (
+          <div>
+            <label className="block text-xs font-medium text-gray-600 mb-1">Current passphrase</label>
+            <div className="flex items-center gap-1">
+              <input type={showCurrent ? 'text' : 'password'}
+                className="flex-1 text-sm border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-indigo-400"
+                value={current} onChange={e => setCurrent(e.target.value)} placeholder="Current passphrase" />
+              <button onClick={() => setShowCurrent(v => !v)}
+                className="shrink-0 text-gray-400 hover:text-gray-600 p-2 transition-colors">
+                {showCurrent ? '🙈' : '👁'}
+              </button>
+            </div>
+          </div>
+        )}
+        <div>
+          <label className="block text-xs font-medium text-gray-600 mb-1">New passphrase <span className="font-normal text-gray-400">(leave blank to disable encryption)</span></label>
+          <div className="flex items-center gap-1">
+            <input type={showNext ? 'text' : 'password'}
+              className="flex-1 text-sm border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-indigo-400"
+              value={next} onChange={e => setNext(e.target.value)} placeholder="New passphrase" />
+            <button onClick={() => setShowNext(v => !v)}
+              className="shrink-0 text-gray-400 hover:text-gray-600 p-2 transition-colors">
+              {showNext ? '🙈' : '👁'}
+            </button>
+          </div>
+        </div>
+        {next && (
+          <div>
+            <label className="block text-xs font-medium text-gray-600 mb-1">Confirm passphrase</label>
+            <input type="password"
+              className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-indigo-400"
+              value={confirm} onChange={e => setConfirm(e.target.value)} placeholder="Confirm passphrase" />
+          </div>
+        )}
+        <button onClick={save}
+          className="text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors">
+          {hasPassphrase ? 'Update passphrase' : 'Enable encryption'}
+        </button>
+        {msg && <p className={`text-xs ${msg.includes('aved') || msg.includes('now') ? 'text-green-600' : 'text-red-500'}`}>{msg}</p>}
+      </div>
+    );
+  }
+
+  // ── TodosSection (Settings → Todos) ──────────────────────────────────────────
+  function TodosSection({ settings, onUpdate }) {
+    const [selectedState, setSelectedState] = React.useState('completed');
+    const reqFields = settings.todoRequiredFields ?? DEFAULT_REQUIRED_FIELDS;
+    const stateReq  = reqFields[selectedState] || {};
+
+    function toggleField(key) {
+      const cur     = reqFields[selectedState] || {};
+      const updated = { ...reqFields, [selectedState]: { ...cur, [key]: !cur[key] } };
+      onUpdate({ todoRequiredFields: updated });
+    }
+
+    return (
+      <div className="p-4 bg-white rounded-xl border border-gray-200 shadow-sm space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Require fields before changing to</label>
+          <select value={selectedState} onChange={e => setSelectedState(e.target.value)}
+            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-800 bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            {ALL_STATUSES.map(s => (
+              <option key={s} value={s}>{STATUS_CONFIG[s].label}</option>
+            ))}
+          </select>
+        </div>
+        <div className="space-y-2">
+          {CONFIGURABLE_FIELDS.map(f => (
+            <label key={f.key} className="flex items-center gap-3 cursor-pointer select-none">
+              <input type="checkbox" checked={!!stateReq[f.key]} onChange={() => toggleField(f.key)}
+                className="w-4 h-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer" />
+              <span className="text-sm text-gray-700">{f.label}</span>
+            </label>
+          ))}
+        </div>
+        {CONFIGURABLE_FIELDS.some(f => stateReq[f.key]) ? (
+          <p className="text-xs text-gray-400">
+            Checked fields must be filled before a task can move to <span className="font-medium">{STATUS_CONFIG[selectedState].label}</span>.
+          </p>
+        ) : (
+          <p className="text-xs text-gray-400">No required fields — status can change freely.</p>
+        )}
+      </div>
+    );
+  }
+
   // ── SettingsTab ──────────────────────────────────────────────────────────────
   function SettingsTab({ settings, onUpdate }) {
     const theme    = settings.theme    || 'light';
@@ -2747,6 +3182,16 @@
             </div>
 
           </div>
+        </section>
+
+        <section>
+          <h3 className="text-xs font-semibold text-gray-700 uppercase tracking-wider mb-3">Todos</h3>
+          <TodosSection settings={settings} onUpdate={onUpdate} />
+        </section>
+
+        <section>
+          <h3 className="text-xs font-semibold text-gray-700 uppercase tracking-wider mb-3">Secrets</h3>
+          <SecretsPassphraseSection />
         </section>
 
         <McpServersSection />
@@ -3096,6 +3541,7 @@
   function App() {
     const [tasks, setTasks]           = useState([]);
     const [links, setLinks]           = useState([]);
+    const [secrets, setSecrets]       = useState([]);
     const [notes, setNotes]           = useState([]);
     const [folders, setFolders]       = useState([]);
     const [selectedNoteFolder, setSelectedNoteFolder] = useState(null);
@@ -3230,18 +3676,20 @@
 
     const taskTimer      = useRef(null);
     const linkTimer      = useRef(null);
+    const secretTimer    = useRef(null);
     const noteTimer      = useRef(null);
     const recurringTimer = useRef(null);
     const folderTimer    = useRef(null);
     const tasksReady     = useRef(false);
     const linksReady     = useRef(false);
+    const secretsReady   = useRef(false);
     const notesReady     = useRef(false);
     const recurringReady = useRef(false);
     const foldersReady   = useRef(false);
 
     // load all
     useEffect(() => {
-      Promise.all([fetchTasks(), fetchLinks(), fetchNotes(), fetchRecurring(), fetchFolders()]).then(([t, l, n, r, fo]) => {
+      Promise.all([fetchTasks(), fetchLinks(), fetchSecrets(), fetchNotes(), fetchRecurring(), fetchFolders()]).then(([t, l, sec, n, r, fo]) => {
         const taskArr   = Array.isArray(t) ? t : [];
         const recurArr  = Array.isArray(r) ? r : [];
         const todayStr  = todayDate();
@@ -3252,12 +3700,14 @@
 
         setTasks(allTasks);
         setLinks(Array.isArray(l) ? l : []);
+        setSecrets(Array.isArray(sec) ? sec : []);
         setNotes(Array.isArray(n) ? n : []);
         setFolders(Array.isArray(fo) ? fo : []);
         setRecurring(finalRecurring);
         setLoading(false);
         tasksReady.current     = true;
         linksReady.current     = true;
+        secretsReady.current   = true;
         notesReady.current     = true;
         recurringReady.current = true;
         foldersReady.current   = true;
@@ -3280,6 +3730,7 @@
     };
     useEffect(() => debounceSave(taskTimer, tasksReady, postTasks, tasks), [tasks]);
     useEffect(() => debounceSave(linkTimer, linksReady, postLinks, links), [links]);
+    useEffect(() => debounceSave(secretTimer, secretsReady, postSecrets, secrets), [secrets]);
     useEffect(() => debounceSave(noteTimer, notesReady, postNotes, notes), [notes]);
     useEffect(() => debounceSave(recurringTimer, recurringReady, postRecurring, recurring), [recurring]);
     useEffect(() => debounceSave(folderTimer, foldersReady, postFolders, folders), [folders]);
@@ -3361,6 +3812,11 @@
     const updateLink = useCallback((id, data) => setLinks(ls => ls.map(l => l.id === id ? { ...l, ...data } : l)), []);
     const deleteLink = useCallback((id) => setLinks(ls => ls.filter(l => l.id !== id)), []);
 
+    // ── secret handlers ──
+    const addSecret    = useCallback(() => setSecrets(ss => [makeSecret(), ...ss]), []);
+    const updateSecret = useCallback((id, data) => setSecrets(ss => ss.map(s => s.id === id ? { ...s, ...data } : s)), []);
+    const deleteSecret = useCallback((id) => setSecrets(ss => ss.filter(s => s.id !== id)), []);
+
     // ── note handlers ──
     const addNote = useCallback((folderId = null) => {
       const n = makeNote(folderId);
@@ -3434,11 +3890,29 @@
       return Object.entries(g).sort(([a], [b]) => b.localeCompare(a));
     }, [completedRoots]);
 
+    const [doneSearch, setDoneSearch] = useState('');
+
+    const doneFilter = useMemo(() => {
+      const q = doneSearch.trim().toLowerCase();
+      if (!q) return null;
+      const tagTerms  = q.match(/#(\S+)/g)?.map(t => t.slice(1)) || [];
+      const textTerms = q.replace(/#\S+/g, '').trim().split(/\s+/).filter(Boolean);
+      return (t) => {
+        const tags = (t.tags || []).map(s => s.toLowerCase());
+        if (tagTerms.length && !tagTerms.every(tt => tags.some(tg => tg.includes(tt)))) return false;
+        if (textTerms.length) {
+          const haystack = [t.title, t.description, t.type, ...(t.tags || [])].filter(Boolean).join(' ').toLowerCase();
+          if (!textTerms.every(w => haystack.includes(w))) return false;
+        }
+        return true;
+      };
+    }, [doneSearch]);
+
     const activeNote   = notes.find(n => n.id === selectedNote) || null;
     const taskPanel    = detailStack.length > 0;
     const notePanel    = activeNote !== null && tab === 'notes';
 
-    const PAGE_TITLES = { todo: 'To Do', active: 'In Progress', paused: 'Paused', done: 'Completed', calendar: 'Calendar', analysis: 'Analysis', notes: 'Notes', links: 'Bookmarks', recurring: 'Recurring', settings: 'Settings' };
+    const PAGE_TITLES = { todo: 'To Do', active: 'In Progress', paused: 'Paused', done: 'Completed', calendar: 'Calendar', analysis: 'Analysis', notes: 'Notes', links: 'Bookmarks', secrets: 'Secrets', recurring: 'Recurring', settings: 'Settings' };
 
     // ── new action per tab ──
     const handleNew = () => {
@@ -3452,17 +3926,20 @@
       setRefreshing(true);
       tasksReady.current = false;
       linksReady.current = false;
+      secretsReady.current = false;
       notesReady.current = false;
       recurringReady.current = false;
       foldersReady.current = false;
-      const [t, l, n, r, fo] = await Promise.all([fetchTasks(), fetchLinks(), fetchNotes(), fetchRecurring(), fetchFolders()]);
+      const [t, l, sec, n, r, fo] = await Promise.all([fetchTasks(), fetchLinks(), fetchSecrets(), fetchNotes(), fetchRecurring(), fetchFolders()]);
       setTasks(Array.isArray(t) ? t : []);
       setLinks(Array.isArray(l) ? l : []);
+      setSecrets(Array.isArray(sec) ? sec : []);
       setNotes(Array.isArray(n) ? n : []);
       setRecurring(Array.isArray(r) ? r : []);
       setFolders(Array.isArray(fo) ? fo : []);
       tasksReady.current = true;
       linksReady.current = true;
+      secretsReady.current = true;
       notesReady.current = true;
       recurringReady.current = true;
       foldersReady.current = true;
@@ -3499,7 +3976,7 @@
         {/* ── Sidebar ── */}
         <Sidebar
           tab={tab} setTab={(t) => { setTab(t); setStack([]); if (t !== 'notes') setNote(null); }}
-          counts={{ todo: rootTodos.length, done: completedRoots.length + skippedRoots.length, active: activeTasks.length, paused: pausedTasks.length, notes: notes.length, links: links.length, recurring: recurring.length }}
+          counts={{ todo: rootTodos.length, done: completedRoots.length + skippedRoots.length, active: activeTasks.length, paused: pausedTasks.length, notes: notes.length, links: links.length, secrets: secrets.length, recurring: recurring.length }}
           saveStatus={saveStatus}
           collapsed={sidebarCollapsed}
           onToggle={toggleSidebar}
@@ -3523,12 +4000,18 @@
                   {tab === 'todo' ? '+ New Task' : '+ New Note'}
                 </button>
               )}
+              {tab === 'secrets' && (
+                <button onClick={addSecret}
+                  className="text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors shadow-sm">
+                  + New Secret
+                </button>
+              )}
             </div>
           </div>
 
           {/* scrollable content */}
           <div className="flex-1 overflow-y-auto">
-            <div className="w-full px-6 py-6">
+            <div className={notePanel ? 'w-full h-full' : 'w-full px-6 py-6'}>
 
               {/* ── To Do ── */}
               {tab === 'todo' && (
@@ -3553,7 +4036,7 @@
                     )}
                     {filteredTodos.map(t => (
                       <TaskRow key={t.id} task={t} tasks={tasks} onSetStatus={setTaskStatus} onPriority={changePriority}
-                        onOpen={id => setStack([id])} onDelete={deleteTask} />
+                        onOpen={id => setStack([id])} onDelete={deleteTask} settings={settings} />
                     ))}
                     <div className="border-t border-gray-100">
                       <AddInput parentId={null} onAdd={addTask} placeholder="Add task and press Enter…" />
@@ -3564,8 +4047,13 @@
 
               {/* ── Completed ── */}
               {tab === 'done' && (() => {
-                const totalEst = completedRoots.reduce((s, t) => s + parseFloat(t.estimate   || 0), 0);
+                const filteredGroups = doneFilter
+                  ? sortedGroups.map(([d, items]) => [d, items.filter(doneFilter)]).filter(([, items]) => items.length > 0)
+                  : sortedGroups;
+                const filteredSkipped = doneFilter ? skippedRoots.filter(doneFilter) : skippedRoots;
                 const totalAct = completedRoots.reduce((s, t) => s + parseFloat(t.actualTime || 0), 0);
+                const totalEst = completedRoots.reduce((s, t) => s + parseFloat(t.estimate   || 0), 0);
+                const avgAct   = completedRoots.length > 0 ? totalAct / completedRoots.length : 0;
                 return (
                 <div className="space-y-4">
                   {/* summary bar */}
@@ -3573,9 +4061,9 @@
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                       {[
                         { label: 'Tasks Done',    value: completedRoots.length,      color: 'text-green-600' },
-                        { label: 'Est. Hours',    value: totalEst.toFixed(1) + 'h',  color: 'text-gray-700'  },
-                        { label: 'Actual Hours',  value: totalAct.toFixed(1) + 'h',  color: totalAct > totalEst && totalEst > 0 ? 'text-orange-500' : 'text-indigo-600' },
-                        { label: 'Efficiency',
+                        { label: 'Actual Hours',  value: totalAct.toFixed(1) + 'h',  color: 'text-indigo-600' },
+                        { label: 'Avg per Task',  value: avgAct > 0 ? avgAct.toFixed(1) + 'h' : '—', color: 'text-gray-700' },
+                        { label: 'vs Estimate',
                           value: totalEst > 0 && totalAct > 0
                             ? (totalAct <= totalEst
                                 ? `${((totalEst - totalAct) / totalEst * 100).toFixed(0)}% under`
@@ -3591,26 +4079,89 @@
                     </div>
                   )}
 
-                  {sortedGroups.length === 0 && skippedRoots.length === 0 && (
+                  {/* search bar */}
+                  <div className="relative">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-300 text-sm select-none">⌕</span>
+                    <input
+                      type="text"
+                      value={doneSearch}
+                      onChange={e => setDoneSearch(e.target.value)}
+                      placeholder="Search by title, note, type or #tag…"
+                      className="w-full text-sm border border-gray-200 rounded-xl pl-8 pr-8 py-2.5 bg-white focus:outline-none focus:border-indigo-400 placeholder-gray-300"
+                    />
+                    {doneSearch && (
+                      <button onClick={() => setDoneSearch('')}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-300 hover:text-gray-500 text-xs">✕</button>
+                    )}
+                  </div>
+                  {filteredGroups.length === 0 && filteredSkipped.length === 0 && (
                     <div className="bg-white rounded-xl shadow-sm border border-gray-200 py-16 text-center text-gray-400 text-sm">
-                      No completed tasks yet.
+                      {doneSearch ? 'No tasks match your search.' : 'No completed tasks yet.'}
                     </div>
                   )}
-                  {sortedGroups.map(([date, items]) => {
+                  {filteredGroups.map(([date, items]) => {
                     const dayEst = items.reduce((s, t) => s + parseFloat(t.estimate   || 0), 0);
                     const dayAct = items.reduce((s, t) => s + parseFloat(t.actualTime || 0), 0);
+
+                    // Build type breakdown for the day pie chart
+                    const TYPE_COLORS = ['#6366f1','#f97316','#eab308','#10b981','#38bdf8','#e879f9','#f43f5e','#a3e635'];
+                    const typeMap = {};
+                    items.forEach(t => {
+                      const k = t.type || '(no type)';
+                      if (!typeMap[k]) typeMap[k] = { count: 0, act: 0, est: 0 };
+                      typeMap[k].count++;
+                      typeMap[k].act += parseFloat(t.actualTime || 0);
+                      typeMap[k].est += parseFloat(t.estimate   || 0);
+                    });
+                    const typeEntries = Object.entries(typeMap).sort((a, b) => b[1].act - a[1].act);
+                    const hasTypes = typeEntries.some(([k, v]) => k !== '(no type)' && v.act > 0);
+
                     return (
                     <div key={date} className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                       <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100 flex items-center gap-3 flex-wrap">
                         <span className="text-xs font-semibold text-gray-600 flex-1">{fmtDate(date)}</span>
                         <span className="text-xs text-gray-400">{items.length} task{items.length !== 1 ? 's' : ''}</span>
-                        {dayEst > 0 && <span className="text-xs text-gray-400">Est <span className="font-semibold text-gray-600">{dayEst.toFixed(1)}h</span></span>}
                         {dayAct > 0 && (
                           <span className="text-xs text-gray-400">
-                            Actual <span className={`font-semibold ${dayAct > dayEst && dayEst > 0 ? 'text-orange-500' : 'text-green-600'}`}>{dayAct.toFixed(1)}h</span>
+                            <span className="font-semibold text-indigo-600">{dayAct.toFixed(1)}h</span> actual
                           </span>
                         )}
                       </div>
+                      {hasTypes && (
+                        <div className="px-4 py-3 border-b border-gray-100 flex items-center gap-4">
+                          <div className="w-16 h-16 shrink-0">
+                            <ChartCanvas id={`pie-${date}`} config={{
+                              type: 'doughnut',
+                              data: {
+                                labels: typeEntries.map(([k]) => k),
+                                datasets: [{ data: typeEntries.map(([,v]) => v.act), backgroundColor: TYPE_COLORS, borderWidth: 1, borderColor: '#fff' }],
+                              },
+                              options: {
+                                responsive: true,
+                                maintainAspectRatio: true,
+                                cutout: '55%',
+                                plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => {
+                                  const [,v] = typeEntries[ctx.dataIndex];
+                                  const pct = dayAct > 0 ? Math.round(v.act / dayAct * 100) : 0;
+                                  return ` ${ctx.label}: ${v.act.toFixed(1)}h (${pct}%) · ${v.count} task${v.count !== 1 ? 's' : ''}`;
+                                } } } },
+                              },
+                            }} />
+                          </div>
+                          <div className="flex flex-wrap gap-x-4 gap-y-1.5">
+                            {typeEntries.map(([label, v], i) => {
+                              const pct = dayAct > 0 ? Math.round(v.act / dayAct * 100) : 0;
+                              return (
+                              <div key={label} className="flex items-center gap-1.5">
+                                <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: TYPE_COLORS[i % TYPE_COLORS.length] }} />
+                                <span className="text-xs text-gray-700 font-medium">{label}</span>
+                                <span className="text-xs text-gray-400">{v.act > 0 ? `${v.act.toFixed(1)}h · ` : ''}{pct}% · {v.count}</span>
+                              </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
                       {items.map(t => (
                         <CompletedRow key={t.id} task={t} tasks={tasks} onSetStatus={setTaskStatus}
                           onOpen={id => setStack([id])} onDelete={deleteTask} />
@@ -3619,13 +4170,13 @@
                     );
                   })}
 
-                  {skippedRoots.length > 0 && (
+                  {filteredSkipped.length > 0 && (
                     <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
                       <div className="px-4 py-2.5 bg-gray-50 border-b border-gray-100 flex items-center gap-3">
                         <span className="text-xs font-semibold text-gray-500 flex-1">Skipped</span>
-                        <span className="text-xs text-gray-400">{skippedRoots.length} task{skippedRoots.length !== 1 ? 's' : ''}</span>
+                        <span className="text-xs text-gray-400">{filteredSkipped.length} task{filteredSkipped.length !== 1 ? 's' : ''}</span>
                       </div>
-                      {skippedRoots.map(t => (
+                      {filteredSkipped.map(t => (
                         <CompletedRow key={t.id} task={t} tasks={tasks} onSetStatus={setTaskStatus}
                           onOpen={id => setStack([id])} onDelete={deleteTask} />
                       ))}
@@ -3646,7 +4197,7 @@
                   )}
                   {activeTasks.map(t => (
                     <TaskRow key={t.id} task={t} tasks={tasks} onSetStatus={setTaskStatus} onPriority={changePriority}
-                      onOpen={id => setStack([id])} onDelete={deleteTask} />
+                      onOpen={id => setStack([id])} onDelete={deleteTask} settings={settings} />
                   ))}
                 </div>
               )}
@@ -3662,27 +4213,34 @@
                   )}
                   {pausedTasks.map(t => (
                     <TaskRow key={t.id} task={t} tasks={tasks} onSetStatus={setTaskStatus} onPriority={changePriority}
-                      onOpen={id => setStack([id])} onDelete={deleteTask} />
+                      onOpen={id => setStack([id])} onDelete={deleteTask} settings={settings} />
                   ))}
                 </div>
               )}
 
               {/* ── Notes ── */}
               {tab === 'notes' && (
-                <NotesTab notes={notes} folders={folders} selectedId={selectedNote}
-                  selectedFolder={selectedNoteFolder}
-                  onFolderSelect={setSelectedNoteFolder}
-                  onSelect={id => setNote(id === selectedNote ? null : id)}
-                  onDelete={deleteNote}
-                  onAddFolder={addFolder}
-                  onUpdateFolder={updateFolder}
-                  onDeleteFolder={deleteFolder}
-                  onMoveNote={moveNoteToFolder} />
+                activeNote
+                  ? <NotePanel note={activeNote} onUpdate={updateNote} onClose={() => setNote(null)} onDelete={deleteNote} />
+                  : <NotesTab notes={notes} folders={folders} selectedId={selectedNote}
+                      selectedFolder={selectedNoteFolder}
+                      onFolderSelect={setSelectedNoteFolder}
+                      onSelect={id => setNote(id === selectedNote ? null : id)}
+                      onDelete={deleteNote}
+                      onAddFolder={addFolder}
+                      onUpdateFolder={updateFolder}
+                      onDeleteFolder={deleteFolder}
+                      onMoveNote={moveNoteToFolder} />
               )}
 
               {/* ── Bookmarks ── */}
               {tab === 'links' && (
                 <BookmarksTab links={links} onAdd={addLink} onUpdate={updateLink} onDelete={deleteLink} />
+              )}
+
+              {/* ── Secrets ── */}
+              {tab === 'secrets' && (
+                <SecretsTab secrets={secrets} links={links} onUpdate={updateSecret} onDelete={deleteSecret} />
               )}
 
               {/* ── Calendar ── */}
@@ -3741,16 +4299,8 @@
             <div onClick={e => e.stopPropagation()} style={{ width: '80vw', height: '100%', maxHeight: 'calc(100vh - 4rem)' }}>
               <DetailPanel stack={detailStack} tasks={tasks} onClose={() => setStack([])}
                 onUpdate={updateTask} onAddTask={addTask} onSetStatus={setTaskStatus}
-                onDelete={deleteTask}
+                onDelete={deleteTask} settings={settings}
                 onNavigate={id => setStack(s => [...s, id])} onBack={() => setStack(s => s.slice(0, -1))} />
-            </div>
-          </div>
-        )}
-
-        {notePanel && (
-          <div className="fixed inset-0 z-40 flex items-center justify-center p-8" style={{ backgroundColor: 'rgba(0,0,0,0.35)' }} onClick={() => setNote(null)}>
-            <div onClick={e => e.stopPropagation()} style={{ width: '80vw', height: '100%', maxHeight: 'calc(100vh - 4rem)' }}>
-              <NotePanel note={activeNote} onUpdate={updateNote} onClose={() => setNote(null)} onDelete={deleteNote} />
             </div>
           </div>
         )}
