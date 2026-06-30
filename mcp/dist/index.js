@@ -307,6 +307,192 @@ server.tool("vega_create_bookmark", "Create a new bookmark.", {
     await vegaPost("/api/links", links);
     return { content: [{ type: "text", text: `Created bookmark: ${link.id}` }] };
 });
+// ── CANVAS DOCS ───────────────────────────────────────────────────────────────
+const STICKY_COLORS = ['#fef9c3', '#dbeafe', '#dcfce7', '#fce7f3', '#ede9fe', '#ffedd5'];
+/** Find a canvas doc inside an idea by id or title. */
+function findCanvasDoc(idea, docIdOrTitle) {
+    const docs = idea.docs || [];
+    return docs.find((d) => d.template === 'canvas' && (d.id === docIdOrTitle || (d.title || '').toLowerCase().includes(docIdOrTitle.toLowerCase())));
+}
+server.tool("vega_list_canvas_docs", "List all canvas (sticky-note board) documents inside an idea.", { ideaId: z.string().describe("Idea ID") }, async ({ ideaId }) => {
+    const ideas = await vegaGet("/api/ideas");
+    const idea = ideas.find((i) => i.id === ideaId);
+    if (!idea)
+        throw new Error(`Idea not found: ${ideaId}`);
+    const canvasDocs = (idea.docs || []).filter((d) => d.template === 'canvas');
+    const summary = canvasDocs.map((d) => {
+        const notes = (() => { try {
+            return JSON.parse(d.content || '[]');
+        }
+        catch {
+            return [];
+        } })();
+        return { id: d.id, title: d.title, stickyCount: notes.length };
+    });
+    return { content: [{ type: "text", text: JSON.stringify(summary, null, 2) }] };
+});
+server.tool("vega_get_canvas", "Get all sticky notes from a canvas doc.", {
+    ideaId: z.string().describe("Idea ID"),
+    docIdOrTitle: z.string().describe("Canvas doc ID or title (partial match)"),
+}, async ({ ideaId, docIdOrTitle }) => {
+    const ideas = await vegaGet("/api/ideas");
+    const idea = ideas.find((i) => i.id === ideaId);
+    if (!idea)
+        throw new Error(`Idea not found: ${ideaId}`);
+    const doc = findCanvasDoc(idea, docIdOrTitle);
+    if (!doc)
+        throw new Error(`Canvas doc not found: ${docIdOrTitle}`);
+    const notes = (() => { try {
+        return JSON.parse(doc.content || '[]');
+    }
+    catch {
+        return [];
+    } })();
+    return { content: [{ type: "text", text: JSON.stringify(notes, null, 2) }] };
+});
+server.tool("vega_add_sticky", "Add one or more sticky notes to a canvas doc inside an idea.", {
+    ideaId: z.string().describe("Idea ID"),
+    docIdOrTitle: z.string().describe("Canvas doc ID or title"),
+    stickies: z.array(z.object({
+        text: z.string().describe("Sticky note text"),
+        color: z.string().optional().describe("Hex color, e.g. #fef9c3. Defaults to cycling palette."),
+        x: z.number().optional().describe("Horizontal position 0-85 (%). Defaults to auto."),
+        y: z.number().optional().describe("Vertical position 0-85 (%). Defaults to auto."),
+    })).describe("List of sticky notes to add"),
+}, async ({ ideaId, docIdOrTitle, stickies }) => {
+    const ideas = await vegaGet("/api/ideas");
+    const ideaIdx = ideas.findIndex((i) => i.id === ideaId);
+    if (ideaIdx === -1)
+        throw new Error(`Idea not found: ${ideaId}`);
+    const idea = ideas[ideaIdx];
+    const doc = findCanvasDoc(idea, docIdOrTitle);
+    if (!doc)
+        throw new Error(`Canvas doc not found: ${docIdOrTitle}`);
+    const existing = (() => { try {
+        return JSON.parse(doc.content || '[]');
+    }
+    catch {
+        return [];
+    } })();
+    const added = [];
+    let offset = existing.length;
+    for (const s of stickies) {
+        const gridOffset = (offset * 3) % 20;
+        const note = {
+            id: uid(),
+            text: s.text,
+            color: s.color || STICKY_COLORS[offset % STICKY_COLORS.length],
+            x: s.x ?? (35 + gridOffset),
+            y: s.y ?? (20 + gridOffset),
+            connections: [],
+        };
+        existing.push(note);
+        added.push(note);
+        offset++;
+    }
+    const docUpdated = { ...doc, content: JSON.stringify(existing), updatedAt: now() };
+    ideas[ideaIdx] = {
+        ...idea,
+        docs: (idea.docs || []).map((d) => d.id === doc.id ? docUpdated : d),
+        updatedAt: now(),
+    };
+    await vegaPost("/api/ideas", ideas);
+    return { content: [{ type: "text", text: `Added ${added.length} sticky/stickies.\n${JSON.stringify(added, null, 2)}` }] };
+});
+server.tool("vega_update_sticky", "Update the text or color of a sticky note in a canvas doc.", {
+    ideaId: z.string(),
+    docIdOrTitle: z.string(),
+    stickyId: z.string().describe("Sticky note ID to update"),
+    text: z.string().optional(),
+    color: z.string().optional().describe("New hex color"),
+    x: z.number().optional(),
+    y: z.number().optional(),
+}, async ({ ideaId, docIdOrTitle, stickyId, ...updates }) => {
+    const ideas = await vegaGet("/api/ideas");
+    const ideaIdx = ideas.findIndex((i) => i.id === ideaId);
+    if (ideaIdx === -1)
+        throw new Error(`Idea not found: ${ideaId}`);
+    const idea = ideas[ideaIdx];
+    const doc = findCanvasDoc(idea, docIdOrTitle);
+    if (!doc)
+        throw new Error(`Canvas doc not found: ${docIdOrTitle}`);
+    const notes = (() => { try {
+        return JSON.parse(doc.content || '[]');
+    }
+    catch {
+        return [];
+    } })();
+    const idx = notes.findIndex((n) => n.id === stickyId);
+    if (idx === -1)
+        throw new Error(`Sticky not found: ${stickyId}`);
+    notes[idx] = { ...notes[idx], ...updates };
+    const docUpdated = { ...doc, content: JSON.stringify(notes), updatedAt: now() };
+    ideas[ideaIdx] = { ...idea, docs: (idea.docs || []).map((d) => d.id === doc.id ? docUpdated : d), updatedAt: now() };
+    await vegaPost("/api/ideas", ideas);
+    return { content: [{ type: "text", text: `Updated sticky ${stickyId}` }] };
+});
+server.tool("vega_delete_sticky", "Delete a sticky note from a canvas doc.", {
+    ideaId: z.string(),
+    docIdOrTitle: z.string(),
+    stickyId: z.string().describe("Sticky note ID to delete"),
+}, async ({ ideaId, docIdOrTitle, stickyId }) => {
+    const ideas = await vegaGet("/api/ideas");
+    const ideaIdx = ideas.findIndex((i) => i.id === ideaId);
+    if (ideaIdx === -1)
+        throw new Error(`Idea not found: ${ideaId}`);
+    const idea = ideas[ideaIdx];
+    const doc = findCanvasDoc(idea, docIdOrTitle);
+    if (!doc)
+        throw new Error(`Canvas doc not found: ${docIdOrTitle}`);
+    const notes = (() => { try {
+        return JSON.parse(doc.content || '[]');
+    }
+    catch {
+        return [];
+    } })();
+    const cleaned = notes
+        .filter((n) => n.id !== stickyId)
+        .map((n) => ({ ...n, connections: (n.connections || []).filter((c) => c.toId !== stickyId) }));
+    const docUpdated = { ...doc, content: JSON.stringify(cleaned), updatedAt: now() };
+    ideas[ideaIdx] = { ...idea, docs: (idea.docs || []).map((d) => d.id === doc.id ? docUpdated : d), updatedAt: now() };
+    await vegaPost("/api/ideas", ideas);
+    return { content: [{ type: "text", text: `Deleted sticky ${stickyId}` }] };
+});
+server.tool("vega_connect_stickies", "Draw a connection (arrow) between two sticky notes in a canvas doc.", {
+    ideaId: z.string(),
+    docIdOrTitle: z.string(),
+    fromStickyId: z.string().describe("Source sticky ID"),
+    toStickyId: z.string().describe("Target sticky ID"),
+    fromAnchor: z.enum(["top", "right", "bottom", "left"]).default("right"),
+    toAnchor: z.enum(["top", "right", "bottom", "left"]).default("left"),
+}, async ({ ideaId, docIdOrTitle, fromStickyId, toStickyId, fromAnchor, toAnchor }) => {
+    const ideas = await vegaGet("/api/ideas");
+    const ideaIdx = ideas.findIndex((i) => i.id === ideaId);
+    if (ideaIdx === -1)
+        throw new Error(`Idea not found: ${ideaId}`);
+    const idea = ideas[ideaIdx];
+    const doc = findCanvasDoc(idea, docIdOrTitle);
+    if (!doc)
+        throw new Error(`Canvas doc not found: ${docIdOrTitle}`);
+    const notes = (() => { try {
+        return JSON.parse(doc.content || '[]');
+    }
+    catch {
+        return [];
+    } })();
+    const fromIdx = notes.findIndex((n) => n.id === fromStickyId);
+    if (fromIdx === -1)
+        throw new Error(`Source sticky not found: ${fromStickyId}`);
+    const existing = notes[fromIdx].connections || [];
+    const dupe = existing.some((c) => c.toId === toStickyId && c.fromAnchor === fromAnchor && c.toAnchor === toAnchor);
+    if (!dupe) {
+        notes[fromIdx] = { ...notes[fromIdx], connections: [...existing, { toId: toStickyId, fromAnchor, toAnchor }] };
+    }
+    const docUpdated = { ...doc, content: JSON.stringify(notes), updatedAt: now() };
+    ideas[ideaIdx] = { ...idea, docs: (idea.docs || []).map((d) => d.id === doc.id ? docUpdated : d), updatedAt: now() };
+    await vegaPost("/api/ideas", ideas);
+    return { content: [{ type: "text", text: `Connected ${fromStickyId} → ${toStickyId}` }] };
+});
 // ── Transport ──────────────────────────────────────────────────────────────────
 const transport = new StdioServerTransport();
 await server.connect(transport);

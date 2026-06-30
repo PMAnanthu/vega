@@ -4,6 +4,22 @@ All notable changes to Vega are documented here.
 
 ---
 
+## [1.21.0] — 2026-07-01
+
+### Added
+
+- **Canvas MCP tools** — 6 new MCP tools for managing sticky-note canvas docs
+  via Claude: `vega_list_canvas_docs`, `vega_get_canvas`, `vega_add_sticky`,
+  `vega_update_sticky`, `vega_delete_sticky`, `vega_connect_stickies`.
+- **Auto-refresh on external writes** — renderer polls `/api/last-modified`
+  every 3 s and auto-refreshes when a file is written by MCP or another
+  external tool, without requiring a manual refresh.
+- `/api/last-modified` endpoint returning max mtime across all data files.
+
+---
+
+## [1.20.0] — 2026-07-01
+
 ## [1.20.0] — 2026-07-01
 
 ### Fixed

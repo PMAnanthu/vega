@@ -4,6 +4,7 @@ const https = require('node:https');
 const fs    = require('node:fs');
 const path  = require('node:path');
 const os    = require('node:os');
+const crypto = require('node:crypto');
 const { exec } = require('node:child_process');
 const { randomUUID } = require('node:crypto');
 
@@ -22,6 +23,8 @@ let TASKS_DIR        = '';
 let NOTES_DIR        = '';
 let INDEX_FILE       = '';
 let LINKS_FILE       = '';
+let SECRETS_FILE     = '';
+let IDEAS_FILE       = '';
 let RECURRING_FILE   = '';
 let ATTACHMENTS_FILE = '';
 let CHAT_FILE        = '';
@@ -36,6 +39,8 @@ function applyDataDir(dir) {
   NOTES_DIR        = path.join(dir, 'notes');
   INDEX_FILE       = path.join(dir, 'index.json');
   LINKS_FILE       = path.join(dir, 'links.json');
+  SECRETS_FILE     = path.join(dir, 'secrets.json');
+  IDEAS_FILE       = path.join(dir, 'ideas.json');
   RECURRING_FILE   = path.join(dir, 'recurring.json');
   ATTACHMENTS_FILE = path.join(dir, 'attachments.json');
   CHAT_FILE        = path.join(dir, 'chat.json');
@@ -52,9 +57,11 @@ function applyDataDir(dir) {
 }
 
 // Load saved config, fall back to default
+let SECRETS_PASSPHRASE = '';
 try {
   const cfg = JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf8'));
   applyDataDir(typeof cfg.dataDir === 'string' && cfg.dataDir ? cfg.dataDir : DEFAULT_DATA_DIR);
+  if (typeof cfg.secretsPassphrase === 'string') SECRETS_PASSPHRASE = cfg.secretsPassphrase;
 } catch {
   applyDataDir(DEFAULT_DATA_DIR);
 }
@@ -222,6 +229,96 @@ function handlePostJson(req, res, file) {
   readBody(req, body => {
     try { writeJson(file, body); jsonOk(res, '{"ok":true}'); }
     catch { res.writeHead(400); res.end('Invalid JSON'); }
+  });
+}
+
+// ── Secrets encryption (AES-256-GCM + PBKDF2) ────────────────────────────────
+function deriveKey(passphrase, salt) {
+  return crypto.pbkdf2Sync(passphrase, salt, 210000, 32, 'sha256');
+}
+
+function encryptJson(jsonStr, passphrase) {
+  const salt    = crypto.randomBytes(16);
+  const iv      = crypto.randomBytes(12);
+  const key     = deriveKey(passphrase, salt);
+  const cipher  = crypto.createCipheriv('aes-256-gcm', key, iv);
+  const enc     = Buffer.concat([cipher.update(jsonStr, 'utf8'), cipher.final()]);
+  const authTag = cipher.getAuthTag();
+  return JSON.stringify({
+    encrypted: true,
+    salt:    salt.toString('hex'),
+    iv:      iv.toString('hex'),
+    authTag: authTag.toString('hex'),
+    data:    enc.toString('hex'),
+  });
+}
+
+function decryptJson(fileContent, passphrase) {
+  const obj = JSON.parse(fileContent);
+  if (!obj.encrypted) return fileContent; // plaintext fallback
+  const salt    = Buffer.from(obj.salt,    'hex');
+  const iv      = Buffer.from(obj.iv,      'hex');
+  const authTag = Buffer.from(obj.authTag, 'hex');
+  const enc     = Buffer.from(obj.data,    'hex');
+  const key     = deriveKey(passphrase, salt);
+  const decipher = crypto.createDecipheriv('aes-256-gcm', key, iv);
+  decipher.setAuthTag(authTag);
+  return decipher.update(enc) + decipher.final('utf8');
+}
+
+function handleGetSecrets(res) {
+  try {
+    if (!fs.existsSync(SECRETS_FILE)) { jsonOk(res, '[]'); return; }
+    const raw = fs.readFileSync(SECRETS_FILE, 'utf8');
+    if (!SECRETS_PASSPHRASE) { jsonOk(res, raw); return; }
+    jsonOk(res, decryptJson(raw, SECRETS_PASSPHRASE));
+  } catch { res.writeHead(500); res.end('[]'); }
+}
+
+function handlePostSecrets(req, res) {
+  readBody(req, body => {
+    try {
+      JSON.parse(body); // validate JSON
+      const toWrite = SECRETS_PASSPHRASE ? encryptJson(body, SECRETS_PASSPHRASE) : body;
+      fs.writeFileSync(SECRETS_FILE, toWrite, 'utf8');
+      jsonOk(res, '{"ok":true}');
+    } catch { res.writeHead(400); res.end('Invalid JSON'); }
+  });
+}
+
+function handleGetSecretsConfig(res) {
+  jsonOk(res, JSON.stringify({ hasPassphrase: !!SECRETS_PASSPHRASE }));
+}
+
+function handleSetSecretsPassphrase(req, res) {
+  readBody(req, body => {
+    try {
+      const { passphrase, currentPassphrase } = JSON.parse(body);
+      if (typeof passphrase !== 'string') { res.writeHead(400); res.end('{"error":"invalid"}'); return; }
+      // If there's existing encrypted data, re-encrypt with new passphrase
+      if (fs.existsSync(SECRETS_FILE)) {
+        const raw = fs.readFileSync(SECRETS_FILE, 'utf8');
+        let plainJson;
+        try {
+          const parsed = JSON.parse(raw);
+          if (parsed.encrypted) {
+            if (!currentPassphrase) { res.writeHead(403); res.end('{"error":"current passphrase required"}'); return; }
+            plainJson = decryptJson(raw, currentPassphrase);
+          } else {
+            plainJson = raw;
+          }
+        } catch { plainJson = '[]'; }
+        const toWrite = passphrase ? encryptJson(plainJson, passphrase) : plainJson;
+        fs.writeFileSync(SECRETS_FILE, toWrite, 'utf8');
+      }
+      SECRETS_PASSPHRASE = passphrase;
+      // Persist to config
+      let cfg = {};
+      try { cfg = JSON.parse(fs.readFileSync(CONFIG_FILE, 'utf8')); } catch {}
+      cfg.secretsPassphrase = passphrase;
+      fs.writeFileSync(CONFIG_FILE, JSON.stringify(cfg), 'utf8');
+      jsonOk(res, '{"ok":true}');
+    } catch (e) { res.writeHead(400); res.end(JSON.stringify({ error: e.message })); }
   });
 }
 
@@ -724,6 +821,18 @@ const ROUTES = [
     fn: (q, s) => readBody(q, b => { try { writeDirItems(TASKS_DIR, b, t => taskSubDir(TASKS_DIR, t)); jsonOk(s, '{"ok":true}'); } catch { s.writeHead(400); s.end('Invalid JSON'); } }) },
   { method: 'GET',  test: (u) => u === '/api/links',                fn: (_, s) => handleGetJson(s, LINKS_FILE) },
   { method: 'POST', test: (u) => u === '/api/links',                fn: (q, s) => handlePostJson(q, s, LINKS_FILE) },
+  { method: 'GET',  test: (u) => u === '/api/secrets',              fn: (_, s) => handleGetSecrets(s) },
+  { method: 'POST', test: (u) => u === '/api/secrets',              fn: (q, s) => handlePostSecrets(q, s) },
+  { method: 'GET',  test: (u) => u === '/api/secrets-config',       fn: (_, s) => handleGetSecretsConfig(s) },
+  { method: 'GET',  test: (u) => u === '/api/ideas',                fn: (_, s) => handleGetJson(s, IDEAS_FILE) },
+  { method: 'POST', test: (u) => u === '/api/ideas',                fn: (q, s) => handlePostJson(q, s, IDEAS_FILE) },
+  { method: 'GET',  test: (u) => u === '/api/last-modified', fn: (_, s) => {
+    const files = [TASKS_DIR, NOTES_DIR, LINKS_FILE, IDEAS_FILE, RECURRING_FILE, FOLDERS_FILE];
+    let latest = 0;
+    files.forEach(f => { try { const m = fs.statSync(f).mtimeMs; if (m > latest) latest = m; } catch {} });
+    jsonOk(s, JSON.stringify({ ts: latest }));
+  }},
+  { method: 'POST', test: (u) => u === '/api/secrets-passphrase',   fn: (q, s) => handleSetSecretsPassphrase(q, s) },
   { method: 'GET',  test: (u) => u === '/api/notes',
     fn: (_, s) => { try { jsonOk(s, readDirRecursive(NOTES_DIR)); } catch { s.writeHead(500); s.end('[]'); } } },
   { method: 'POST', test: (u) => u === '/api/notes',
