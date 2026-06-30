@@ -1,6 +1,7 @@
 'use strict';
 const { app, BrowserWindow, shell, ipcMain, dialog } = require('electron');
 const path = require('node:path');
+const net  = require('node:net');
 
 const PORT = 3690;
 
@@ -8,11 +9,11 @@ const PORT = 3690;
 app.commandLine.appendSwitch('no-sandbox');
 app.commandLine.appendSwitch('disable-gpu-sandbox');
 
-if (!app.requestSingleInstanceLock()) {
-  app.quit();
-}
+// Allow multiple instances — each window connects to the shared local server.
+// Do NOT call app.requestSingleInstanceLock().
 
 let mainWindow = null;
+let ownedServer = null; // only set if this instance started the server
 
 function createWindow() {
   mainWindow = new BrowserWindow({
@@ -45,15 +46,24 @@ function createWindow() {
   mainWindow.loadURL(`http://localhost:${PORT}`);
 }
 
-app.whenReady().then(() => {
-  // Handle openExternal from renderer via IPC (more reliable than direct shell call in preload)
+/** Check whether something is already listening on PORT. */
+function isPortInUse() {
+  return new Promise((resolve) => {
+    const probe = net.createConnection({ port: PORT, host: '127.0.0.1' });
+    probe.once('connect', () => { probe.destroy(); resolve(true); });
+    probe.once('error', () => resolve(false));
+  });
+}
+
+app.whenReady().then(async () => {
+  // Register IPC handlers (safe to register in every instance — they only serve
+  // the BrowserWindow that belongs to *this* process).
   ipcMain.handle('shell:open-external', (_, url) => shell.openExternal(url));
   ipcMain.handle('dialog:select-folder', () =>
     dialog.showOpenDialog(mainWindow, { properties: ['openDirectory', 'createDirectory'] })
       .then(r => r.canceled ? null : r.filePaths[0])
   );
 
-  // Share: write temp .txt file and show in Finder so user can Share via right-click
   ipcMain.handle('share:content', async (_, { title, text }) => {
     const os = require('node:os');
     const fs = require('node:fs');
@@ -64,7 +74,6 @@ app.whenReady().then(() => {
     return { ok: true };
   });
 
-  // Export: show save dialog and write JSON
   ipcMain.handle('export:data', async (_, { filename, data }) => {
     const result = await dialog.showSaveDialog(mainWindow, {
       defaultPath: filename,
@@ -77,7 +86,6 @@ app.whenReady().then(() => {
     return { ok: false };
   });
 
-  // Import: show open dialog and read JSON
   ipcMain.handle('import:data', async () => {
     const result = await dialog.showOpenDialog(mainWindow, {
       filters: [{ name: 'JSON', extensions: ['json'] }],
@@ -93,33 +101,32 @@ app.whenReady().then(() => {
     }
     return { ok: false };
   });
-  // Set macOS Dock icon explicitly (BrowserWindow icon alone doesn't update it)
+
+  // Set macOS Dock icon explicitly
   if (process.platform === 'darwin' && app.dock) {
     app.dock.setIcon(path.join(__dirname, 'assets', 'icon.png'));
   }
 
-  // Start the HTTP server
-  const { server } = require('./server.js');
+  // Start the HTTP server only if nothing is already listening on PORT.
+  const alreadyRunning = await isPortInUse();
+  if (!alreadyRunning) {
+    const { server } = require('./server.js');
+    ownedServer = server;
+    // Give the server a moment to bind before opening the window
+    await new Promise(resolve => setTimeout(resolve, 400));
+  }
+  // If already running, connect immediately — no wait needed.
 
-  // Give the server a moment to bind before opening the window
-  setTimeout(() => {
-    createWindow();
+  createWindow();
 
-    // macOS: re-open window when clicking dock icon
-    app.on('activate', () => {
-      if (BrowserWindow.getAllWindows().length === 0) createWindow();
-    });
-  }, 400);
-
-  app.on('second-instance', () => {
-    if (mainWindow) {
-      if (mainWindow.isMinimized()) mainWindow.restore();
-      mainWindow.focus();
-    }
+  // macOS: re-open window when clicking dock icon
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 
+  // Only the instance that started the server shuts it down on quit.
   app.on('before-quit', () => {
-    server.close();
+    if (ownedServer) ownedServer.close();
   });
 });
 

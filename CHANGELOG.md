@@ -4,6 +4,26 @@ All notable changes to Vega are documented here.
 
 ---
 
+## [1.22.0] — 2026-07-01
+
+### Added
+
+- **Scrollable canvas** — the sticky-note canvas now has full vertical and
+  horizontal scrolling. The inner canvas is 2400×1600 px; the outer viewport
+  scrolls independently so stickies can be placed anywhere.
+
+### Fixed
+
+- **Multiple app instances** — removed `requestSingleInstanceLock()`; each
+  new window checks if port 3690 is already bound and connects to the existing
+  server instead of starting a new one.
+- **Canvas JSX syntax error** — fixed missing closing `</div>` for the
+  `CanvasBoard` wrapper that caused a Babel parse error.
+
+---
+
+## [1.21.0] — 2026-07-01
+
 ## [1.21.0] — 2026-07-01
 
 ### Added

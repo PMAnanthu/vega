@@ -3184,7 +3184,8 @@
   const STICKY_COLORS = ['#fef9c3','#dbeafe','#dcfce7','#fce7f3','#ede9fe','#ffedd5'];
 
   function CanvasBoard({ notes, onChange }) {
-    const containerRef    = useRef(null);
+    const containerRef    = useRef(null);  // outer scrollable viewport
+    const canvasRef       = useRef(null);  // inner 2400×1600 canvas
     const dragging        = useRef(null);   // node drag
     const drawingConn     = useRef(null);   // drag-to-connect: { fromId, fromAnchor, curX, curY }
     const notesRef        = useRef(notes);
@@ -3208,7 +3209,7 @@
     };
 
     const getContainerXYPct = (clientX, clientY) => {
-      const rect = containerRef.current.getBoundingClientRect();
+      const rect = canvasRef.current.getBoundingClientRect();
       return { x: ((clientX - rect.left) / rect.width) * 100, y: ((clientY - rect.top) / rect.height) * 100 };
     };
 
@@ -3278,7 +3279,7 @@
       if (canvasTool === 'connect') return;
       if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'BUTTON') return;
       e.preventDefault();
-      const rect = containerRef.current.getBoundingClientRect();
+      const rect = canvasRef.current.getBoundingClientRect();
       dragging.current = { id: note.id, startMouseX: e.clientX, startMouseY: e.clientY, startX: note.x, startY: note.y, rect };
       const onMove = (ev) => {
         if (!dragging.current) return;
@@ -3302,7 +3303,7 @@
     // Build connection lines for rendering
     const connLines = [];
     if (containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
+      const rect = canvasRef.current.getBoundingClientRect();
       notes.forEach(note => {
         (note.connections || []).forEach((c, ci) => {
           const target = notes.find(n => n.id === c.toId);
@@ -3318,7 +3319,7 @@
     // Find source anchor position for drag preview
     let dragLine = null;
     if (connDrag && drawingConn.current && containerRef.current) {
-      const rect = containerRef.current.getBoundingClientRect();
+      const rect = canvasRef.current.getBoundingClientRect();
       const from = notesRef.current.find(n => n.id === drawingConn.current.fromId);
       if (from) {
         const fa = getAnchorPct(from, drawingConn.current.fromAnchor, rect);
@@ -3352,11 +3353,13 @@
         </div>
 
         <div ref={containerRef}
-          className="relative rounded-xl border border-gray-200 overflow-hidden select-none"
-          style={{ height: 'calc(100vh - 250px)', minHeight: '480px',
-                   background: 'radial-gradient(circle, #e5e7eb 1px, transparent 1px)',
-                   backgroundSize: '24px 24px', backgroundColor: '#f9fafb' }}
+          className="relative rounded-xl border border-gray-200 overflow-auto select-none"
+          style={{ height: 'calc(100vh - 250px)', minHeight: '480px' }}
           onClick={() => setSelConn(null)}>
+          {/* Scrollable inner canvas — fixed large size so stickies have room to spread */}
+          <div ref={canvasRef} style={{ position: 'relative', width: '2400px', height: '1600px',
+                        background: 'radial-gradient(circle, #e5e7eb 1px, transparent 1px)',
+                        backgroundSize: '24px 24px', backgroundColor: '#f9fafb' }}>
 
           {notes.length === 0 && (
             <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm pointer-events-none">
@@ -3448,6 +3451,7 @@
           ))}
         </div>
       </div>
+    </div>
     );
   }
 
@@ -5220,7 +5224,7 @@
         </div>
         <div className="w-full rounded-xl border border-gray-200 divide-y divide-gray-200 text-sm bg-white">
           {[
-            ['Version',     '1.21.0'],
+            ['Version',     '1.22.0'],
             ['Author',      'Ananthu PM'],
             ['Description', 'A personal productivity app for managing tasks, notes, and bookmarks with an AI assistant.'],
             ['License',     'MIT'],
