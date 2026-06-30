@@ -4,6 +4,19 @@ All notable changes to Vega are documented here.
 
 ---
 
+## [1.23.0] — 2026-07-01
+
+### Fixed
+
+- **MCP task lookup** — `/api/index` returns `{ tasks, notes }` dict, not a
+  flat array. Fixed `vega_list_tasks`, `vega_search`, and `vega_get_summary`
+  to read `index.tasks` / `index.notes` correctly.
+- Added optional `keyword` filter to `vega_list_tasks` for searching by title.
+
+---
+
+## [1.22.0] — 2026-07-01
+
 ## [1.22.0] — 2026-07-01
 
 ### Added
