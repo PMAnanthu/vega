@@ -34,10 +34,18 @@ const server = new McpServer({
     version: "1.0.0",
 });
 // ── TASKS ────────────────────────────────────────────────────────────────────
-server.tool("vega_list_tasks", "List all tasks from Vega. Optionally filter by status.", { status: z.string().optional().describe("Filter: ready | in_progress | paused | skipped | completed") }, async ({ status }) => {
+server.tool("vega_list_tasks", "List all tasks from Vega. Optionally filter by status or title keyword.", {
+    status: z.string().optional().describe("Filter: ready | in_progress | paused | skipped | completed"),
+    keyword: z.string().optional().describe("Search keyword in task title"),
+}, async ({ status, keyword }) => {
     const index = await vegaGet("/api/index");
-    const tasks = index.filter((i) => i.type === "task");
-    const filtered = status ? tasks.filter((t) => t.status === status) : tasks;
+    // /api/index returns { tasks: [...], notes: [...] } — extract tasks array
+    const allTasks = Array.isArray(index) ? index.filter((i) => i.type === "task") : (index.tasks || []);
+    let filtered = status ? allTasks.filter((t) => t.status === status) : allTasks;
+    if (keyword) {
+        const q = keyword.toLowerCase();
+        filtered = filtered.filter((t) => (t.title || "").toLowerCase().includes(q));
+    }
     return { content: [{ type: "text", text: JSON.stringify(filtered, null, 2) }] };
 });
 server.tool("vega_get_task", "Get full details of a single task by ID.", { id: z.string().describe("Task ID") }, async ({ id }) => {
@@ -265,15 +273,19 @@ server.tool("vega_add_defect", "Report a defect on an idea.", {
 // ── INDEX / SEARCH ────────────────────────────────────────────────────────────
 server.tool("vega_search", "Search across all Vega items (tasks, notes, ideas) by keyword in title.", { query: z.string().describe("Search keyword") }, async ({ query }) => {
     const index = await vegaGet("/api/index");
+    // /api/index returns { tasks: [...], notes: [...] }
+    const items = Array.isArray(index)
+        ? index
+        : [...(index.tasks || []), ...(index.notes || [])];
     const q = query.toLowerCase();
-    const results = index.filter((item) => (item.title || "").toLowerCase().includes(q) ||
+    const results = items.filter((item) => (item.title || "").toLowerCase().includes(q) ||
         (item.tags || []).some((t) => t.toLowerCase().includes(q)));
     return { content: [{ type: "text", text: JSON.stringify(results, null, 2) }] };
 });
 server.tool("vega_get_summary", "Get a high-level summary of all Vega data: task counts by status, open ideas, recent notes.", {}, async () => {
     const index = await vegaGet("/api/index");
-    const tasks = index.filter((i) => i.type === "task");
-    const notes = index.filter((i) => i.type === "note");
+    const tasks = Array.isArray(index) ? index.filter((i) => i.type === "task") : (index.tasks || []);
+    const notes = Array.isArray(index) ? index.filter((i) => i.type === "note") : (index.notes || []);
     const ideas = await vegaGet("/api/ideas");
     const tasksByStatus = {};
     tasks.forEach((t) => { tasksByStatus[t.status] = (tasksByStatus[t.status] || 0) + 1; });

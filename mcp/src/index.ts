@@ -44,12 +44,20 @@ const server = new McpServer({
 
 server.tool(
   "vega_list_tasks",
-  "List all tasks from Vega. Optionally filter by status.",
-  { status: z.string().optional().describe("Filter: ready | in_progress | paused | skipped | completed") },
-  async ({ status }) => {
-    const index = await vegaGet("/api/index") as any[];
-    const tasks = index.filter((i: any) => i.type === "task");
-    const filtered = status ? tasks.filter((t: any) => t.status === status) : tasks;
+  "List all tasks from Vega. Optionally filter by status or title keyword.",
+  {
+    status:  z.string().optional().describe("Filter: ready | in_progress | paused | skipped | completed"),
+    keyword: z.string().optional().describe("Search keyword in task title"),
+  },
+  async ({ status, keyword }) => {
+    const index = await vegaGet("/api/index") as any;
+    // /api/index returns { tasks: [...], notes: [...] } — extract tasks array
+    const allTasks: any[] = Array.isArray(index) ? index.filter((i: any) => i.type === "task") : (index.tasks || []);
+    let filtered = status ? allTasks.filter((t: any) => t.status === status) : allTasks;
+    if (keyword) {
+      const q = keyword.toLowerCase();
+      filtered = filtered.filter((t: any) => (t.title || "").toLowerCase().includes(q));
+    }
     return { content: [{ type: "text", text: JSON.stringify(filtered, null, 2) }] };
   }
 );
@@ -363,9 +371,13 @@ server.tool(
   "Search across all Vega items (tasks, notes, ideas) by keyword in title.",
   { query: z.string().describe("Search keyword") },
   async ({ query }) => {
-    const index = await vegaGet("/api/index") as any[];
+    const index = await vegaGet("/api/index") as any;
+    // /api/index returns { tasks: [...], notes: [...] }
+    const items: any[] = Array.isArray(index)
+      ? index
+      : [...(index.tasks || []), ...(index.notes || [])];
     const q = query.toLowerCase();
-    const results = index.filter((item: any) =>
+    const results = items.filter((item: any) =>
       (item.title || "").toLowerCase().includes(q) ||
       (item.tags || []).some((t: string) => t.toLowerCase().includes(q))
     );
@@ -378,9 +390,9 @@ server.tool(
   "Get a high-level summary of all Vega data: task counts by status, open ideas, recent notes.",
   {},
   async () => {
-    const index = await vegaGet("/api/index") as any[];
-    const tasks = index.filter((i: any) => i.type === "task");
-    const notes = index.filter((i: any) => i.type === "note");
+    const index = await vegaGet("/api/index") as any;
+    const tasks: any[] = Array.isArray(index) ? index.filter((i: any) => i.type === "task") : (index.tasks || []);
+    const notes: any[] = Array.isArray(index) ? index.filter((i: any) => i.type === "note") : (index.notes || []);
     const ideas = await vegaGet("/api/ideas") as any[];
 
     const tasksByStatus: Record<string, number> = {};
