@@ -4,6 +4,18 @@ All notable changes to Vega are documented here.
 
 ---
 
+## [1.24.0] — 2026-07-01
+
+### Fixed
+
+- **MCP server rebuilt** — `mcp/dist/index.js` rebuilt to include all recent
+  fixes. Previous build was from before the `index.filter` fix, causing the
+  running process to use stale code. Restart `/mcp` in Claude Code to reload.
+
+---
+
+## [1.23.0] — 2026-07-01
+
 ## [1.23.0] — 2026-07-01
 
 ### Fixed
