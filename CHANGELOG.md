@@ -4,6 +4,40 @@ All notable changes to Vega are documented here.
 
 ---
 
+## [1.17.0] — 2026-06-30
+
+### Added
+
+- **Sprint Planner calendar template** — new doc template on Design+ ideas. Drag stories
+  from the side panel onto a monthly calendar; estimate auto-spreads across working days
+  (skips weekends and holidays). Dependency check blocks placement if a required story
+  isn't planned first. Add/remove holidays. Persists story dates on the idea.
+- **Stories on ideas** — Design/Implementation/Released ideas now have a Stories section.
+  Each story has title, status, estimate, links, and dependencies (dropdown selector).
+  StoryEditor opens full-screen with ← Back navigation.
+- **Actual time on stories** — shown in Implementation/Released status with variance and
+  progress bar.
+- **Defects section 🐛** — Implementation/Released ideas have a Defects section. Each
+  defect has severity (Critical/High/Medium/Low), status (Open/In Progress/Fixed/Won't Fix),
+  description, linked story, and links. Opens in DefectEditor.
+- **Idea progress bar** — collapsed card shows an overall story progress bar
+  (green = done, blue = in-progress) in Implementation/Released status.
+- **Feature Menu toggles** — Settings → Feature Menus: toggle switches for Sprint View,
+  Notes, Bookmarks, Secrets, and the entire Features section (Ideas/Design/etc.).
+  Settings persist across sessions.
+- **Cross-doc references** — type `[[IdeaTitle / DocTitle]]` in any Markdown doc to link
+  to another document. Renders as a clickable link in Preview; navigates to the target doc.
+- **Sprint field on tasks** — combobox field with autocomplete from existing sprints.
+- **Sprint View tab** — sprint selector with Time by Type chart, Open and Completed groups
+  with total hours and variance.
+
+### Changed
+
+- Delete button moved to left, Done button to right in idea card editor footer.
+- Dependencies in StoryEditor changed from checkboxes to a dropdown selector with tag pills.
+
+---
+
 ## [1.16.0] — 2026-06-24
 
 ### Added

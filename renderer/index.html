@@ -12,6 +12,7 @@
   <script src="/lib/babel.min.js"></script>
   <script src="/lib/marked.min.js"></script>
   <script src="/lib/chart.min.js"></script>
+  <script src="/lib/mermaid.min.js"></script>
   <style>
     * { box-sizing: border-box; }
     html, body, #root { height: 100%; }
@@ -123,6 +124,10 @@
     links:     <svg viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 2c-1.716 0-3.408.106-5.07.31C3.806 2.45 3 3.414 3 4.517V17.25a.75.75 0 001.075.676L10 15.082l5.925 2.844A.75.75 0 0017 17.25V4.517c0-1.103-.806-2.068-1.93-2.207A41.403 41.403 0 0010 2z" clipRule="evenodd"/></svg>,
     secrets:   <svg viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clipRule="evenodd"/></svg>,
     sprint:    <svg viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311h2.433a.75.75 0 000-1.5H3.989a.75.75 0 00-.75.75v4.242a.75.75 0 001.5 0v-2.43l.31.31a7 7 0 0011.712-3.138.75.75 0 00-1.449-.39zm1.23-3.723a.75.75 0 00.219-.53V2.929a.75.75 0 00-1.5 0V5.36l-.31-.31A7 7 0 003.239 8.188a.75.75 0 101.448.389A5.5 5.5 0 0113.89 6.11l.311.31h-2.432a.75.75 0 000 1.5h4.243a.75.75 0 00.53-.219z" clipRule="evenodd"/></svg>,
+    idea:      <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a6 6 0 00-3.75 10.66c.28.21.5.52.5.84V15h6.5v-1.5c0-.32.22-.63.5-.84A6 6 0 0010 2zm-1.25 14v.25A1.25 1.25 0 0010 17.5a1.25 1.25 0 001.25-1.25V16h-2.5z"/></svg>,
+    design:    <svg viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M15.988 3.012A2.25 2.25 0 0118 5.25v6.5A2.25 2.25 0 0115.75 14H13.5v-3.379a3 3 0 00-.879-2.121l-3.12-3.121a3 3 0 00-1.402-.791V2.25h2.503a2.25 2.25 0 011.591.659l3.794 3.796zM11.5 4.376V7.5h3.123l-3.123-3.124zM9 9.5H4.75A2.75 2.75 0 002 12.25v3A2.75 2.75 0 004.75 18h4.5A2.75 2.75 0 0012 15.25v-3A2.75 2.75 0 009 9.5zM3.5 12.25c0-.69.56-1.25 1.25-1.25h4.5c.69 0 1.25.56 1.25 1.25v3c0 .69-.56 1.25-1.25 1.25h-4.5c-.69 0-1.25-.56-1.25-1.25v-3z" clipRule="evenodd"/></svg>,
+    implementation: <svg viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M6.28 5.22a.75.75 0 010 1.06L2.56 10l3.72 3.72a.75.75 0 01-1.06 1.06L.97 10.53a.75.75 0 010-1.06l4.25-4.25a.75.75 0 011.06 0zm7.44 0a.75.75 0 011.06 0l4.25 4.25a.75.75 0 010 1.06l-4.25 4.25a.75.75 0 01-1.06-1.06L17.44 10l-3.72-3.72a.75.75 0 010-1.06zM11.377 2.011a.75.75 0 01.612.867l-2.5 14.5a.75.75 0 01-1.478-.255l2.5-14.5a.75.75 0 01.866-.612z" clipRule="evenodd"/></svg>,
+    released:  <svg viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd"/></svg>,
     recurring: <svg viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311h2.433a.75.75 0 000-1.5H3.989a.75.75 0 00-.75.75v4.242a.75.75 0 001.5 0v-2.43l.31.31a7 7 0 0011.712-3.138.75.75 0 00-1.449-.39zm1.23-3.723a.75.75 0 00.219-.53V2.929a.75.75 0 00-1.5 0V5.36l-.31-.31A7 7 0 003.239 8.188a.75.75 0 101.448.389A5.5 5.5 0 0113.89 6.11l.311.31h-2.432a.75.75 0 000 1.5h4.243a.75.75 0 00.53-.219z" clipRule="evenodd"/></svg>,
     settings:  <svg viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M7.84 1.804A1 1 0 018.82 1h2.36a1 1 0 01.98.804l.331 1.652a6.993 6.993 0 011.929 1.115l1.598-.54a1 1 0 011.186.447l1.18 2.044a1 1 0 01-.205 1.251l-1.267 1.113a7.047 7.047 0 010 2.228l1.267 1.113a1 1 0 01.206 1.25l-1.18 2.045a1 1 0 01-1.187.447l-1.598-.54a6.993 6.993 0 01-1.929 1.115l-.33 1.652a1 1 0 01-.98.804H8.82a1 1 0 01-.98-.804l-.331-1.652a6.993 6.993 0 01-1.929-1.115l-1.598.54a1 1 0 01-1.186-.447l-1.18-2.044a1 1 0 01.205-1.251l1.267-1.114a7.05 7.05 0 010-2.227L1.821 7.773a1 1 0 01-.206-1.25l1.18-2.045a1 1 0 011.187-.447l1.598.54A6.993 6.993 0 017.51 3.456l.33-1.652zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd"/></svg>,
     views:     <svg viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M.99 5.24A2.25 2.25 0 013.25 3h13.5A2.25 2.25 0 0119 5.25l.01 9.5A2.25 2.25 0 0116.76 17H3.26A2.25 2.25 0 011 14.74l-.01-9.5zm8.26 9.52v-.001a.75.75 0 00.75.75h4.5a.75.75 0 00.75-.75V8.76a.75.75 0 00-.75-.75h-4.5a.75.75 0 00-.75.75v5.99zm-8.25 0a.75.75 0 00.75.75H6a.75.75 0 00.75-.75V8.76A.75.75 0 006 8.01H1.75a.75.75 0 00-.75.75v5.99zm7.5-10.5v-.75h-6v.75h6zm8.25 0v-.75h-6v.75h6z" clipRule="evenodd"/></svg>,
@@ -180,6 +185,8 @@
   const postTasks  = (t)   => apiPost('/api/tasks', t);
   const fetchLinks = ()    => apiGet('/api/links');
   const postLinks  = (l)   => apiPost('/api/links', l);
+  const fetchIdeas = ()    => apiGet('/api/ideas');
+  const postIdeas  = (i)   => apiPost('/api/ideas', i);
   const fetchNotes      = ()  => apiGet('/api/notes');
   const postNotes       = (n) => apiPost('/api/notes', n);
   const fetchFolders    = ()  => apiGet('/api/folders');
@@ -205,6 +212,13 @@
   const makeLink = (url = '', title = '') => ({
     id: uid(), url, title, description: '', tags: [],
     createdAt: new Date().toISOString(),
+  });
+
+  const makeIdea = (title = '') => ({
+    id: uid(), title, description: '', tags: [], links: [], docs: [], stories: [], defects: [],
+    status: 'idea',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
   });
 
   const makeSecret = (name = '') => ({
@@ -721,10 +735,11 @@
   }
 
   // ── ExpandableTextarea ──────────────────────────────────────────────────────
-  function ExpandableTextarea({ label, value, onChange, placeholder, rows = 3, withImages = false }) {
+  function ExpandableTextarea({ label, value, onChange, placeholder, rows = 3, withImages = false, taRef: externalTaRef, customPreviewRenderer, onPreviewClick }) {
     const [expanded, setExpanded] = React.useState(false);
     const [mode, setMode]         = React.useState(() => value ? 'preview' : 'edit');
-    const taRef      = React.useRef(null);
+    const internalTaRef = React.useRef(null);
+    const taRef         = externalTaRef || internalTaRef;
     const previewRef = React.useRef(null);
     const valueRef   = React.useRef(value);
     React.useEffect(() => { valueRef.current = value; }, [value]);
@@ -811,8 +826,11 @@
           <div ref={previewRef}
             className="md-preview w-full min-h-[3.5rem] text-sm border border-gray-200 rounded-lg px-3 py-2.5 text-gray-700"
             dangerouslySetInnerHTML={{
-              __html: previewHtml || '<p style="color:#d1d5db;font-style:italic">Nothing to preview.</p>'
+              __html: customPreviewRenderer
+                ? (customPreviewRenderer(value) || '<p style="color:#d1d5db;font-style:italic">Nothing to preview.</p>')
+                : (previewHtml || '<p style="color:#d1d5db;font-style:italic">Nothing to preview.</p>')
             }}
+            onClick={onPreviewClick}
           />
         ) : (
           <textarea
@@ -2175,7 +2193,9 @@
         {/* Sprint selector */}
         <div className="flex items-center justify-between">
           <span className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-            {selectedSprint ? `${sprintTasks.length} task${sprintTasks.length !== 1 ? 's' : ''}` : `${sprintTasks.length} tasks across all sprints`}
+            {selectedSprint
+              ? (sprintTasks.length + ' task' + (sprintTasks.length !== 1 ? 's' : ''))
+              : (sprintTasks.length + ' tasks across all sprints')}
           </span>
           <select
             value={selectedSprint}
@@ -2316,6 +2336,1778 @@
             </div>
           )}
         </div>
+      </div>
+    );
+  }
+
+  // ── DiagramEditor (draw.io-style visual + Mermaid preview) ───────────────────
+  if (typeof mermaid !== 'undefined') {
+    mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+  }
+
+  const DIAG_SECTIONS = [
+    {
+      label: 'Tools', items: [
+        { key: 'select',  icon: '↖', label: 'Select',  type: 'tool' },
+        { key: 'connect', icon: '→', label: 'Connect', type: 'tool' },
+      ]
+    },
+    {
+      label: 'Flowchart', items: [
+        { key: 'rect',    icon: '▭', label: 'Process',   type: 'shape' },
+        { key: 'diamond', icon: '◇', label: 'Decision',  type: 'shape' },
+        { key: 'rounded', icon: '▢', label: 'Terminal',  type: 'shape' },
+        { key: 'para',    icon: '▱', label: 'Data',      type: 'shape' },
+      ]
+    },
+    {
+      label: 'UML / Sequence', items: [
+        { key: 'circle',  icon: '●', label: 'State',     type: 'shape' },
+        { key: 'actor',   icon: '👤', label: 'Actor',    type: 'shape' },
+        { key: 'component', icon: '⬡', label: 'Component', type: 'shape' },
+        { key: 'note',    icon: '📝', label: 'Note',     type: 'shape' },
+      ]
+    },
+  ];
+
+  function graphToMermaid(nodes, edges) {
+    const nodeId = (n) => 'N' + n.id.replace(/-/g, '');
+    const nodeDecl = (n) => {
+      const id = nodeId(n); const lbl = (n.label || 'Node').replace(/"/g, "'");
+      switch (n.shape) {
+        case 'diamond':   return `  ${id}{${lbl}}`;
+        case 'circle':    return `  ${id}((${lbl}))`;
+        case 'rounded':   return `  ${id}([${lbl}])`;
+        case 'para':      return `  ${id}[/${lbl}/]`;
+        case 'actor':     return `  ${id}["👤 ${lbl}"]`;
+        case 'component': return `  ${id}["⬡ ${lbl}"]`;
+        case 'note':      return `  ${id}["📝 ${lbl}"]`;
+        default:          return `  ${id}["${lbl}"]`;
+      }
+    };
+    const lines = ['flowchart TD'];
+    nodes.forEach(n => lines.push(nodeDecl(n)));
+    edges.forEach(e => {
+      const fn = nodes.find(n => n.id === e.from); const tn = nodes.find(n => n.id === e.to);
+      if (!fn || !tn) return;
+      const arrow = e.dashed ? '-.->' : '-->';
+      const edgeStr = e.label ? (arrow + '|' + e.label + '|') : arrow;
+      lines.push('  ' + nodeId(fn) + ' ' + edgeStr + ' ' + nodeId(tn));
+    });
+    return lines.join('\n');
+  }
+
+  function DiagramEditor({ content, onChange }) {
+    const initGraph = () => {
+      try { const s = JSON.parse(content || '{}'); if (s.nodes) return s; } catch {}
+      return { nodes: [], edges: [] };
+    };
+
+    const [graph, setGraph]       = useState(initGraph);
+    const [diagTab, setDiagTab]   = useState('canvas');
+    const [tool, setTool]         = useState('select');
+    const [selected, setSelected] = useState(null);
+    const [connecting, setConn]   = useState(null);
+    const [editLabel, setEditLbl] = useState(null);
+    const [edgeLabel, setEdgeLbl] = useState(null);
+    const [error, setError]       = useState('');
+    const svgRef    = useRef(null);
+    const diagId    = useRef('diag-' + Math.random().toString(36).slice(2));
+    const nodesRef  = useRef(graph.nodes);
+    const edgesRef  = useRef(graph.edges);
+    useEffect(() => { nodesRef.current = graph.nodes; edgesRef.current = graph.edges; }, [graph]);
+
+    const save = (g) => { setGraph(g); onChange(JSON.stringify(g)); };
+
+    // Keyboard delete
+    useEffect(() => {
+      const handler = (e) => {
+        if ((e.key === 'Delete' || e.key === 'Backspace') && selected
+            && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+          deleteSelected(selected);
+        }
+      };
+      window.addEventListener('keydown', handler);
+      return () => window.removeEventListener('keydown', handler);
+    }, [selected, graph]);
+
+    const deleteSelected = (id) => {
+      const g = {
+        nodes: nodesRef.current.filter(n => n.id !== id),
+        edges: edgesRef.current.filter(e => e.from !== id && e.to !== id && e.id !== id),
+      };
+      save(g); setSelected(null);
+    };
+
+    // Mermaid preview
+    useEffect(() => {
+      if (diagTab !== 'mermaid' || typeof mermaid === 'undefined') return;
+      setError('');
+      const src = graphToMermaid(graph.nodes, graph.edges);
+      const el = document.getElementById(diagId.current + '-out');
+      if (!el) return;
+      mermaid.render(diagId.current, src)
+        .then(({ svg }) => { el.innerHTML = svg; })
+        .catch(e => { setError(String(e.message || e).split('\n')[0]); if (el) el.innerHTML = ''; });
+    }, [diagTab, graph]);
+
+    const addNode = (shape) => {
+      const n = { id: uid(), label: shape.charAt(0).toUpperCase() + shape.slice(1), shape,
+        x: 120 + (nodesRef.current.length * 40) % 500, y: 80 + Math.floor(nodesRef.current.length * 40 / 500) * 100 };
+      const g = { ...graph, nodes: [...graph.nodes, n] };
+      save(g); setSelected(n.id); setTool('select');
+    };
+
+    const onNodeMouseDown = (e, nodeId) => {
+      if (tool === 'connect') {
+        if (!connecting) { setConn(nodeId); return; }
+        if (connecting !== nodeId) save({ ...graph, edges: [...graph.edges, { id: uid(), from: connecting, to: nodeId, label: '', dashed: false }] });
+        setConn(null); return;
+      }
+      if (e.detail === 2) { setEditLbl(nodeId); return; }
+      e.preventDefault();
+      const svg = svgRef.current;
+      const toSvgPt = (cx, cy) => { const p = svg.createSVGPoint(); p.x = cx; p.y = cy; return p.matrixTransform(svg.getScreenCTM().inverse()); };
+      const sp = toSvgPt(e.clientX, e.clientY);
+      const n = nodesRef.current.find(nd => nd.id === nodeId);
+      const drag = { id: nodeId, ox: sp.x - n.x, oy: sp.y - n.y };
+      let moved = false;
+
+      const onMove = (ev) => {
+        // Only start actually moving after 4px threshold — prevents accidental drags
+        const dx = ev.clientX - e.clientX, dy = ev.clientY - e.clientY;
+        if (!moved && Math.sqrt(dx*dx + dy*dy) < 4) return;
+        moved = true;
+        const s = toSvgPt(ev.clientX, ev.clientY);
+        const nx = Math.max(0, s.x - drag.ox), ny = Math.max(0, s.y - drag.oy);
+        save({ nodes: nodesRef.current.map(nd => nd.id === drag.id ? { ...nd, x: nx, y: ny } : nd), edges: edgesRef.current });
+      };
+      const onUp = () => {
+        // Clean click (no drag) → select the node; moved drag → keep existing selection
+        if (!moved) setSelected(nodeId);
+        window.removeEventListener('mousemove', onMove);
+        window.removeEventListener('mouseup', onUp);
+      };
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onUp);
+    };
+
+    const shapeEl = (n, sel) => {
+      const W = 140, H = 50, hs = H/2, ws = W/2, stroke = sel ? '#6366f1' : '#94a3b8', fill = sel ? '#eef2ff' : '#fff';
+      switch (n.shape) {
+        case 'diamond':   return <polygon points={`${ws},0 ${W},${hs} ${ws},${H} 0,${hs}`} fill={fill} stroke={stroke} strokeWidth="1.5" />;
+        case 'circle':    return <ellipse cx={ws} cy={hs} rx={ws-2} ry={hs-2} fill={fill} stroke={stroke} strokeWidth="1.5" />;
+        case 'rounded':   return <rect width={W} height={H} rx={H/2} fill={fill} stroke={stroke} strokeWidth="1.5" />;
+        case 'para':      return <polygon points={`12,0 ${W},0 ${W-12},${H} 0,${H}`} fill={fill} stroke={stroke} strokeWidth="1.5" />;
+        case 'actor':     return <><ellipse cx={ws} cy="14" rx="10" ry="10" fill={fill} stroke={stroke} strokeWidth="1.5" /><line x1={ws} y1="24" x2={ws} y2="38" stroke={stroke} strokeWidth="1.5" /><line x1={ws-14} y1="30" x2={ws+14} y2="30" stroke={stroke} strokeWidth="1.5" /><line x1={ws} y1="38" x2={ws-10} y2={H} stroke={stroke} strokeWidth="1.5" /><line x1={ws} y1="38" x2={ws+10} y2={H} stroke={stroke} strokeWidth="1.5" /></>;
+        case 'component': return <><rect width={W} height={H} rx="4" fill={fill} stroke={stroke} strokeWidth="1.5" /><rect x="2" y="12" width="10" height="6" rx="1" fill={stroke} /><rect x="2" y="22" width="10" height="6" rx="1" fill={stroke} /></>;
+        case 'note':      return <><polygon points={`0,0 ${W-10},0 ${W},10 ${W},${H} 0,${H}`} fill="#fffbeb" stroke={stroke} strokeWidth="1.5" /><line x1={W-10} y1="0" x2={W-10} y2="10" stroke={stroke} strokeWidth="1" /><line x1={W-10} y1="10" x2={W} y2="10" stroke={stroke} strokeWidth="1" /></>;
+        default:          return <rect width={W} height={H} rx="6" fill={fill} stroke={stroke} strokeWidth="1.5" />;
+      }
+    };
+
+    const edgeMid = (e) => {
+      const fn = graph.nodes.find(n => n.id === e.from), tn = graph.nodes.find(n => n.id === e.to);
+      if (!fn || !tn) return null;
+      return { x: (fn.x+70+tn.x+70)/2, y: (fn.y+25+tn.y+25)/2 };
+    };
+
+    const mermaidSrc = graphToMermaid(graph.nodes, graph.edges);
+
+    return (
+      <div className="flex gap-0" style={{ height: 'calc(100vh - 240px)', minHeight: '480px', userSelect: 'none' }}>
+
+        {/* ── Left panel ── */}
+        <div className="w-36 shrink-0 flex flex-col gap-1 bg-gray-50 border border-r-0 border-gray-200 rounded-l-xl p-2 overflow-y-auto">
+          {DIAG_SECTIONS.map(sec => (
+            <div key={sec.label}>
+              <div className="text-xs font-semibold text-gray-400 uppercase tracking-wide px-1 mt-2 mb-1 first:mt-0">{sec.label}</div>
+              {sec.items.map(item => {
+                const active = item.type === 'tool' ? tool === item.key : false;
+                return (
+                  <button key={item.key}
+                    onClick={() => item.type === 'tool' ? (setTool(item.key), setConn(null)) : addNode(item.key)}
+                    className={`w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs font-medium transition-colors mb-0.5 ${active ? 'bg-indigo-600 text-white' : 'text-gray-700 hover:bg-white hover:shadow-sm border border-transparent hover:border-gray-200'}`}>
+                    <span className="text-base leading-none w-5 text-center">{item.icon}</span>
+                    {item.label}
+                  </button>
+                );
+              })}
+            </div>
+          ))}
+          <div className="mt-auto pt-2 border-t border-gray-200">
+            <button onClick={() => { if (selected) deleteSelected(selected); }}
+              disabled={!selected}
+              className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs font-medium text-red-500 hover:bg-red-50 disabled:opacity-30 transition-colors border border-transparent hover:border-red-200">
+              <span className="text-base leading-none w-5 text-center">✕</span>
+              Delete
+            </button>
+          </div>
+        </div>
+
+        {/* ── Main area ── */}
+        <div className="flex-1 flex flex-col min-w-0 border border-gray-200 rounded-r-xl overflow-hidden">
+          {/* Tab bar */}
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-white border-b border-gray-200 shrink-0">
+            <div className="flex bg-gray-100 rounded p-0.5 text-xs">
+              <button onClick={() => setDiagTab('canvas')}
+                className={`px-2.5 py-1 rounded transition-colors ${diagTab === 'canvas' ? 'bg-white text-gray-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}>
+                Canvas
+              </button>
+              <button onClick={() => setDiagTab('mermaid')}
+                className={`px-2.5 py-1 rounded transition-colors ${diagTab === 'mermaid' ? 'bg-white text-gray-700 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}>
+                Preview
+              </button>
+            </div>
+            <div className="text-xs text-gray-400 ml-auto">
+              {connecting ? '🔵 Click target node' : tool === 'connect' ? 'Click source node' : selected ? 'Del key or ✕ to delete' : 'Double-click to edit label'}
+            </div>
+          </div>
+
+          {diagTab === 'canvas'
+            ? (
+              <div className="flex-1 overflow-auto"
+                style={{ background: 'radial-gradient(circle, #e5e7eb 1px, transparent 1px)', backgroundSize: '20px 20px', backgroundColor: '#f9fafb' }}>
+                <svg ref={svgRef} width="100%" height="100%" style={{ minWidth: '600px', minHeight: '440px' }}
+                  onClick={() => { if (tool === 'select') setSelected(null); }}>
+                  <defs>
+                    <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="7" refY="3.5" orient="auto">
+                      <polygon points="0 0, 8 3.5, 0 7" fill="#64748b" />
+                    </marker>
+                  </defs>
+
+                  {graph.edges.map(e => {
+                    const fn = graph.nodes.find(n => n.id === e.from), tn = graph.nodes.find(n => n.id === e.to);
+                    if (!fn || !tn) return null;
+                    const x1 = fn.x+70, y1 = fn.y+25, x2 = tn.x+70, y2 = tn.y+25;
+                    const mid = edgeMid(e); const isSel = selected === e.id;
+                    return (
+                      <g key={e.id} onClick={ev => { ev.stopPropagation(); setSelected(e.id); }}>
+                        <line x1={x1} y1={y1} x2={x2} y2={y2}
+                          stroke={isSel ? '#6366f1' : '#64748b'} strokeWidth={isSel ? 2 : 1.5}
+                          strokeDasharray={e.dashed ? '6 3' : 'none'} markerEnd="url(#arrowhead)" />
+                        <line x1={x1} y1={y1} x2={x2} y2={y2} stroke="transparent" strokeWidth="12" style={{ cursor: 'pointer' }} />
+                        {mid && (
+                          <g>
+                            <rect x={mid.x-24} y={mid.y-10} width={48} height={20} rx={4}
+                              fill="white" stroke={isSel ? '#6366f1' : '#e2e8f0'} strokeWidth="1"
+                              onClick={ev => { ev.stopPropagation(); setEdgeLbl(e.id); }} style={{ cursor: 'pointer' }} />
+                            {edgeLabel === e.id
+                              ? <foreignObject x={mid.x-30} y={mid.y-12} width={60} height={24}>
+                                  <input autoFocus
+                                    style={{ width: '100%', fontSize: '10px', border: 'none', outline: 'none', background: 'transparent', textAlign: 'center' }}
+                                    value={e.label || ''}
+                                    onChange={ev => save({ ...graph, edges: graph.edges.map(ed => ed.id === e.id ? { ...ed, label: ev.target.value } : ed) })}
+                                    onBlur={() => setEdgeLbl(null)}
+                                    onKeyDown={ev => { if (ev.key === 'Enter') setEdgeLbl(null); }} />
+                                </foreignObject>
+                              : <text x={mid.x} y={mid.y+4} textAnchor="middle" fontSize="10" fill={isSel ? '#6366f1' : '#64748b'} style={{ pointerEvents: 'none' }}>{e.label}</text>
+                            }
+                          </g>
+                        )}
+                      </g>
+                    );
+                  })}
+
+                  {graph.nodes.map(n => {
+                    const isSel = selected === n.id, isConn = connecting === n.id;
+                    return (
+                      <g key={n.id} transform={`translate(${n.x},${n.y})`}
+                        onMouseDown={e => onNodeMouseDown(e, n.id)}
+                        style={{ cursor: tool === 'connect' ? 'crosshair' : 'grab' }}>
+                        {shapeEl(n, isSel || isConn)}
+                        {isConn && <rect width="140" height="50" rx="6" fill="none" stroke="#6366f1" strokeWidth="2.5" strokeDasharray="4 2" />}
+                        {editLabel === n.id
+                          ? <foreignObject x="4" y="4" width="132" height="42">
+                              <input autoFocus
+                                style={{ width: '100%', height: '100%', fontSize: '12px', fontWeight: '500', border: 'none', outline: 'none', background: 'transparent', textAlign: 'center' }}
+                                value={n.label}
+                                onChange={ev => save({ ...graph, nodes: graph.nodes.map(nd => nd.id === n.id ? { ...nd, label: ev.target.value } : nd) })}
+                                onBlur={() => setEditLbl(null)}
+                                onKeyDown={ev => { if (ev.key === 'Enter') setEditLbl(null); }} />
+                            </foreignObject>
+                          : <text x="70" y="30" textAnchor="middle" fontSize="12" fontWeight="500"
+                              fill={isSel ? '#4338ca' : '#374151'} style={{ pointerEvents: 'none' }}>
+                              {n.label.length > 16 ? n.label.slice(0, 15) + '…' : n.label}
+                            </text>
+                        }
+                      </g>
+                    );
+                  })}
+                </svg>
+              </div>
+            ) : (
+              <div className="flex-1 overflow-auto p-4 space-y-3">
+                {error
+                  ? <pre className="text-xs text-red-500 whitespace-pre-wrap">{error}</pre>
+                  : <div id={diagId.current + '-out'} className="flex justify-center" />
+                }
+                <details className="text-xs">
+                  <summary className="cursor-pointer text-gray-400 hover:text-gray-600">Mermaid source</summary>
+                  <pre className="mt-1 bg-gray-50 border border-gray-200 rounded-lg p-3 font-mono overflow-auto whitespace-pre-wrap">{mermaidSrc}</pre>
+                </details>
+              </div>
+            )
+          }
+        </div>
+      </div>
+    );
+  }
+
+  // ── SprintPlannerCalendar ────────────────────────────────────────────────────
+  const MONTH_NAMES_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const DAY_NAMES_2 = ['Mo','Tu','We','Th','Fr','Sa','Su'];
+
+  function SprintPlannerCalendar({ idea, doc, onSaveDoc, onUpdate }) {
+    const parsedContent = (() => { try { return JSON.parse(doc.content || '{}'); } catch { return {}; } })();
+    const now = new Date();
+    const [year,  setYear]     = useState(parsedContent.year  || now.getFullYear());
+    const [month, setMonth]    = useState(parsedContent.month !== undefined ? parsedContent.month : now.getMonth());
+    const [holidays, setHols]  = useState(parsedContent.holidays || []);
+    const [draggingId, setDragging]   = useState(null);
+    const [dropDate, setDropDate]     = useState(null);
+    const [blockMsg, setBlockMsg]     = useState('');
+    const [addHolDate, setAddHolDate] = useState('');
+    const [selectedBar, setSelBar]    = useState(null); // story id clicked
+
+    // Save calendar settings when year/month/holidays change
+    useEffect(() => {
+      onSaveDoc(JSON.stringify({ year, month, holidays }));
+    }, [year, month, JSON.stringify(holidays)]);
+
+    const prevMonth = () => { if (month === 0) { setYear(y => y - 1); setMonth(11); } else setMonth(m => m - 1); };
+    const nextMonth = () => { if (month === 11) { setYear(y => y + 1); setMonth(0); } else setMonth(m => m + 1); };
+
+    // Build calendar grid (Mon-first)
+    const firstDay    = new Date(year, month, 1);
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    // 0=Sun..6=Sat → shift to Mon-first (0=Mon..6=Sun)
+    const firstDow = (firstDay.getDay() + 6) % 7;
+    const cells = [];
+    for (let i = 0; i < firstDow; i++) cells.push(null);
+    for (let d = 1; d <= daysInMonth; d++) cells.push(d);
+    while (cells.length % 7 !== 0) cells.push(null);
+    const weeks = [];
+    for (let i = 0; i < cells.length; i += 7) weeks.push(cells.slice(i, i + 7));
+
+    const pad = (n) => String(n).padStart(2, '0');
+    const dateStr = (d) => d ? year + '-' + pad(month + 1) + '-' + pad(d) : '';
+    const isHoliday = (d) => holidays.includes(dateStr(d));
+    const isWeekend = (colIdx) => colIdx >= 5; // Sa, Su in Mon-first grid
+
+    // Spread estimate across working days from startDate, skipping holidays/weekends
+    const calcEnd = (startDateStr, estimateHours) => {
+      const hrs  = parseFloat(estimateHours) || 0;
+      const days = Math.max(1, Math.ceil(hrs / 8));
+      const [sy, sm, sd] = startDateStr.split('-').map(Number);
+      let cur = new Date(sy, sm - 1, sd);
+      let worked = 0;
+      while (worked < days) {
+        const ds = cur.getFullYear() + '-' + pad(cur.getMonth() + 1) + '-' + pad(cur.getDate());
+        const dow = cur.getDay(); // 0=Sun
+        if (dow !== 0 && dow !== 6 && !holidays.includes(ds)) worked++;
+        if (worked < days) cur.setDate(cur.getDate() + 1);
+      }
+      return cur.getFullYear() + '-' + pad(cur.getMonth() + 1) + '-' + pad(cur.getDate());
+    };
+
+    // Check if story can be placed on a date (dependency check)
+    const checkDeps = (story, droppedDate) => {
+      const deps = story.dependencies || [];
+      for (const did of deps) {
+        const dep = (idea.stories || []).find(s => s.id === did);
+        if (!dep) continue;
+        if (!dep.plannedEnd) return dep.title + ' is not planned yet';
+        if (dep.plannedEnd >= droppedDate) return dep.title + ' ends on ' + dep.plannedEnd + ' — must end before ' + droppedDate;
+      }
+      return null;
+    };
+
+    const onDrop = (e, day) => {
+      e.preventDefault();
+      setDropDate(null);
+      if (!draggingId || !day) return;
+      const story = (idea.stories || []).find(s => s.id === draggingId);
+      if (!story) return;
+      const dropped = dateStr(day);
+      const err = checkDeps(story, dropped);
+      if (err) { setBlockMsg(err); return; }
+      const end = calcEnd(dropped, story.estimate);
+      onUpdate(idea.id, {
+        stories: (idea.stories || []).map(s => s.id === draggingId ? { ...s, plannedStart: dropped, plannedEnd: end } : s),
+      });
+      setDragging(null);
+    };
+
+    const clearPlan = (storyId) => {
+      onUpdate(idea.id, {
+        stories: (idea.stories || []).map(s => s.id === storyId ? { ...s, plannedStart: '', plannedEnd: '' } : s),
+      });
+      setSelBar(null);
+    };
+
+    // Stories placed in this month: which day cells are covered?
+    const storyCells = {}; // { 'YYYY-MM-DD': [story, ...] }
+    (idea.stories || []).forEach(s => {
+      if (!s.plannedStart) return;
+      const [sy, sm, sd] = s.plannedStart.split('-').map(Number);
+      const [ey, em, ed] = (s.plannedEnd || s.plannedStart).split('-').map(Number);
+      let cur = new Date(sy, sm - 1, sd);
+      const end = new Date(ey, em - 1, ed);
+      while (cur <= end) {
+        const ds = cur.getFullYear() + '-' + pad(cur.getMonth() + 1) + '-' + pad(cur.getDate());
+        if (!storyCells[ds]) storyCells[ds] = [];
+        storyCells[ds].push(s);
+        cur.setDate(cur.getDate() + 1);
+      }
+    });
+
+    const unplanned = (idea.stories || []).filter(s => !s.plannedStart);
+    const planned   = (idea.stories || []).filter(s =>  s.plannedStart);
+
+    return (
+      <div className="flex gap-4 h-full" style={{ minHeight: '500px' }}>
+        {/* ── Calendar ── */}
+        <div className="flex-1 min-w-0 flex flex-col gap-2">
+          {/* Block message */}
+          {blockMsg && (
+            <div className="flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-2 text-sm text-red-700">
+              <span>🚫 Cannot place story: {blockMsg}</span>
+              <button onClick={() => setBlockMsg('')} className="ml-auto text-red-400 hover:text-red-600">✕</button>
+            </div>
+          )}
+
+          {/* Header */}
+          <div className="flex items-center gap-3">
+            <button onClick={prevMonth} className="text-gray-400 hover:text-gray-700 px-2 py-1 rounded-lg transition-colors">◀</button>
+            <span className="font-semibold text-gray-800 text-sm min-w-[110px] text-center">
+              {MONTH_NAMES_SHORT[month]} {year}
+            </span>
+            <button onClick={nextMonth} className="text-gray-400 hover:text-gray-700 px-2 py-1 rounded-lg transition-colors">▶</button>
+            <div className="ml-auto flex items-center gap-2">
+              <input type="date" value={addHolDate} onChange={e => setAddHolDate(e.target.value)}
+                className="text-xs border border-gray-200 rounded-lg px-2 py-1 outline-none focus:border-red-400" />
+              <button onClick={() => {
+                if (addHolDate && !holidays.includes(addHolDate)) setHols([...holidays, addHolDate]);
+                setAddHolDate('');
+              }} className="text-xs font-medium bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-lg px-2.5 py-1 transition-colors">
+                + Holiday
+              </button>
+            </div>
+          </div>
+
+          {/* Day-name header */}
+          <div className="grid grid-cols-7 gap-px">
+            {DAY_NAMES_2.map((d, i) => (
+              <div key={d} className={'text-center text-xs font-semibold py-1 rounded ' + (i >= 5 ? 'text-gray-400' : 'text-gray-600')}>{d}</div>
+            ))}
+          </div>
+
+          {/* Calendar grid */}
+          <div className="flex-1 grid gap-px" style={{ gridTemplateRows: 'repeat(' + weeks.length + ', 1fr)' }}>
+            {weeks.map((week, wi) => (
+              <div key={wi} className="grid grid-cols-7 gap-px">
+                {week.map((day, di) => {
+                  const ds = dateStr(day);
+                  const isHol = isHoliday(day);
+                  const isWknd = isWeekend(di);
+                  const stories = ds ? (storyCells[ds] || []) : [];
+                  const isOver = dropDate === ds;
+                  return (
+                    <div key={di}
+                      onDragOver={e => { e.preventDefault(); if (day) setDropDate(ds); }}
+                      onDragLeave={() => setDropDate(null)}
+                      onDrop={e => onDrop(e, day)}
+                      className={'min-h-[70px] rounded-lg p-1 flex flex-col gap-0.5 transition-colors ' + (
+                        !day ? 'bg-transparent' :
+                        isHol ? 'bg-red-50 border border-red-200' :
+                        isWknd ? 'bg-gray-50 border border-gray-100' :
+                        isOver ? 'bg-indigo-50 border-2 border-indigo-400' :
+                        'bg-white border border-gray-100 hover:border-gray-200'
+                      )}>
+                      {day && (
+                        <div className="flex items-center justify-between">
+                          <span className={'text-xs font-medium ' + (isHol ? 'text-red-500' : isWknd ? 'text-gray-400' : 'text-gray-600')}>
+                            {day}{isHol && ' 🏖'}
+                          </span>
+                          {isHol && (
+                            <button onClick={() => setHols(holidays.filter(h => h !== ds))}
+                              className="text-red-300 hover:text-red-500 text-xs leading-none">✕</button>
+                          )}
+                        </div>
+                      )}
+                      {stories.map(s => {
+                        const sc = STORY_STATUS_CONFIG[s.status] || STORY_STATUS_CONFIG.todo;
+                        const isSel = selectedBar === s.id;
+                        const isStart = s.plannedStart === ds;
+                        return (
+                          <div key={s.id}
+                            onClick={e => { e.stopPropagation(); setSelBar(isSel ? null : s.id); }}
+                            className={'text-xs rounded px-1 py-0.5 truncate cursor-pointer flex items-center justify-between gap-1 ' + sc.bg + ' ' + sc.text + (isSel ? ' ring-1 ring-offset-0 ring-indigo-400' : '')}
+                            style={{ borderLeft: isStart ? '3px solid currentColor' : '3px solid transparent' }}>
+                            <span className="truncate">{s.title || 'Untitled'}</span>
+                            {isSel && isStart && (
+                              <button onClick={e => { e.stopPropagation(); clearPlan(s.id); }}
+                                className="shrink-0 hover:text-red-500 transition-colors">✕</button>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Story panel ── */}
+        <div className="w-56 shrink-0 flex flex-col gap-2 bg-gray-50 border border-gray-200 rounded-xl p-3 overflow-y-auto">
+          <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Stories</div>
+
+          {unplanned.length === 0 && planned.length === 0 && (
+            <p className="text-xs text-gray-400">No stories yet. Add stories to the idea first.</p>
+          )}
+
+          {unplanned.length > 0 && (
+            <>
+              <div className="text-xs text-gray-400">Unplanned — drag to calendar</div>
+              {unplanned.map(s => {
+                const sc = STORY_STATUS_CONFIG[s.status] || STORY_STATUS_CONFIG.todo;
+                const deps = s.dependencies || [];
+                const hasUnmetDep = deps.some(did => {
+                  const dep = (idea.stories || []).find(st => st.id === did);
+                  return !dep || !dep.plannedEnd;
+                });
+                return (
+                  <div key={s.id}
+                    draggable={!hasUnmetDep}
+                    onDragStart={() => setDragging(s.id)}
+                    onDragEnd={() => { setDragging(null); setDropDate(null); }}
+                    className={'rounded-lg px-2 py-2 border flex flex-col gap-1 ' + sc.bg + ' ' + sc.border + (hasUnmetDep ? ' opacity-50 cursor-not-allowed' : ' cursor-grab active:cursor-grabbing')}>
+                    <div className={'text-xs font-medium truncate ' + sc.text}>{s.title || 'Untitled'}</div>
+                    <div className="flex items-center gap-2">
+                      <span className={'text-xs px-1.5 py-0.5 rounded-full bg-white/60 ' + sc.text}>{sc.label}</span>
+                      {s.estimate && <span className="text-xs text-gray-500">{s.estimate}h</span>}
+                    </div>
+                    {hasUnmetDep && <div className="text-xs text-red-500">⛔ Dependency unplanned</div>}
+                  </div>
+                );
+              })}
+            </>
+          )}
+
+          {planned.length > 0 && (
+            <>
+              <div className="text-xs text-gray-400 mt-2">Planned</div>
+              {planned.map(s => {
+                const sc = STORY_STATUS_CONFIG[s.status] || STORY_STATUS_CONFIG.todo;
+                return (
+                  <div key={s.id} className={'rounded-lg px-2 py-2 border opacity-70 ' + sc.bg + ' ' + sc.border}>
+                    <div className={'text-xs font-medium truncate ' + sc.text}>{s.title || 'Untitled'}</div>
+                    <div className="text-xs text-gray-400 mt-0.5">{s.plannedStart} → {s.plannedEnd}</div>
+                  </div>
+                );
+              })}
+            </>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  // ── DocViewer ─────────────────────────────────────────────────────────────────
+
+  /** Find a doc across all ideas by "IdeaTitle / DocTitle" reference string */
+  const findDocByRef = (ref, allIdeas) => {
+    const parts = ref.split('/').map(s => s.trim());
+    const ideaPart = parts[0] || '';
+    const docPart  = parts[1] || '';
+    for (const idea of (allIdeas || [])) {
+      if (!idea.title.toLowerCase().includes(ideaPart.toLowerCase())) continue;
+      const found = (idea.docs || []).find(d =>
+        d.title.toLowerCase().includes(docPart.toLowerCase()));
+      if (found) return { ideaId: idea.id, docId: found.id };
+    }
+    return null;
+  };
+
+  function DocViewer({ idea, doc, onUpdate, onClose, allIdeas, onDocRef }) {
+    const [showHistory, setShowHistory]   = useState(false);
+    const [isDraft, setIsDraft]           = useState(false);
+    const [showRefPicker, setShowRefPicker] = useState(false);
+    const contentTaRef = useRef(null);   // points at the <textarea> inside ExpandableTextarea
+
+    const saveDoc = (fields) => {
+      const now = new Date().toISOString();
+      onUpdate(idea.id, {
+        docs: (idea.docs || []).map(d => d.id === doc.id ? { ...d, ...fields, updatedAt: now } : d),
+      });
+      if (fields.content !== undefined) setIsDraft(true);
+    };
+
+    const publish = () => {
+      const now     = new Date().toISOString();
+      const current = (idea.docs || []).find(d => d.id === doc.id) || doc;
+      const prev    = current.history || [];
+      const entry   = { version: prev.length + 1, ts: now, content: current.content, title: current.title };
+      onUpdate(idea.id, {
+        docs: (idea.docs || []).map(d => d.id === doc.id
+          ? { ...d, history: [...prev, entry].slice(-50), updatedAt: now }
+          : d),
+      });
+      setIsDraft(false);
+    };
+
+    const restoreHistory = (entry) => { saveDoc({ content: entry.content, title: entry.title }); setShowHistory(false); };
+
+    const parseCanvas = () => { try { return JSON.parse(doc.content || '[]'); } catch { return []; } };
+
+    /** Insert [[IdeaTitle / DocTitle]] at textarea cursor */
+    const insertRef = (refIdea, refDoc) => {
+      const token = '[[' + refIdea.title + ' / ' + refDoc.title + ']]';
+      const ta = contentTaRef.current;
+      if (ta) {
+        const start = ta.selectionStart;
+        const cur   = doc.content || '';
+        saveDoc({ content: cur.slice(0, start) + token + cur.slice(ta.selectionEnd) });
+        setTimeout(() => { ta.focus(); ta.setSelectionRange(start + token.length, start + token.length); }, 0);
+      } else {
+        saveDoc({ content: (doc.content || '') + token });
+      }
+      setShowRefPicker(false);
+    };
+
+    /** Render markdown, turning [[...]] refs into clickable links */
+    const renderWithRefs = (md) => {
+      const processed = (md || '').replace(/\[\[([^\]]+)\]\]/g, (_, ref) => {
+        const match = findDocByRef(ref, allIdeas);
+        if (!match) return '<span style="color:#ef4444">[[' + ref + ']]</span>';
+        return '<a href="#docref:' + match.ideaId + ':' + match.docId + '" style="color:#6366f1;text-decoration:underline;cursor:pointer">📄 ' + ref + '</a>';
+      });
+      return marked.parse(processed);
+    };
+
+    const handlePreviewClick = (e) => {
+      const href = e.target?.closest('a')?.getAttribute('href') || '';
+      if (href.startsWith('#docref:')) {
+        e.preventDefault();
+        const parts = href.slice(8).split(':');   // strip "#docref:"
+        onDocRef && onDocRef(parts[0], parts[1]);
+      }
+    };
+
+    const history = doc.history || [];
+
+    // Collect all docs for the ref picker (exclude the current doc)
+    const allDocs = (allIdeas || []).flatMap(i =>
+      (i.docs || []).filter(d => !(i.id === idea.id && d.id === doc.id))
+        .map(d => ({ idea: i, doc: d }))
+    );
+
+    return (
+      <div className="flex flex-col h-full space-y-3">
+        {/* Header */}
+        <div className="flex items-center gap-2 shrink-0 flex-wrap">
+          <button onClick={onClose}
+            className="flex items-center gap-1 text-sm text-gray-400 hover:text-indigo-600 transition-colors shrink-0">
+            ← Back
+          </button>
+          <input
+            className="flex-1 min-w-0 text-base font-semibold bg-transparent border-b border-transparent hover:border-gray-200 focus:border-indigo-400 outline-none text-gray-800 py-0.5 transition-colors"
+            value={doc.title}
+            onChange={e => saveDoc({ title: e.target.value })}
+            placeholder="Document title"
+          />
+          <span className={'shrink-0 text-xs font-medium px-2 py-1 rounded-full ' + (doc.template === 'canvas' ? 'bg-yellow-100 text-yellow-700' : doc.template === 'diagram' ? 'bg-purple-100 text-purple-700' : doc.template === 'calendar' ? 'bg-teal-100 text-teal-700' : 'bg-indigo-100 text-indigo-700')}>
+            {doc.template === 'canvas' ? '🎨 Canvas' : doc.template === 'diagram' ? '🔷 Diagram' : doc.template === 'calendar' ? '📅 Sprint Planner' : '📄 Markdown'}
+          </span>
+          {doc.template === 'markdown' && (
+            <div className="relative shrink-0">
+              <button onClick={() => setShowRefPicker(v => !v)}
+                title="Insert reference to another document"
+                className={'text-xs font-medium px-2.5 py-1 rounded-full border transition-colors ' + (showRefPicker ? 'bg-indigo-600 text-white border-indigo-600' : 'text-gray-500 border-gray-200 hover:border-indigo-400 hover:text-indigo-600')}>
+                [[ ]] Ref
+              </button>
+              {showRefPicker && (
+                <div className="absolute right-0 top-full mt-1 w-72 bg-white border border-gray-200 rounded-xl shadow-xl z-50 overflow-hidden">
+                  <div className="px-3 py-2 text-xs font-semibold text-gray-500 uppercase tracking-wide border-b border-gray-100">
+                    Insert document reference
+                  </div>
+                  <div className="max-h-64 overflow-y-auto">
+                    {allDocs.length === 0
+                      ? <div className="px-3 py-4 text-xs text-gray-400 text-center">No other documents yet</div>
+                      : (() => {
+                          const groups = {};
+                          allDocs.forEach(({ idea: i, doc: d }) => {
+                            if (!groups[i.id]) groups[i.id] = { idea: i, docs: [] };
+                            groups[i.id].docs.push(d);
+                          });
+                          return Object.values(groups).map(g => (
+                            <div key={g.idea.id}>
+                              <div className="px-3 pt-2 pb-1 text-xs font-semibold text-gray-400 uppercase tracking-wide">{g.idea.title || 'Untitled'}</div>
+                              {g.docs.map(d => (
+                                <button key={d.id} onClick={() => insertRef(g.idea, d)}
+                                  className="w-full flex items-center gap-2 px-3 py-2 hover:bg-indigo-50 transition-colors text-left">
+                                  <span className="text-sm">{d.template === 'canvas' ? '🎨' : d.template === 'diagram' ? '🔷' : '📄'}</span>
+                                  <span className="flex-1 text-sm text-gray-700 truncate">{d.title || 'Untitled'}</span>
+                                </button>
+                              ))}
+                            </div>
+                          ));
+                        })()
+                    }
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+          {isDraft && <span className="shrink-0 text-xs text-amber-600 font-medium bg-amber-50 border border-amber-200 px-2 py-1 rounded-full">Draft</span>}
+          <button onClick={publish}
+            className="shrink-0 text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1.5 rounded-lg transition-colors shadow-sm">
+            Publish v{history.length + 1}
+          </button>
+          <button onClick={() => setShowHistory(v => !v)} title="Version history"
+            className={'shrink-0 text-xs font-medium px-2.5 py-1 rounded-full border transition-colors ' + (showHistory ? 'bg-gray-800 text-white border-gray-800' : 'text-gray-500 border-gray-200 hover:border-gray-400')}>
+            🕐 {history.length > 0 ? 'v' + history.length : 'History'}
+          </button>
+        </div>
+
+        {/* History panel */}
+        {showHistory && (
+          <div className="bg-gray-50 rounded-xl border border-gray-200 p-3 space-y-1 max-h-52 overflow-y-auto shrink-0">
+            <div className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Published Versions</div>
+            {history.length === 0
+              ? <p className="text-xs text-gray-400">No published versions yet. Click "Publish" to save a version.</p>
+              : [...history].reverse().map((entry, i) => {
+                const realIdx = history.length - 1 - i;
+                return (
+                  <div key={i} className="flex items-center justify-between gap-2 bg-white rounded-lg border border-gray-200 px-3 py-2">
+                    <div>
+                      <div className="text-xs font-medium text-gray-700">v{entry.version} — {entry.title || 'Untitled'}</div>
+                      <div className="text-xs text-gray-400">{fmtDate(entry.ts.split('T')[0])} {entry.ts.split('T')[1].slice(0,5)}</div>
+                    </div>
+                    <div className="flex items-center gap-2 shrink-0">
+                      <button onClick={() => { if (confirm('Restore v' + entry.version + '?')) restoreHistory(entry); }}
+                        className="text-xs text-indigo-600 hover:text-indigo-800 font-medium transition-colors">Restore</button>
+                      <button onClick={() => {
+                        const newHistory = history.filter((_, idx) => idx !== realIdx);
+                        onUpdate(idea.id, { docs: (idea.docs || []).map(d => d.id === doc.id ? { ...d, history: newHistory } : d) });
+                      }} className="text-xs text-red-400 hover:text-red-600 transition-colors">✕</button>
+                    </div>
+                  </div>
+                );
+              })
+            }
+          </div>
+        )}
+
+        {/* Body */}
+        {doc.template === 'markdown'
+          ? <ExpandableTextarea
+              label=""
+              value={doc.content || ''}
+              onChange={e => saveDoc({ content: e.target.value })}
+              placeholder={"Start writing… (Markdown + images supported)\n\n# Heading\n**bold**, *italic*, `code`\n\nRef another doc: [[IdeaTitle / DocTitle]]"}
+              rows={14}
+              withImages={true}
+              taRef={contentTaRef}
+              customPreviewRenderer={renderWithRefs}
+              onPreviewClick={handlePreviewClick}
+            />
+          : doc.template === 'diagram'
+          ? <DiagramEditor content={doc.content || ''} onChange={val => saveDoc({ content: val })} />
+          : doc.template === 'calendar'
+          ? <SprintPlannerCalendar idea={idea} doc={doc} onSaveDoc={val => saveDoc({ content: val })} onUpdate={onUpdate} />
+          : <CanvasBoard notes={parseCanvas()} onChange={notes => saveDoc({ content: JSON.stringify(notes) })} />
+        }
+      </div>
+    );
+  }
+
+
+  // ── CanvasBoard ──────────────────────────────────────────────────────────────
+  const STICKY_COLORS = ['#fef9c3','#dbeafe','#dcfce7','#fce7f3','#ede9fe','#ffedd5'];
+
+  function CanvasBoard({ notes, onChange }) {
+    const containerRef    = useRef(null);
+    const dragging        = useRef(null);   // node drag
+    const drawingConn     = useRef(null);   // drag-to-connect: { fromId, fromAnchor, curX, curY }
+    const notesRef        = useRef(notes);
+    const [canvasTool, setCanvasTool]   = useState('select');
+    const [hoveredNote, setHoveredNote] = useState(null);
+    const [selConn, setSelConn]         = useState(null);  // { noteId, ci } — selected connection
+    const [connDrag, setConnDrag]       = useState(null);  // live drag-to-connect preview pos
+    useEffect(() => { notesRef.current = notes; }, [notes]);
+
+    const SW = 180, SH = 130;
+
+    const getAnchorPct = (note, anchor, rect) => {
+      const xp = (px) => (px / rect.width)  * 100;
+      const yp = (py) => (py / rect.height) * 100;
+      switch (anchor) {
+        case 'top':    return { x: note.x + xp(SW / 2), y: note.y + yp(0) };
+        case 'right':  return { x: note.x + xp(SW),     y: note.y + yp(SH / 2) };
+        case 'bottom': return { x: note.x + xp(SW / 2), y: note.y + yp(SH) };
+        default:       return { x: note.x + xp(0),      y: note.y + yp(SH / 2) };
+      }
+    };
+
+    const getContainerXYPct = (clientX, clientY) => {
+      const rect = containerRef.current.getBoundingClientRect();
+      return { x: ((clientX - rect.left) / rect.width) * 100, y: ((clientY - rect.top) / rect.height) * 100 };
+    };
+
+    const addSticky = () => {
+      const offset = (notes.length * 3) % 20;
+      onChange([...notes, { id: uid(), text: '', color: STICKY_COLORS[notes.length % STICKY_COLORS.length], x: 35 + offset, y: 20 + offset, connections: [] }]);
+    };
+    const updateSticky = (id, fields) => onChange(notesRef.current.map(n => n.id === id ? { ...n, ...fields } : n));
+    const deleteSticky = (id) => onChange(notesRef.current.filter(n => n.id !== id).map(n => ({
+      ...n, connections: (n.connections || []).filter(c => c.toId !== id),
+    })));
+    const deleteConnection = (fromId, ci) => {
+      updateSticky(fromId, { connections: (notesRef.current.find(n => n.id === fromId)?.connections || []).filter((_, i) => i !== ci) });
+      setSelConn(null);
+    };
+
+    // Delete selected connection via keyboard
+    useEffect(() => {
+      const handler = (e) => {
+        if ((e.key === 'Delete' || e.key === 'Backspace') && selConn
+            && e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+          deleteConnection(selConn.noteId, selConn.ci);
+        }
+      };
+      window.addEventListener('keydown', handler);
+      return () => window.removeEventListener('keydown', handler);
+    }, [selConn, notes]);
+
+    // ── Anchor: drag-to-connect (mousedown starts drag; mouseup on anchor completes) ──
+    const onAnchorMouseDown = (e, noteId, anchor) => {
+      e.stopPropagation(); e.preventDefault();
+      if (canvasTool !== 'connect') return;
+      const pos = getContainerXYPct(e.clientX, e.clientY);
+      drawingConn.current = { fromId: noteId, fromAnchor: anchor };
+      setConnDrag({ x: pos.x, y: pos.y });
+
+      const onMove = (ev) => {
+        const p = getContainerXYPct(ev.clientX, ev.clientY);
+        setConnDrag({ x: p.x, y: p.y });
+      };
+      const onUp = () => {
+        drawingConn.current = null;
+        setConnDrag(null);
+        window.removeEventListener('mousemove', onMove);
+        window.removeEventListener('mouseup', onUp);
+      };
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onUp);
+    };
+
+    const onAnchorMouseUp = (e, noteId, anchor) => {
+      e.stopPropagation();
+      if (!drawingConn.current || drawingConn.current.fromId === noteId) return;
+      const { fromId, fromAnchor } = drawingConn.current;
+      const from = notesRef.current.find(n => n.id === fromId);
+      if (from) {
+        const existing = from.connections || [];
+        const dupe = existing.some(c => c.toId === noteId && c.fromAnchor === fromAnchor && c.toAnchor === anchor);
+        if (!dupe) updateSticky(fromId, { connections: [...existing, { toId: noteId, fromAnchor, toAnchor: anchor }] });
+      }
+      drawingConn.current = null;
+      setConnDrag(null);
+    };
+
+    // ── Node drag (select mode) ──
+    const onNodeMouseDown = (e, note) => {
+      if (canvasTool === 'connect') return;
+      if (e.target.tagName === 'TEXTAREA' || e.target.tagName === 'BUTTON') return;
+      e.preventDefault();
+      const rect = containerRef.current.getBoundingClientRect();
+      dragging.current = { id: note.id, startMouseX: e.clientX, startMouseY: e.clientY, startX: note.x, startY: note.y, rect };
+      const onMove = (ev) => {
+        if (!dragging.current) return;
+        const { id: did, startMouseX, startMouseY, startX, startY, rect: r } = dragging.current;
+        const nx = Math.max(0, Math.min(85, startX + ((ev.clientX - startMouseX) / r.width)  * 100));
+        const ny = Math.max(0, Math.min(85, startY + ((ev.clientY - startMouseY) / r.height) * 100));
+        onChange(notesRef.current.map(n => n.id === did ? { ...n, x: nx, y: ny } : n));
+      };
+      const onUp = () => { dragging.current = null; window.removeEventListener('mousemove', onMove); window.removeEventListener('mouseup', onUp); };
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onUp);
+    };
+
+    const ANCHOR_POSITIONS = [
+      { key: 'top',    style: { top: '-7px',  left: '50%',  transform: 'translateX(-50%)' } },
+      { key: 'right',  style: { right: '-7px', top: '50%',  transform: 'translateY(-50%)' } },
+      { key: 'bottom', style: { bottom: '-7px', left: '50%', transform: 'translateX(-50%)' } },
+      { key: 'left',   style: { left: '-7px',  top: '50%',  transform: 'translateY(-50%)' } },
+    ];
+
+    // Build connection lines for rendering
+    const connLines = [];
+    if (containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      notes.forEach(note => {
+        (note.connections || []).forEach((c, ci) => {
+          const target = notes.find(n => n.id === c.toId);
+          if (!target) return;
+          const fa = getAnchorPct(note, c.fromAnchor, rect);
+          const ta = getAnchorPct(target, c.toAnchor, rect);
+          const isSel = selConn && selConn.noteId === note.id && selConn.ci === ci;
+          connLines.push({ key: note.id + '-' + c.toId + '-' + ci, fa, ta, isSel, noteId: note.id, ci });
+        });
+      });
+    }
+
+    // Find source anchor position for drag preview
+    let dragLine = null;
+    if (connDrag && drawingConn.current && containerRef.current) {
+      const rect = containerRef.current.getBoundingClientRect();
+      const from = notesRef.current.find(n => n.id === drawingConn.current.fromId);
+      if (from) {
+        const fa = getAnchorPct(from, drawingConn.current.fromAnchor, rect);
+        dragLine = { x1: fa.x, y1: fa.y, x2: connDrag.x, y2: connDrag.y };
+      }
+    }
+
+    return (
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <div className="flex bg-gray-100 rounded p-0.5 text-xs">
+            <button onClick={() => { setCanvasTool('select'); setSelConn(null); }}
+              className={'px-2.5 py-1 rounded transition-colors ' + (canvasTool === 'select' ? 'bg-white text-gray-700 shadow-sm' : 'text-gray-500 hover:text-gray-700')}>
+              ↖ Select
+            </button>
+            <button onClick={() => setCanvasTool('connect')}
+              className={'px-2.5 py-1 rounded transition-colors ' + (canvasTool === 'connect' ? 'bg-white text-gray-700 shadow-sm' : 'text-gray-500 hover:text-gray-700')}>
+              → Connect
+            </button>
+          </div>
+          {canvasTool === 'connect' && <span className="text-xs text-indigo-500">Drag from a blue dot to another</span>}
+          {selConn && canvasTool === 'select' && (
+            <button onClick={() => deleteConnection(selConn.noteId, selConn.ci)}
+              className="text-xs font-medium text-red-500 hover:text-red-700 border border-red-200 rounded-lg px-2 py-1 transition-colors">
+              ✕ Delete connection
+            </button>
+          )}
+          <button onClick={addSticky} className="ml-auto text-xs font-semibold bg-yellow-400 hover:bg-yellow-500 text-yellow-900 px-3 py-1.5 rounded-lg transition-colors">
+            + Add Sticky
+          </button>
+        </div>
+
+        <div ref={containerRef}
+          className="relative rounded-xl border border-gray-200 overflow-hidden select-none"
+          style={{ height: 'calc(100vh - 250px)', minHeight: '480px',
+                   background: 'radial-gradient(circle, #e5e7eb 1px, transparent 1px)',
+                   backgroundSize: '24px 24px', backgroundColor: '#f9fafb' }}
+          onClick={() => setSelConn(null)}>
+
+          {notes.length === 0 && (
+            <div className="absolute inset-0 flex items-center justify-center text-gray-400 text-sm pointer-events-none">
+              Click "+ Add Sticky" to start
+            </div>
+          )}
+
+          {/* Connection lines + drag preview */}
+          <svg className="absolute inset-0" style={{ width: '100%', height: '100%', zIndex: 6, pointerEvents: 'none' }}>
+            <defs>
+              <marker id="carr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                <polygon points="0 0, 6 3, 0 6" fill="#6366f1" opacity="0.85" />
+              </marker>
+              <marker id="carrsel" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                <polygon points="0 0, 6 3, 0 6" fill="#ef4444" />
+              </marker>
+            </defs>
+
+            {/* Clickable hit-area lines (pointer-events enabled) */}
+            {connLines.map(l => (
+              <line key={'hit-' + l.key}
+                x1={l.fa.x + '%'} y1={l.fa.y + '%'} x2={l.ta.x + '%'} y2={l.ta.y + '%'}
+                stroke="transparent" strokeWidth="12"
+                style={{ pointerEvents: 'stroke', cursor: 'pointer' }}
+                onClick={(e) => { e.stopPropagation(); setSelConn({ noteId: l.noteId, ci: l.ci }); }} />
+            ))}
+
+            {/* Visible lines */}
+            {connLines.map(l => (
+              <line key={l.key}
+                x1={l.fa.x + '%'} y1={l.fa.y + '%'} x2={l.ta.x + '%'} y2={l.ta.y + '%'}
+                stroke={l.isSel ? '#ef4444' : '#6366f1'}
+                strokeWidth={l.isSel ? 2 : 1.5}
+                strokeDasharray="5 3"
+                markerEnd={l.isSel ? 'url(#carrsel)' : 'url(#carr)'}
+                opacity="0.85"
+                style={{ pointerEvents: 'none' }} />
+            ))}
+
+            {/* Drag-to-connect preview */}
+            {dragLine && (
+              <line x1={dragLine.x1 + '%'} y1={dragLine.y1 + '%'} x2={dragLine.x2 + '%'} y2={dragLine.y2 + '%'}
+                stroke="#6366f1" strokeWidth="1.5" strokeDasharray="4 3" opacity="0.6" style={{ pointerEvents: 'none' }} />
+            )}
+          </svg>
+
+          {notes.map(note => (
+            <div key={note.id}
+              onMouseDown={e => onNodeMouseDown(e, note)}
+              onMouseEnter={() => setHoveredNote(note.id)}
+              onMouseLeave={() => setHoveredNote(null)}
+              className="absolute rounded-xl shadow-md flex flex-col"
+              style={{ left: note.x + '%', top: note.y + '%', width: SW + 'px', minHeight: SH + 'px',
+                backgroundColor: note.color, padding: '8px', zIndex: 10,
+                cursor: canvasTool === 'connect' ? 'default' : 'grab' }}>
+
+              {/* Anchor dots — shown in connect mode or on hover */}
+              {(canvasTool === 'connect' || hoveredNote === note.id) && ANCHOR_POSITIONS.map(ap => (
+                <div key={ap.key}
+                  onMouseDown={e => onAnchorMouseDown(e, note.id, ap.key)}
+                  onMouseUp={e => onAnchorMouseUp(e, note.id, ap.key)}
+                  className={'absolute w-3.5 h-3.5 rounded-full border-2 border-white z-20 transition-all ' +
+                    (drawingConn.current?.fromId === note.id && drawingConn.current?.fromAnchor === ap.key
+                      ? 'bg-indigo-700 scale-125 cursor-grabbing'
+                      : 'bg-indigo-400 hover:bg-indigo-600 hover:scale-125 cursor-crosshair')}
+                  style={{ ...ap.style, boxShadow: '0 0 0 1px #6366f1' }} />
+              ))}
+
+              <textarea
+                className="flex-1 resize-none text-sm text-gray-800 bg-transparent outline-none placeholder-gray-400"
+                placeholder="Type here…"
+                value={note.text}
+                onChange={e => updateSticky(note.id, { text: e.target.value })}
+                rows={4}
+                style={{ cursor: 'text' }}
+              />
+              <div className="flex items-center justify-between mt-2 gap-1">
+                <div className="flex gap-1 flex-wrap">
+                  {STICKY_COLORS.map(c => (
+                    <button key={c} onClick={() => updateSticky(note.id, { color: c })}
+                      className={'w-3.5 h-3.5 rounded-full border-2 transition-transform hover:scale-110 ' + (note.color === c ? 'border-gray-500 scale-110' : 'border-transparent')}
+                      style={{ backgroundColor: c }} />
+                  ))}
+                </div>
+                <button onClick={() => deleteSticky(note.id)}
+                  className="text-gray-400 hover:text-red-500 text-xs transition-colors">✕</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  // ── DefectEditor ─────────────────────────────────────────────────────────────
+  const DEFECT_SEVERITY_CONFIG = {
+    critical: { label: 'Critical', bg: 'bg-red-100',    text: 'text-red-700',    border: 'border-red-200'    },
+    high:     { label: 'High',     bg: 'bg-orange-100', text: 'text-orange-700', border: 'border-orange-200' },
+    medium:   { label: 'Medium',   bg: 'bg-yellow-100', text: 'text-yellow-700', border: 'border-yellow-200' },
+    low:      { label: 'Low',      bg: 'bg-gray-100',   text: 'text-gray-600',   border: 'border-gray-200'   },
+  };
+
+  const DEFECT_STATUS_CONFIG = {
+    open:       { label: 'Open',       bg: 'bg-red-50',    text: 'text-red-600'    },
+    in_progress:{ label: 'In Progress',bg: 'bg-blue-50',   text: 'text-blue-600'   },
+    fixed:      { label: 'Fixed',      bg: 'bg-green-50',  text: 'text-green-600'  },
+    wont_fix:   { label: "Won't Fix",  bg: 'bg-gray-100',  text: 'text-gray-500'   },
+  };
+
+  function DefectEditor({ idea, defect, onUpdate, onClose }) {
+    const saveDef = (fields) => {
+      const now = new Date().toISOString();
+      onUpdate(idea.id, {
+        defects: (idea.defects || []).map(d => d.id === defect.id ? { ...d, ...fields, updatedAt: now } : d),
+      });
+    };
+
+    const sev = DEFECT_SEVERITY_CONFIG[defect.severity] || DEFECT_SEVERITY_CONFIG.medium;
+    const dst = DEFECT_STATUS_CONFIG[defect.status]   || DEFECT_STATUS_CONFIG.open;
+
+    return (
+      <div className="space-y-4">
+        {/* Header */}
+        <div className="flex items-center gap-3 flex-wrap">
+          <button onClick={onClose}
+            className="flex items-center gap-1 text-sm text-gray-400 hover:text-indigo-600 transition-colors shrink-0">
+            ← Defects
+          </button>
+          <input
+            className="flex-1 min-w-0 text-base font-semibold bg-transparent border-b border-transparent hover:border-gray-200 focus:border-indigo-400 outline-none text-gray-800 py-0.5 transition-colors"
+            value={defect.title}
+            onChange={e => saveDef({ title: e.target.value })}
+            placeholder="Defect title"
+          />
+          <select value={defect.severity} onChange={e => saveDef({ severity: e.target.value })}
+            className={'shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full border outline-none cursor-pointer ' + sev.bg + ' ' + sev.text + ' ' + sev.border}>
+            {Object.entries(DEFECT_SEVERITY_CONFIG).map(([k, v]) => (
+              <option key={k} value={k}>{v.label}</option>
+            ))}
+          </select>
+          <select value={defect.status} onChange={e => saveDef({ status: e.target.value })}
+            className={'shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full border outline-none cursor-pointer border-gray-200 ' + dst.bg + ' ' + dst.text}>
+            {Object.entries(DEFECT_STATUS_CONFIG).map(([k, v]) => (
+              <option key={k} value={k}>{v.label}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Description (steps to reproduce / details) */}
+        <ExpandableTextarea
+          label="Description / Steps to Reproduce"
+          value={defect.description || ''}
+          onChange={e => saveDef({ description: e.target.value })}
+          placeholder="Describe the defect, steps to reproduce, expected vs actual behaviour…"
+          rows={5}
+        />
+
+        {/* Linked story */}
+        <div>
+          <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Linked Story</label>
+          <select value={defect.storyId || ''} onChange={e => saveDef({ storyId: e.target.value || '' })}
+            className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-indigo-400 bg-white text-gray-600">
+            <option value="">— None —</option>
+            {(idea.stories || []).map(s => (
+              <option key={s.id} value={s.id}>{(STORY_STATUS_CONFIG[s.status] || STORY_STATUS_CONFIG.todo).label} — {s.title || 'Untitled'}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Links */}
+        <div>
+          <div className="flex items-center justify-between mb-1.5">
+            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Links</label>
+            <button onClick={() => saveDef({ links: [...(defect.links || []), { id: uid(), name: '', value: '', editing: true }] })}
+              className="text-xs text-indigo-500 hover:text-indigo-700 font-medium">+ Add</button>
+          </div>
+          {(defect.links || []).length === 0 && <p className="text-xs text-gray-400">No links yet.</p>}
+          <div className="space-y-1.5">
+            {(defect.links || []).map((lk, i) => {
+              const isUrl = /^https?:\/\//i.test(lk.value);
+              const updateLk = (fields) => saveDef({ links: (defect.links || []).map((x, j) => j === i ? { ...x, ...fields } : x) });
+              const removeLk = () => saveDef({ links: (defect.links || []).filter((_, j) => j !== i) });
+              if (lk.editing) return (
+                <div key={lk.id || i} className="flex items-center gap-2">
+                  <input autoFocus className="w-24 shrink-0 text-xs border border-gray-200 rounded-lg px-2 py-1.5 outline-none focus:border-indigo-300 placeholder-gray-300"
+                    placeholder="Name" value={lk.name} onChange={e => updateLk({ name: e.target.value })} />
+                  <span className="text-gray-300 text-xs shrink-0">:</span>
+                  <input className="flex-1 min-w-0 text-xs border border-gray-200 rounded-lg px-2 py-1.5 outline-none focus:border-indigo-300 placeholder-gray-300"
+                    placeholder="URL or value" value={lk.value}
+                    onChange={e => updateLk({ value: e.target.value })}
+                    onKeyDown={e => { if (e.key === 'Enter') updateLk({ editing: false }); }} />
+                  <button onClick={() => updateLk({ editing: false })} className="shrink-0 text-xs text-indigo-500 hover:text-indigo-700 font-medium px-1">Done</button>
+                  <button onClick={removeLk} className="shrink-0 text-red-300 hover:text-red-500 text-xs">✕</button>
+                </div>
+              );
+              return (
+                <div key={lk.id || i} className="flex items-center gap-2 group">
+                  {isUrl
+                    ? <a href={lk.value} onClick={e => { e.preventDefault(); openUrl(lk.value); }}
+                        className="text-sm text-indigo-600 hover:text-indigo-800 hover:underline truncate flex items-center gap-1">
+                        {lk.name || lk.value}<span className="text-xs opacity-60">↗</span>
+                      </a>
+                    : <span className="text-sm text-gray-700 truncate">{lk.name}{lk.value ? ': ' + lk.value : ''}</span>
+                  }
+                  <button onClick={() => updateLk({ editing: true })} className="shrink-0 text-xs text-gray-400 hover:text-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity ml-auto">✎</button>
+                  <button onClick={removeLk} className="shrink-0 text-red-300 hover:text-red-500 text-xs opacity-0 group-hover:opacity-100 transition-opacity">✕</button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ── StoryEditor ──────────────────────────────────────────────────────────────
+  function StoryEditor({ idea, story, onUpdate, onClose }) {
+    const saveStory = (fields) => {
+      const now = new Date().toISOString();
+      onUpdate(idea.id, {
+        stories: (idea.stories || []).map(s =>
+          s.id === story.id ? { ...s, ...fields, updatedAt: now } : s
+        ),
+      });
+    };
+
+    const sc = STORY_STATUS_CONFIG[story.status] || STORY_STATUS_CONFIG.todo;
+
+    return (
+      <div className="space-y-4">
+        {/* Header */}
+        <div className="flex items-center gap-3">
+          <button onClick={onClose}
+            className="flex items-center gap-1 text-sm text-gray-400 hover:text-indigo-600 transition-colors shrink-0">
+            ← Stories
+          </button>
+          <input
+            className="flex-1 text-base font-semibold bg-transparent border-b border-transparent hover:border-gray-200 focus:border-indigo-400 outline-none text-gray-800 py-0.5 transition-colors"
+            value={story.title}
+            onChange={e => saveStory({ title: e.target.value })}
+            placeholder="Story title"
+          />
+          <select
+            value={story.status}
+            onChange={e => saveStory({ status: e.target.value })}
+            className={'shrink-0 text-xs font-semibold px-2.5 py-1 rounded-full border outline-none cursor-pointer ' + sc.bg + ' ' + sc.text + ' ' + sc.border}>
+            {Object.entries(STORY_STATUS_CONFIG).map(([k, v]) => (
+              <option key={k} value={k}>{v.label}</option>
+            ))}
+          </select>
+        </div>
+
+        {/* Description */}
+        <ExpandableTextarea
+          label="Description"
+          value={story.description || ''}
+          onChange={e => saveStory({ description: e.target.value })}
+          placeholder="Describe the story…"
+          rows={4}
+        />
+
+        {/* Estimate — always shown. Actual — shown in implementation+ */}
+        <div>
+          <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Time</label>
+          <div className="flex items-center gap-4 flex-wrap">
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-gray-500">Estimate</span>
+              <input type="number" min="0" step="0.5"
+                className="w-20 text-sm border border-gray-200 rounded-lg px-2.5 py-1.5 outline-none focus:border-indigo-400 text-center"
+                value={story.estimate || ''}
+                onChange={e => saveStory({ estimate: e.target.value })}
+                placeholder="0" />
+              <span className="text-xs text-gray-400">h</span>
+              {story.estimate && (
+                <span className="text-xs text-gray-400">≈ {Math.ceil(parseFloat(story.estimate) / 8)}d</span>
+              )}
+            </div>
+            {(idea.status === 'implementation' || idea.status === 'released') && (
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-gray-500">Actual</span>
+                <input type="number" min="0" step="0.5"
+                  className="w-20 text-sm border border-gray-200 rounded-lg px-2.5 py-1.5 outline-none focus:border-indigo-400 text-center"
+                  value={story.actualTime || ''}
+                  onChange={e => saveStory({ actualTime: e.target.value })}
+                  placeholder="0" />
+                <span className="text-xs text-gray-400">h</span>
+                {story.estimate && story.actualTime && (
+                  <span className={'text-xs font-medium ' + (parseFloat(story.actualTime) > parseFloat(story.estimate) ? 'text-red-500' : 'text-green-600')}>
+                    {parseFloat(story.actualTime) > parseFloat(story.estimate) ? '+' : ''}
+                    {(parseFloat(story.actualTime) - parseFloat(story.estimate)).toFixed(1)}h
+                  </span>
+                )}
+              </div>
+            )}
+          </div>
+          {/* Progress bar for implementation */}
+          {(idea.status === 'implementation' || idea.status === 'released') && story.estimate && story.actualTime && (
+            <div className="mt-2">
+              <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+                <div className={'h-full rounded-full transition-all ' + (parseFloat(story.actualTime) > parseFloat(story.estimate) ? 'bg-red-400' : 'bg-green-400')}
+                  style={{ width: Math.min(100, (parseFloat(story.actualTime) / parseFloat(story.estimate)) * 100) + '%' }} />
+              </div>
+              <div className="text-xs text-gray-400 mt-0.5 text-right">
+                {Math.round((parseFloat(story.actualTime) / parseFloat(story.estimate)) * 100)}% used
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Links */}
+        <div>
+          <div className="flex items-center justify-between mb-1.5">
+            <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Links</label>
+            <button onClick={() => saveStory({ links: [...(story.links || []), { id: uid(), name: '', value: '', editing: true }] })}
+              className="text-xs text-indigo-500 hover:text-indigo-700 font-medium">+ Add</button>
+          </div>
+          {(story.links || []).length === 0 && <p className="text-xs text-gray-400">No links yet.</p>}
+          <div className="space-y-1.5">
+            {(story.links || []).map((lk, i) => {
+              const isUrl = /^https?:\/\//i.test(lk.value);
+              const updateLk = (fields) => saveStory({ links: (story.links || []).map((x, j) => j === i ? { ...x, ...fields } : x) });
+              const removeLk = () => saveStory({ links: (story.links || []).filter((_, j) => j !== i) });
+              if (lk.editing) return (
+                <div key={lk.id || i} className="flex items-center gap-2">
+                  <input autoFocus className="w-24 shrink-0 text-xs border border-gray-200 rounded-lg px-2 py-1.5 outline-none focus:border-indigo-300 placeholder-gray-300"
+                    placeholder="Name" value={lk.name} onChange={e => updateLk({ name: e.target.value })} />
+                  <span className="text-gray-300 text-xs shrink-0">:</span>
+                  <input className="flex-1 min-w-0 text-xs border border-gray-200 rounded-lg px-2 py-1.5 outline-none focus:border-indigo-300 placeholder-gray-300"
+                    placeholder="URL or value" value={lk.value}
+                    onChange={e => updateLk({ value: e.target.value })}
+                    onKeyDown={e => { if (e.key === 'Enter') updateLk({ editing: false }); }} />
+                  <button onClick={() => updateLk({ editing: false })} className="shrink-0 text-xs text-indigo-500 hover:text-indigo-700 font-medium px-1">Done</button>
+                  <button onClick={removeLk} className="shrink-0 text-red-300 hover:text-red-500 text-xs">✕</button>
+                </div>
+              );
+              return (
+                <div key={lk.id || i} className="flex items-center gap-2 group">
+                  {isUrl
+                    ? <a href={lk.value} onClick={e => { e.preventDefault(); openUrl(lk.value); }}
+                        className="text-sm text-indigo-600 hover:text-indigo-800 hover:underline truncate flex items-center gap-1">
+                        {lk.name || lk.value}<span className="text-xs opacity-60">↗</span>
+                      </a>
+                    : <span className="text-sm text-gray-700 truncate">{lk.name}{lk.value ? ': ' + lk.value : ''}</span>
+                  }
+                  <button onClick={() => updateLk({ editing: true })} className="shrink-0 text-xs text-gray-400 hover:text-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity ml-auto">✎</button>
+                  <button onClick={removeLk} className="shrink-0 text-red-300 hover:text-red-500 text-xs opacity-0 group-hover:opacity-100 transition-opacity">✕</button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Dependencies — dropdown + add */}
+        <div>
+          <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-2">Dependencies</label>
+          {/* Added dependency tags */}
+          {(story.dependencies || []).length > 0 && (
+            <div className="flex flex-wrap gap-1.5 mb-2">
+              {(story.dependencies || []).map(did => {
+                const dep = (idea.stories || []).find(s => s.id === did);
+                if (!dep) return null;
+                const sc2 = STORY_STATUS_CONFIG[dep.status] || STORY_STATUS_CONFIG.todo;
+                return (
+                  <span key={did} className={'flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full ' + sc2.bg + ' ' + sc2.text}>
+                    {dep.title || 'Untitled'}
+                    <button onClick={() => saveStory({ dependencies: (story.dependencies || []).filter(id => id !== did) })}
+                      className="hover:text-red-500 transition-colors leading-none">✕</button>
+                  </span>
+                );
+              })}
+            </div>
+          )}
+          {/* Dropdown to add a new dependency */}
+          {(() => {
+            const available = (idea.stories || []).filter(s => s.id !== story.id && !(story.dependencies || []).includes(s.id));
+            if (available.length === 0) return <p className="text-xs text-gray-400">No other stories available.</p>;
+            return (
+              <div className="flex items-center gap-2">
+                <select
+                  defaultValue=""
+                  onChange={e => {
+                    if (e.target.value) {
+                      saveStory({ dependencies: [...(story.dependencies || []), e.target.value] });
+                      e.target.value = '';
+                    }
+                  }}
+                  className="flex-1 text-sm border border-gray-200 rounded-lg px-3 py-1.5 outline-none focus:border-indigo-400 bg-white text-gray-600">
+                  <option value="" disabled>Select a story to add…</option>
+                  {available.map(s => {
+                    const sc2 = STORY_STATUS_CONFIG[s.status] || STORY_STATUS_CONFIG.todo;
+                    return <option key={s.id} value={s.id}>{sc2.label} — {s.title || 'Untitled'}</option>;
+                  })}
+                </select>
+              </div>
+            );
+          })()}
+        </div>
+      </div>
+    );
+  }
+
+  // ── PlanningTab ──────────────────────────────────────────────────────────────
+  const STORY_STATUS_CONFIG = {
+    todo:        { label: 'To Do',       bg: 'bg-gray-100',   text: 'text-gray-600',  border: 'border-gray-200' },
+    in_progress: { label: 'In Progress', bg: 'bg-blue-100',   text: 'text-blue-700',  border: 'border-blue-200' },
+    done:        { label: 'Done',        bg: 'bg-green-100',  text: 'text-green-700', border: 'border-green-200' },
+    blocked:     { label: 'Blocked',     bg: 'bg-red-100',    text: 'text-red-700',   border: 'border-red-200'  },
+  };
+
+  const IDEA_STATUSES = [
+    { key: 'idea',           label: 'Idea',           next: 'design',         nextLabel: '→ Design',         color: 'indigo' },
+    { key: 'design',         label: 'Design',         next: 'implementation', nextLabel: '→ Implementation', color: 'amber'  },
+    { key: 'implementation', label: 'Implementation', next: 'released',       nextLabel: '→ Released',       color: 'blue'   },
+    { key: 'released',       label: 'Released',       next: null,             nextLabel: null,                color: 'green'  },
+  ];
+
+  const IDEA_COLOR = {
+    indigo: { bg: 'bg-indigo-50', border: 'border-indigo-200', badge: 'bg-indigo-100 text-indigo-700', btn: 'bg-indigo-600 hover:bg-indigo-700 text-white' },
+    amber:  { bg: 'bg-amber-50',  border: 'border-amber-200',  badge: 'bg-amber-100 text-amber-700',   btn: 'bg-amber-500 hover:bg-amber-600 text-white'   },
+    blue:   { bg: 'bg-blue-50',   border: 'border-blue-200',   badge: 'bg-blue-100 text-blue-700',     btn: 'bg-blue-600 hover:bg-blue-700 text-white'     },
+    green:  { bg: 'bg-green-50',  border: 'border-green-200',  badge: 'bg-green-100 text-green-700',   btn: 'bg-green-600 hover:bg-green-700 text-white'   },
+  };
+
+  function PlanningTab({ ideas, onAdd, onUpdate, onDelete, onMove, statusKey }) {
+    const [editId, setEditId]       = useState(null);
+    const [openDoc, setOpenDoc]     = useState(null);   // { ideaId, docId }
+    const [addDocFor, setAddDocFor] = useState(null);   // ideaId waiting for template choice
+    const [openStory, setOpenStory]   = useState(null);   // { ideaId, storyId }
+    const [openDefect, setOpenDefect] = useState(null);   // { ideaId, defectId }
+    const cfg   = IDEA_STATUSES.find(s => s.key === statusKey) || IDEA_STATUSES[0];
+    const color = IDEA_COLOR[cfg.color];
+    const list  = ideas.filter(i => i.status === statusKey)
+                       .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+
+    // Helper: add a new doc and open it
+    const createDoc = (ideaId, template) => {
+      const idea = ideas.find(i => i.id === ideaId);
+      if (!idea) return;
+      const newDoc = { id: uid(), title: 'Untitled', template, content: '', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
+      onUpdate(ideaId, { docs: [...(idea.docs || []), newDoc] });
+      setAddDocFor(null);
+      setOpenDoc({ ideaId, docId: newDoc.id });
+    };
+
+    // DocViewer mode
+    if (openDoc) {
+      const idea = ideas.find(i => i.id === openDoc.ideaId);
+      const doc  = idea && (idea.docs || []).find(d => d.id === openDoc.docId);
+      if (idea && doc) return (
+        <DocViewer idea={idea} doc={doc} onUpdate={onUpdate} onClose={() => setOpenDoc(null)}
+                   allIdeas={ideas}
+                   onDocRef={(iid, did) => setOpenDoc({ ideaId: iid, docId: did })} />
+      );
+      setOpenDoc(null);
+    }
+
+    // StoryEditor mode
+    if (openStory) {
+      const idea  = ideas.find(i => i.id === openStory.ideaId);
+      const story = idea && (idea.stories || []).find(s => s.id === openStory.storyId);
+      if (idea && story) return (
+        <StoryEditor idea={idea} story={story} onUpdate={onUpdate} onClose={() => setOpenStory(null)} />
+      );
+      setOpenStory(null);
+    }
+
+    // DefectEditor mode
+    if (openDefect) {
+      const idea   = ideas.find(i => i.id === openDefect.ideaId);
+      const defect = idea && (idea.defects || []).find(d => d.id === openDefect.defectId);
+      if (idea && defect) return (
+        <DefectEditor idea={idea} defect={defect} onUpdate={onUpdate} onClose={() => setOpenDefect(null)} />
+      );
+      setOpenDefect(null);
+    }
+
+    return (
+      <div className="space-y-3">
+        {/* Add button */}
+        <div className="flex justify-end">
+          <button onClick={onAdd}
+            className={`text-sm font-semibold px-4 py-2 rounded-lg transition-colors shadow-sm ${color.btn}`}>
+            + New {cfg.label}
+          </button>
+        </div>
+
+        {list.length === 0 && (
+          <div className={`rounded-xl border ${color.border} ${color.bg} py-16 text-center text-gray-400 text-sm`}>
+            No {cfg.label.toLowerCase()} items yet.
+          </div>
+        )}
+
+        {list.map(idea => (
+          <div key={idea.id}
+            className={`bg-white rounded-xl border ${editId === idea.id ? 'border-indigo-300 shadow-md' : 'border-gray-200 hover:border-gray-300 hover:shadow-sm'} transition-all`}>
+            {editId === idea.id
+              ? (
+              <div className="p-4 space-y-3">
+                  <input
+                    autoFocus
+                    className="w-full text-sm font-semibold border border-gray-200 rounded-lg px-3 py-2 outline-none focus:border-indigo-400"
+                    value={idea.title}
+                    placeholder="Idea title"
+                    onChange={e => onUpdate(idea.id, { title: e.target.value })}
+                  />
+                  <ExpandableTextarea
+                    label="Description"
+                    value={idea.description}
+                    onChange={e => onUpdate(idea.id, { description: e.target.value })}
+                    placeholder="Describe the idea… (Markdown + images supported)"
+                    rows={4}
+                    withImages={true}
+                  />
+
+                  {/* Links */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Links</label>
+                      <button
+                        onClick={() => onUpdate(idea.id, { links: [...(idea.links || []), { id: uid(), name: '', value: '', editing: true }] })}
+                        className="text-xs text-indigo-500 hover:text-indigo-700 font-medium">
+                        + Add
+                      </button>
+                    </div>
+                    {(idea.links || []).length === 0 && (
+                      <p className="text-xs text-gray-400">No links yet.</p>
+                    )}
+                    <div className="space-y-1.5">
+                      {(idea.links || []).map((lk, i) => {
+                        const isUrl = /^https?:\/\//i.test(lk.value);
+                        const updateLk = (fields) => {
+                          const updated = (idea.links || []).map((x, j) => j === i ? { ...x, ...fields } : x);
+                          onUpdate(idea.id, { links: updated });
+                        };
+                        const removeLk = () => onUpdate(idea.id, { links: (idea.links || []).filter((_, j) => j !== i) });
+                        if (lk.editing) {
+                          return (
+                            <div key={lk.id || i} className="flex items-center gap-2">
+                              <input autoFocus
+                                className="w-24 shrink-0 text-xs border border-gray-200 rounded-lg px-2 py-1.5 outline-none focus:border-indigo-300 placeholder-gray-300"
+                                placeholder="Name" value={lk.name}
+                                onChange={e => updateLk({ name: e.target.value })} />
+                              <span className="text-gray-300 text-xs shrink-0">:</span>
+                              <input
+                                className="flex-1 min-w-0 text-xs border border-gray-200 rounded-lg px-2 py-1.5 outline-none focus:border-indigo-300 placeholder-gray-300"
+                                placeholder="URL or value" value={lk.value}
+                                onChange={e => updateLk({ value: e.target.value })}
+                                onKeyDown={e => { if (e.key === 'Enter') updateLk({ editing: false }); }} />
+                              <button onClick={() => updateLk({ editing: false })}
+                                className="shrink-0 text-xs text-indigo-500 hover:text-indigo-700 font-medium px-1">Done</button>
+                              <button onClick={removeLk}
+                                className="shrink-0 text-red-300 hover:text-red-500 text-xs">✕</button>
+                            </div>
+                          );
+                        }
+                        return (
+                          <div key={lk.id || i} className="flex items-center gap-2 group">
+                            {isUrl
+                              ? <a href={lk.value} onClick={e => { e.preventDefault(); openUrl(lk.value); }}
+                                  className="text-sm text-indigo-600 hover:text-indigo-800 hover:underline truncate flex items-center gap-1">
+                                  {lk.name || lk.value}<span className="text-xs opacity-60">↗</span>
+                                </a>
+                              : <span className="text-sm text-gray-700 truncate">{lk.name}{lk.value ? `: ${lk.value}` : ''}</span>
+                            }
+                            <button onClick={() => updateLk({ editing: true })}
+                              className="shrink-0 text-xs text-gray-400 hover:text-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity ml-auto">✎</button>
+                            <button onClick={removeLk}
+                              className="shrink-0 text-red-300 hover:text-red-500 text-xs opacity-0 group-hover:opacity-100 transition-opacity">✕</button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Documents — shown for design / implementation / released */}
+                  {idea.status !== 'idea' && (
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Documents</label>
+                        <button onClick={() => setAddDocFor(addDocFor === idea.id ? null : idea.id)}
+                          className="text-xs text-indigo-500 hover:text-indigo-700 font-medium">
+                          + Add
+                        </button>
+                      </div>
+
+                      {/* Template picker */}
+                      {addDocFor === idea.id && (
+                        <div className="flex gap-2 mb-2">
+                          {[
+                            { t: 'markdown', icon: '📄', label: 'Markdown',       desc: 'Rich text + images' },
+                            { t: 'canvas',   icon: '🎨', label: 'Canvas',         desc: 'Sticky notes board' },
+                            { t: 'diagram',  icon: '🔷', label: 'Diagram',        desc: 'Flowchart, UML, sequence…' },
+                            { t: 'calendar', icon: '📅', label: 'Sprint Planner', desc: 'Plan stories on a calendar' },
+                          ].map(({ t, icon, label, desc }) => (
+                            <button key={t} onClick={() => createDoc(idea.id, t)}
+                              className="flex-1 text-left border border-gray-200 rounded-lg px-3 py-2 hover:border-indigo-400 hover:bg-indigo-50 transition-colors">
+                              <div className="text-base">{icon}</div>
+                              <div className="text-xs font-semibold text-gray-700 mt-0.5">{label}</div>
+                              <div className="text-xs text-gray-400">{desc}</div>
+                            </button>
+                          ))}
+                        </div>
+                      )}
+
+                      {/* Doc list */}
+                      {(idea.docs || []).length === 0 && addDocFor !== idea.id && (
+                        <p className="text-xs text-gray-400">No documents yet.</p>
+                      )}
+                      <div className="space-y-1">
+                        {(idea.docs || []).map(doc => (
+                          <div key={doc.id} className="flex items-center gap-2 group bg-gray-50 rounded-lg px-2 py-1.5">
+                            <span className="text-sm">{doc.template === 'canvas' ? '🎨' : doc.template === 'diagram' ? '🔷' : doc.template === 'calendar' ? '📅' : '📄'}</span>
+                            <span className="flex-1 text-xs text-gray-700 truncate">{doc.title || 'Untitled'}</span>
+                            <button onClick={() => setOpenDoc({ ideaId: idea.id, docId: doc.id })}
+                              className="shrink-0 text-xs text-indigo-500 hover:text-indigo-700 transition-colors">↗</button>
+                            <button onClick={() => onUpdate(idea.id, { docs: (idea.docs || []).filter(d => d.id !== doc.id) })}
+                              className="shrink-0 text-red-300 hover:text-red-500 text-xs transition-colors opacity-0 group-hover:opacity-100">✕</button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Stories — shown for design / implementation / released */}
+                  {idea.status !== 'idea' && (
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Stories</label>
+                        <button onClick={() => {
+                          const newStory = { id: uid(), title: '', description: '', links: [], dependencies: [], estimate: '', actualTime: '', status: 'todo', plannedStart: '', plannedEnd: '', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
+                          onUpdate(idea.id, { stories: [...(idea.stories || []), newStory] });
+                        }} className="text-xs text-indigo-500 hover:text-indigo-700 font-medium">+ Add</button>
+                      </div>
+                      {(idea.stories || []).length === 0
+                        ? <p className="text-xs text-gray-400">No stories yet.</p>
+                        : <div className="space-y-1">
+                            {(idea.stories || []).map(s => {
+                              const sc  = STORY_STATUS_CONFIG[s.status] || STORY_STATUS_CONFIG.todo;
+                              const est = parseFloat(s.estimate) || 0;
+                              const act = parseFloat(s.actualTime) || 0;
+                              const pct = est > 0 && act > 0 ? Math.min(100, Math.round((act / est) * 100)) : null;
+                              return (
+                                <div key={s.id} className="flex flex-col gap-0.5 group bg-gray-50 rounded-lg px-2 py-1.5">
+                                  <div className="flex items-center gap-2">
+                                    <span className={'text-xs font-medium px-1.5 py-0.5 rounded-full shrink-0 ' + sc.bg + ' ' + sc.text}>{sc.label}</span>
+                                    <span className="flex-1 text-xs text-gray-700 truncate">{s.title || 'Untitled'}</span>
+                                    {(est > 0 || act > 0) && (
+                                      <span className="text-xs text-gray-400 shrink-0">
+                                        {act > 0 ? act + 'h' : ''}{act > 0 && est > 0 ? '/' : ''}{est > 0 ? est + 'h est' : ''}
+                                      </span>
+                                    )}
+                                    <button onClick={() => setOpenStory({ ideaId: idea.id, storyId: s.id })}
+                                      className="shrink-0 text-xs text-indigo-500 hover:text-indigo-700 transition-colors">↗</button>
+                                    <button onClick={() => onUpdate(idea.id, { stories: (idea.stories || []).filter(st => st.id !== s.id) })}
+                                      className="shrink-0 text-red-300 hover:text-red-500 text-xs transition-colors opacity-0 group-hover:opacity-100">✕</button>
+                                  </div>
+                                  {pct !== null && (
+                                    <div className="h-1 bg-gray-200 rounded-full overflow-hidden ml-10">
+                                      <div className={'h-full rounded-full ' + (act > est ? 'bg-red-400' : 'bg-green-400')}
+                                        style={{ width: pct + '%' }} />
+                                    </div>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                      }
+                    </div>
+                  )}
+
+                  {/* Defects — shown for implementation / released */}
+                  {(idea.status === 'implementation' || idea.status === 'released') && (
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide">Defects 🐛</label>
+                        <button onClick={() => {
+                          const newDef = { id: uid(), title: '', description: '', severity: 'medium', status: 'open', storyId: '', links: [], createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() };
+                          onUpdate(idea.id, { defects: [...(idea.defects || []), newDef] });
+                        }} className="text-xs text-red-500 hover:text-red-700 font-medium">+ Add</button>
+                      </div>
+                      {(idea.defects || []).length === 0
+                        ? <p className="text-xs text-gray-400">No defects reported.</p>
+                        : <div className="space-y-1">
+                            {(idea.defects || []).map(d => {
+                              const sev = DEFECT_SEVERITY_CONFIG[d.severity] || DEFECT_SEVERITY_CONFIG.medium;
+                              const dst = DEFECT_STATUS_CONFIG[d.status]    || DEFECT_STATUS_CONFIG.open;
+                              return (
+                                <div key={d.id} className="flex items-center gap-2 group bg-red-50 rounded-lg px-2 py-1.5 border border-red-100">
+                                  <span className={'text-xs font-medium px-1.5 py-0.5 rounded-full shrink-0 ' + sev.bg + ' ' + sev.text}>{sev.label}</span>
+                                  <span className={'text-xs font-medium px-1.5 py-0.5 rounded-full shrink-0 ' + dst.bg + ' ' + dst.text}>{dst.label}</span>
+                                  <span className="flex-1 text-xs text-gray-700 truncate">{d.title || 'Untitled'}</span>
+                                  <button onClick={() => setOpenDefect({ ideaId: idea.id, defectId: d.id })}
+                                    className="shrink-0 text-xs text-indigo-500 hover:text-indigo-700 transition-colors">↗</button>
+                                  <button onClick={() => onUpdate(idea.id, { defects: (idea.defects || []).filter(df => df.id !== d.id) })}
+                                    className="shrink-0 text-red-300 hover:text-red-500 text-xs transition-colors opacity-0 group-hover:opacity-100">✕</button>
+                                </div>
+                              );
+                            })}
+                          </div>
+                      }
+                    </div>
+                  )}
+
+                  <div className="flex items-center justify-between gap-2">
+                    <button onClick={() => { if (confirm('Delete this idea?')) { onDelete(idea.id); setEditId(null); } }}
+                      className="text-xs text-red-400 hover:text-red-600 transition-colors">
+                      Delete
+                    </button>
+                    <button onClick={() => setEditId(null)}
+                      className="text-xs text-indigo-600 hover:text-indigo-800 font-medium transition-colors">
+                      Done
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="p-4" onClick={() => setEditId(idea.id)}>
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-semibold text-gray-800 leading-snug">
+                        {idea.title || <span className="text-gray-300 italic">Untitled</span>}
+                      </div>
+                      {idea.description && (
+                        <div className="mt-1 text-xs text-gray-500 line-clamp-2">{idea.description}</div>
+                      )}
+                      <div className="mt-2 flex items-center gap-3 flex-wrap">
+                        <span className="text-xs text-gray-400">{fmtShort(idea.updatedAt || idea.createdAt)}</span>
+                        {(idea.links || []).length > 0 && (
+                          <span className="text-indigo-400 text-xs">🔗 {idea.links.length} link{idea.links.length !== 1 ? 's' : ''}</span>
+                        )}
+                        {(idea.docs || []).length > 0 && (
+                          <span className="text-amber-500 text-xs">📄 {idea.docs.length} doc{idea.docs.length !== 1 ? 's' : ''}</span>
+                        )}
+                        {(idea.stories || []).length > 0 && (() => {
+                          const stories = idea.stories;
+                          const done = stories.filter(s => s.status === 'done').length;
+                          const pct  = Math.round((done / stories.length) * 100);
+                          return (
+                            <span className="flex items-center gap-1.5 text-purple-500 text-xs">
+                              📋 {stories.length} {stories.length !== 1 ? 'stories' : 'story'}
+                              {done > 0 && (
+                                <>
+                                  <span className="text-gray-300">·</span>
+                                  <span className="inline-flex items-center gap-1">
+                                    <span className="w-16 h-1.5 bg-gray-100 rounded-full overflow-hidden inline-block">
+                                      <span className="h-full bg-green-400 rounded-full inline-block" style={{ width: pct + '%' }} />
+                                    </span>
+                                    <span className="text-gray-400">{pct}%</span>
+                                  </span>
+                                </>
+                              )}
+                            </span>
+                          );
+                        })()}
+                        {(idea.defects || []).length > 0 && (() => {
+                          const defects = idea.defects;
+                          const fixed = defects.filter(d => d.status === 'fixed').length;
+                          return (
+                            <span className="text-red-500 text-xs">🐛 {defects.length} defect{defects.length !== 1 ? 's' : ''}{fixed > 0 ? ' · ' + fixed + ' fixed' : ''}</span>
+                          );
+                        })()}
+                      </div>
+                      {/* Idea-level progress bar — shown in implementation / released */}
+                      {(statusKey === 'implementation' || statusKey === 'released') && (idea.stories || []).length > 0 && (() => {
+                        const stories = idea.stories;
+                        const done = stories.filter(s => s.status === 'done').length;
+                        const inprog = stories.filter(s => s.status === 'in_progress').length;
+                        const pct = Math.round((done / stories.length) * 100);
+                        return (
+                          <div className="mt-3">
+                            <div className="flex items-center justify-between text-xs text-gray-400 mb-1">
+                              <span>Overall progress</span>
+                              <span>{done}/{stories.length} stories done · {pct}%</span>
+                            </div>
+                            <div className="h-2 bg-gray-100 rounded-full overflow-hidden">
+                              <div className="h-full flex">
+                                <div className="bg-green-400 transition-all" style={{ width: pct + '%' }} />
+                                <div className="bg-blue-300 transition-all" style={{ width: Math.round((inprog / stories.length) * 100) + '%' }} />
+                              </div>
+                            </div>
+                            <div className="flex items-center gap-3 mt-1 text-xs text-gray-400">
+                              {done > 0     && <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-400 inline-block" />Done</span>}
+                              {inprog > 0   && <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-300 inline-block" />In progress</span>}
+                            </div>
+                          </div>
+                        );
+                      })()}
+                    </div>
+                    {cfg.next && (
+                      <button
+                        onClick={e => { e.stopPropagation(); onMove(idea.id, cfg.next); }}
+                        className={`shrink-0 text-xs font-semibold px-2.5 py-1 rounded-lg transition-colors ${color.btn}`}>
+                        {cfg.nextLabel}
+                      </button>
+                    )}
+                  </div>
+                  {!cfg.next && (
+                    <span className={`inline-block mt-2 text-xs font-medium px-2 py-0.5 rounded-full ${color.badge}`}>
+                      ✓ {cfg.label}
+                    </span>
+                  )}
+                </div>
+              )
+            }
+          </div>
+        ))}
       </div>
     );
   }
@@ -3099,7 +4891,8 @@
   }
 
   // ── Sidebar ─────────────────────────────────────────────────────────────────
-  function Sidebar({ tab, setTab, counts, saveStatus, collapsed, onToggle, dynamicViewCount = 0 }) {
+  function Sidebar({ tab, setTab, counts, saveStatus, collapsed, onToggle, dynamicViewCount = 0, featureFlags = {} }) {
+    const ff = { showSprintView: true, showNotes: true, showBookmarks: true, showSecrets: true, showFeatures: true, ...featureFlags };
     const c = collapsed;
     return (
       <aside className={`${c ? 'w-14' : 'w-56'} shrink-0 bg-white border-r border-gray-200 flex flex-col h-full overflow-hidden`}>
@@ -3120,14 +4913,29 @@
           <NavItem label="Completed"   icon={NAV_ICONS.done}      count={counts.done}      active={tab === 'done'}      onClick={() => setTab('done')}      indent={!c} collapsed={c} />
           <NavItem label="Calendar"    icon={NAV_ICONS.calendar}                           active={tab === 'calendar'}  onClick={() => setTab('calendar')}  indent={!c} collapsed={c} />
           <NavItem label="Analysis"    icon={NAV_ICONS.analysis}                           active={tab === 'analysis'}  onClick={() => setTab('analysis')}  indent={!c} collapsed={c} />
-          <NavItem label="Sprint View" icon={NAV_ICONS.sprint}                             active={tab === 'sprint'}    onClick={() => setTab('sprint')}    indent={!c} collapsed={c} />
+          {ff.showSprintView && <NavItem label="Sprint View" icon={NAV_ICONS.sprint} active={tab === 'sprint'} onClick={() => setTab('sprint')} indent={!c} collapsed={c} />}
           <NavItem label="Recurring"   icon={NAV_ICONS.recurring} count={counts.recurring} active={tab === 'recurring'} onClick={() => setTab('recurring')} indent={!c} collapsed={c} />
 
-          {!c && <div className="pt-3 pb-1 px-3"><span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Workspace</span></div>}
-          {c && <div className="my-1 border-t border-gray-100" />}
-          <NavItem label="Notes"     icon={NAV_ICONS.notes}   count={counts.notes}   active={tab === 'notes'}   onClick={() => setTab('notes')}   collapsed={c} />
-          <NavItem label="Bookmarks" icon={NAV_ICONS.links}   count={counts.links}   active={tab === 'links'}   onClick={() => setTab('links')}   collapsed={c} />
-          <NavItem label="Secrets"   icon={NAV_ICONS.secrets} count={counts.secrets} active={tab === 'secrets'} onClick={() => setTab('secrets')} collapsed={c} />
+          {(ff.showNotes || ff.showBookmarks || ff.showSecrets) && (
+            <>
+              {!c && <div className="pt-3 pb-1 px-3"><span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Workspace</span></div>}
+              {c && <div className="my-1 border-t border-gray-100" />}
+              {ff.showNotes     && <NavItem label="Notes"     icon={NAV_ICONS.notes}   count={counts.notes}   active={tab === 'notes'}   onClick={() => setTab('notes')}   collapsed={c} />}
+              {ff.showBookmarks && <NavItem label="Bookmarks" icon={NAV_ICONS.links}   count={counts.links}   active={tab === 'links'}   onClick={() => setTab('links')}   collapsed={c} />}
+              {ff.showSecrets   && <NavItem label="Secrets"   icon={NAV_ICONS.secrets} count={counts.secrets} active={tab === 'secrets'} onClick={() => setTab('secrets')} collapsed={c} />}
+            </>
+          )}
+
+          {ff.showFeatures && (
+            <>
+              {!c && <div className="pt-3 pb-1 px-3"><span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Features</span></div>}
+              {c && <div className="my-1 border-t border-gray-100" />}
+              <NavItem label="Ideas"          icon={NAV_ICONS.idea}           count={counts.idea}           active={tab === 'idea'}           onClick={() => setTab('idea')}           indent={!c} collapsed={c} />
+              <NavItem label="Design"         icon={NAV_ICONS.design}         count={counts.design}         active={tab === 'design'}         onClick={() => setTab('design')}         indent={!c} collapsed={c} />
+              <NavItem label="Implementation" icon={NAV_ICONS.implementation} count={counts.implementation} active={tab === 'implementation'} onClick={() => setTab('implementation')} indent={!c} collapsed={c} />
+              <NavItem label="Released"       icon={NAV_ICONS.released}       count={counts.released}       active={tab === 'released'}       onClick={() => setTab('released')}       indent={!c} collapsed={c} />
+            </>
+          )}
 
           {dynamicViewCount > 0 && (
             <NavItem label="Views" icon={NAV_ICONS.views} count={dynamicViewCount} active={tab === 'views'} onClick={() => setTab('views')} collapsed={c} />
@@ -3356,7 +5164,7 @@
         </div>
         <div className="w-full rounded-xl border border-gray-200 divide-y divide-gray-200 text-sm bg-white">
           {[
-            ['Version',     '1.16.0'],
+            ['Version',     '1.17.0'],
             ['Author',      'Ananthu PM'],
             ['Description', 'A personal productivity app for managing tasks, notes, and bookmarks with an AI assistant.'],
             ['License',     'MIT'],
@@ -3577,6 +5385,34 @@
         <section>
           <h3 className="text-xs font-semibold text-gray-700 uppercase tracking-wider mb-3">Secrets</h3>
           <SecretsPassphraseSection />
+        </section>
+
+        <section>
+          <h3 className="text-xs font-semibold text-gray-700 uppercase tracking-wider mb-3">Feature Menus</h3>
+          <div className="p-4 bg-white rounded-xl border border-gray-200 shadow-sm space-y-3">
+            <p className="text-xs text-gray-500">Show or hide sidebar menu sections.</p>
+            {[
+              { key: 'showSprintView',   label: 'Sprint View',          section: 'Tasks' },
+              { key: 'showNotes',        label: 'Notes',                section: 'Workspace' },
+              { key: 'showBookmarks',    label: 'Bookmarks',            section: 'Workspace' },
+              { key: 'showSecrets',      label: 'Secrets',              section: 'Workspace' },
+              { key: 'showFeatures',     label: 'Features (Ideas / Design / Implementation / Released)', section: 'Features' },
+            ].map(({ key, label, section }) => {
+              const enabled = settings[key] !== false;
+              return (
+                <label key={key} className="flex items-center justify-between gap-3 cursor-pointer select-none">
+                  <div>
+                    <span className="text-sm text-gray-700 font-medium">{label}</span>
+                    <span className="ml-2 text-xs text-gray-400">{section}</span>
+                  </div>
+                  <button onClick={() => onUpdate({ [key]: !enabled })}
+                    className={'relative inline-flex h-5 w-9 rounded-full transition-colors focus:outline-none ' + (enabled ? 'bg-indigo-600' : 'bg-gray-300')}>
+                    <span className={'inline-block w-3.5 h-3.5 rounded-full bg-white shadow transform transition-transform mt-0.5 ' + (enabled ? 'translate-x-4' : 'translate-x-0.5')} />
+                  </button>
+                </label>
+              );
+            })}
+          </div>
         </section>
 
         <McpServersSection />
@@ -3927,13 +5763,17 @@
     const [tasks, setTasks]           = useState([]);
     const [links, setLinks]           = useState([]);
     const [secrets, setSecrets]       = useState([]);
+    const [ideas, setIdeas]           = useState([]);
     const [notes, setNotes]           = useState([]);
     const [folders, setFolders]       = useState([]);
     const [selectedNoteFolder, setSelectedNoteFolder] = useState(null);
     const [recurring, setRecurring]   = useState([]);
     const [loading, setLoading]       = useState(true);
     const [saveStatus, setSave]       = useState('');
-    const [tab, setTab]               = useState('todo');
+    const [tab, setTab]               = useState(() => localStorage.getItem('vega-tab') || 'todo');
+
+    // Persist active tab across refreshes
+    const switchTab = (t) => { setTab(t); localStorage.setItem('vega-tab', t); };
     const [detailStack, setStack]     = useState([]);
     const [selectedNote, setNote]     = useState(null);
     const [dynamicViews, setDynamicViews]       = useState([]);
@@ -4019,7 +5859,7 @@
               if (action.type === 'open_task') {
                 setStack([action.id]);
               } else if (action.type === 'open_note') {
-                setTab('notes');
+                switchTab('notes');
                 setNote(action.id);
               } else if (action.type === 'open_link') {
                 openUrl(action.url);
@@ -4028,7 +5868,7 @@
                 const v = action.view;
                 setDynamicViews(prev => [...prev.filter(x => x.id !== v.id), v]);
                 setActiveDynamicView(v.id);
-                setTab('views');
+                switchTab('views');
               } else if (action.type === 'update_settings') {
                 updateSettings(action.patch);
               }
@@ -4055,26 +5895,28 @@
     function handleCloseView(id) {
       const next = dynamicViews.filter(v => v.id !== id);
       setDynamicViews(next);
-      if (next.length === 0) setTab('todo');
+      if (next.length === 0) switchTab('todo');
       else setActiveDynamicView(next[next.length - 1].id);
     }
 
     const taskTimer      = useRef(null);
     const linkTimer      = useRef(null);
     const secretTimer    = useRef(null);
+    const ideaTimer      = useRef(null);
     const noteTimer      = useRef(null);
     const recurringTimer = useRef(null);
     const folderTimer    = useRef(null);
     const tasksReady     = useRef(false);
     const linksReady     = useRef(false);
     const secretsReady   = useRef(false);
+    const ideasReady     = useRef(false);
     const notesReady     = useRef(false);
     const recurringReady = useRef(false);
     const foldersReady   = useRef(false);
 
     // load all
     useEffect(() => {
-      Promise.all([fetchTasks(), fetchLinks(), fetchSecrets(), fetchNotes(), fetchRecurring(), fetchFolders()]).then(([t, l, sec, n, r, fo]) => {
+      Promise.all([fetchTasks(), fetchLinks(), fetchSecrets(), fetchIdeas(), fetchNotes(), fetchRecurring(), fetchFolders()]).then(([t, l, sec, ideas, n, r, fo]) => {
         const taskArr   = Array.isArray(t) ? t : [];
         const recurArr  = Array.isArray(r) ? r : [];
         const todayStr  = todayDate();
@@ -4086,6 +5928,7 @@
         setTasks(allTasks);
         setLinks(Array.isArray(l) ? l : []);
         setSecrets(Array.isArray(sec) ? sec : []);
+        setIdeas(Array.isArray(ideas) ? ideas : []);
         setNotes(Array.isArray(n) ? n : []);
         setFolders(Array.isArray(fo) ? fo : []);
         setRecurring(finalRecurring);
@@ -4093,6 +5936,7 @@
         tasksReady.current     = true;
         linksReady.current     = true;
         secretsReady.current   = true;
+        ideasReady.current     = true;
         notesReady.current     = true;
         recurringReady.current = true;
         foldersReady.current   = true;
@@ -4116,6 +5960,7 @@
     useEffect(() => debounceSave(taskTimer, tasksReady, postTasks, tasks), [tasks]);
     useEffect(() => debounceSave(linkTimer, linksReady, postLinks, links), [links]);
     useEffect(() => debounceSave(secretTimer, secretsReady, postSecrets, secrets), [secrets]);
+    useEffect(() => debounceSave(ideaTimer,   ideasReady,   postIdeas,   ideas),   [ideas]);
     useEffect(() => debounceSave(noteTimer, notesReady, postNotes, notes), [notes]);
     useEffect(() => debounceSave(recurringTimer, recurringReady, postRecurring, recurring), [recurring]);
     useEffect(() => debounceSave(folderTimer, foldersReady, postFolders, folders), [folders]);
@@ -4202,12 +6047,18 @@
     const updateSecret = useCallback((id, data) => setSecrets(ss => ss.map(s => s.id === id ? { ...s, ...data } : s)), []);
     const deleteSecret = useCallback((id) => setSecrets(ss => ss.filter(s => s.id !== id)), []);
 
+    // ── idea handlers ──
+    const addIdea    = useCallback(() => setIdeas(is => [makeIdea(), ...is]), []);
+    const updateIdea = useCallback((id, data) => setIdeas(is => is.map(i => i.id === id ? { ...i, ...data, updatedAt: new Date().toISOString() } : i)), []);
+    const deleteIdea = useCallback((id) => setIdeas(is => is.filter(i => i.id !== id)), []);
+    const moveIdea   = useCallback((id, status) => setIdeas(is => is.map(i => i.id === id ? { ...i, status, updatedAt: new Date().toISOString() } : i)), []);
+
     // ── note handlers ──
     const addNote = useCallback((folderId = null) => {
       const n = makeNote(folderId);
       setNotes(ns => [n, ...ns]);
       setNote(n.id);
-      setTab('notes');
+      switchTab('notes');
       return n.id;
     }, []);
     const updateNote = useCallback((id, fields) => setNotes(ns => ns.map(n => n.id === id ? { ...n, ...fields } : n)), []);
@@ -4301,7 +6152,7 @@
     const taskPanel    = detailStack.length > 0;
     const notePanel    = activeNote !== null && tab === 'notes';
 
-    const PAGE_TITLES = { todo: 'To Do', active: 'In Progress', paused: 'Paused', done: 'Completed', calendar: 'Calendar', analysis: 'Analysis', sprint: 'Sprint View', notes: 'Notes', links: 'Bookmarks', secrets: 'Secrets', recurring: 'Recurring', settings: 'Settings' };
+    const PAGE_TITLES = { todo: 'To Do', active: 'In Progress', paused: 'Paused', done: 'Completed', calendar: 'Calendar', analysis: 'Analysis', sprint: 'Sprint View', notes: 'Notes', links: 'Bookmarks', secrets: 'Secrets', recurring: 'Recurring', idea: 'Ideas', design: 'Design', implementation: 'Implementation', released: 'Released', settings: 'Settings' };
 
     // ── new action per tab ──
     const handleNew = () => {
@@ -4316,19 +6167,22 @@
       tasksReady.current = false;
       linksReady.current = false;
       secretsReady.current = false;
+      ideasReady.current   = false;
       notesReady.current = false;
       recurringReady.current = false;
       foldersReady.current = false;
-      const [t, l, sec, n, r, fo] = await Promise.all([fetchTasks(), fetchLinks(), fetchSecrets(), fetchNotes(), fetchRecurring(), fetchFolders()]);
+      const [t, l, sec, ideasData, n, r, fo] = await Promise.all([fetchTasks(), fetchLinks(), fetchSecrets(), fetchIdeas(), fetchNotes(), fetchRecurring(), fetchFolders()]);
       setTasks(Array.isArray(t) ? t : []);
       setLinks(Array.isArray(l) ? l : []);
       setSecrets(Array.isArray(sec) ? sec : []);
+      setIdeas(Array.isArray(ideasData) ? ideasData : []);
       setNotes(Array.isArray(n) ? n : []);
       setRecurring(Array.isArray(r) ? r : []);
       setFolders(Array.isArray(fo) ? fo : []);
       tasksReady.current = true;
       linksReady.current = true;
       secretsReady.current = true;
+      ideasReady.current   = true;
       notesReady.current = true;
       recurringReady.current = true;
       foldersReady.current = true;
@@ -4364,12 +6218,24 @@
 
         {/* ── Sidebar ── */}
         <Sidebar
-          tab={tab} setTab={(t) => { setTab(t); setStack([]); if (t !== 'notes') setNote(null); }}
-          counts={{ todo: rootTodos.length, done: completedRoots.length + skippedRoots.length, active: activeTasks.length, paused: pausedTasks.length, notes: notes.length, links: links.length, secrets: secrets.length, recurring: recurring.length }}
+          tab={tab} setTab={(t) => { switchTab(t); setStack([]); if (t !== 'notes') setNote(null); }}
+          counts={{ todo: rootTodos.length, done: completedRoots.length + skippedRoots.length, active: activeTasks.length, paused: pausedTasks.length, notes: notes.length, links: links.length, secrets: secrets.length, recurring: recurring.length,
+            idea: ideas.filter(i => i.status === 'idea').length,
+            design: ideas.filter(i => i.status === 'design').length,
+            implementation: ideas.filter(i => i.status === 'implementation').length,
+            released: ideas.filter(i => i.status === 'released').length,
+          }}
           saveStatus={saveStatus}
           collapsed={sidebarCollapsed}
           onToggle={toggleSidebar}
           dynamicViewCount={dynamicViews.length}
+          featureFlags={{
+            showSprintView: settings.showSprintView !== false,
+            showNotes:      settings.showNotes      !== false,
+            showBookmarks:  settings.showBookmarks  !== false,
+            showSecrets:    settings.showSecrets    !== false,
+            showFeatures:   settings.showFeatures   !== false,
+          }}
         />
 
         {/* ── Main ── */}
@@ -4656,6 +6522,18 @@
                 <SprintViewTab tasks={tasks} onOpen={id => setStack([id])} />
               )}
 
+              {/* ── Planning ── */}
+              {['idea','design','implementation','released'].includes(tab) && (
+                <PlanningTab
+                  ideas={ideas}
+                  onAdd={() => addIdea()}
+                  onUpdate={updateIdea}
+                  onDelete={deleteIdea}
+                  onMove={moveIdea}
+                  statusKey={tab}
+                />
+              )}
+
               {/* ── Recurring ── */}
               {tab === 'recurring' && (
                 <RecurringTab
@@ -4682,7 +6560,7 @@
                   onSelectView={setActiveDynamicView}
                   onCloseView={handleCloseView}
                   onOpenTask={id => setStack([id])}
-                  onOpenNote={id => { setTab('notes'); setNote(id); }}
+                  onOpenNote={id => { switchTab('notes'); setNote(id); }}
                 />
               )}
 
