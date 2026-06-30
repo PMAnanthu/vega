@@ -4,6 +4,19 @@ All notable changes to Vega are documented here.
 
 ---
 
+## [1.20.0] — 2026-07-01
+
+### Fixed
+
+- **Mermaid diagrams in Markdown** — fenced ` ```mermaid ``` ` blocks now
+  render as live diagrams in Preview mode inside notes and idea documents.
+  Uses a custom `marked` renderer to emit `<div class="mermaid">` and calls
+  `mermaid.run()` after the HTML is injected into the DOM.
+
+---
+
+## [1.19.0] — 2026-07-01
+
 ## [1.19.0] — 2026-07-01
 
 ### Added

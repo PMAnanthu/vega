@@ -788,6 +788,10 @@
         () => valueRef.current,
         newVal => onChange({ target: { value: newVal } })
       );
+      // Render any mermaid diagrams inserted by the custom marked renderer
+      if (typeof mermaid !== 'undefined' && previewRef.current.querySelector('.mermaid')) {
+        mermaid.run({ nodes: previewRef.current.querySelectorAll('.mermaid') });
+      }
     }, [mode, previewHtml]);
 
     async function uploadAndInsert(file) {
@@ -1411,6 +1415,9 @@
         () => noteContentRef.current,
         newVal => onUpdate(note.id, { content: newVal, updatedAt: new Date().toISOString() })
       );
+      if (typeof mermaid !== 'undefined' && previewRef.current.querySelector('.mermaid')) {
+        mermaid.run({ nodes: previewRef.current.querySelectorAll('.mermaid') });
+      }
     }, [preview, html]);
 
     return (
@@ -2376,6 +2383,21 @@
   if (typeof mermaid !== 'undefined') {
     mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
   }
+
+  // Custom marked renderer: intercept ```mermaid blocks and emit <div class="mermaid">
+  // so mermaid.run() can process them after the HTML is inserted into the DOM.
+  (() => {
+    if (typeof marked === 'undefined' || typeof mermaid === 'undefined') return;
+    const renderer = new marked.Renderer();
+    const originalCode = renderer.code.bind(renderer);
+    renderer.code = function(code, lang) {
+      if ((lang || '').toLowerCase() === 'mermaid') {
+        return '<div class="mermaid">' + code + '</div>';
+      }
+      return originalCode(code, lang);
+    };
+    marked.setOptions({ renderer });
+  })();
 
   const DIAG_SECTIONS = [
     {
@@ -5198,7 +5220,7 @@
         </div>
         <div className="w-full rounded-xl border border-gray-200 divide-y divide-gray-200 text-sm bg-white">
           {[
-            ['Version',     '1.19.0'],
+            ['Version',     '1.20.0'],
             ['Author',      'Ananthu PM'],
             ['Description', 'A personal productivity app for managing tasks, notes, and bookmarks with an AI assistant.'],
             ['License',     'MIT'],
