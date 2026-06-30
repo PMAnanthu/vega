@@ -52,6 +52,47 @@ app.whenReady().then(() => {
     dialog.showOpenDialog(mainWindow, { properties: ['openDirectory', 'createDirectory'] })
       .then(r => r.canceled ? null : r.filePaths[0])
   );
+
+  // Share: write temp .txt file and show in Finder so user can Share via right-click
+  ipcMain.handle('share:content', async (_, { title, text }) => {
+    const os = require('node:os');
+    const fs = require('node:fs');
+    const safe = (title || 'vega-share').replace(/[^a-z0-9]/gi, '_').slice(0, 40);
+    const tmpPath = path.join(os.tmpdir(), safe + '.txt');
+    fs.writeFileSync(tmpPath, (title || '') + '\n\n' + (text || ''));
+    shell.showItemInFolder(tmpPath);
+    return { ok: true };
+  });
+
+  // Export: show save dialog and write JSON
+  ipcMain.handle('export:data', async (_, { filename, data }) => {
+    const result = await dialog.showSaveDialog(mainWindow, {
+      defaultPath: filename,
+      filters: [{ name: 'JSON', extensions: ['json'] }],
+    });
+    if (!result.canceled && result.filePath) {
+      require('node:fs').writeFileSync(result.filePath, JSON.stringify(data, null, 2), 'utf8');
+      return { ok: true, filePath: result.filePath };
+    }
+    return { ok: false };
+  });
+
+  // Import: show open dialog and read JSON
+  ipcMain.handle('import:data', async () => {
+    const result = await dialog.showOpenDialog(mainWindow, {
+      filters: [{ name: 'JSON', extensions: ['json'] }],
+      properties: ['openFile'],
+    });
+    if (!result.canceled && result.filePaths[0]) {
+      try {
+        const raw = require('node:fs').readFileSync(result.filePaths[0], 'utf8');
+        return { ok: true, data: JSON.parse(raw) };
+      } catch (e) {
+        return { ok: false, error: e.message };
+      }
+    }
+    return { ok: false };
+  });
   // Set macOS Dock icon explicitly (BrowserWindow icon alone doesn't update it)
   if (process.platform === 'darwin' && app.dock) {
     app.dock.setIcon(path.join(__dirname, 'assets', 'icon.png'));

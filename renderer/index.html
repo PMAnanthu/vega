@@ -142,6 +142,10 @@
     else window.open(url, '_blank', 'noopener,noreferrer');
   };
 
+  const shareItem = (title, text) => {
+    navigator.clipboard?.writeText(title + '\n\n' + text);
+  };
+
   const uid = () =>
     typeof crypto !== 'undefined' && crypto.randomUUID
       ? crypto.randomUUID()
@@ -187,6 +191,34 @@
   const postLinks  = (l)   => apiPost('/api/links', l);
   const fetchIdeas = ()    => apiGet('/api/ideas');
   const postIdeas  = (i)   => apiPost('/api/ideas', i);
+
+  const exportData = async (filename, data) => {
+    if (window.electronAPI?.exportData) {
+      return window.electronAPI.exportData({ filename, data });
+    }
+    // Web fallback: trigger download
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename;
+    a.click(); URL.revokeObjectURL(a.href);
+    return { ok: true };
+  };
+
+  const importData = async () => {
+    if (window.electronAPI?.importData) {
+      return window.electronAPI.importData();
+    }
+    // Web fallback: file input
+    return new Promise((resolve) => {
+      const input = document.createElement('input'); input.type = 'file'; input.accept = '.json';
+      input.onchange = e => {
+        const file = e.target.files[0]; if (!file) { resolve({ ok: false }); return; }
+        const reader = new FileReader();
+        reader.onload = ev => { try { resolve({ ok: true, data: JSON.parse(ev.target.result) }); } catch { resolve({ ok: false, error: 'Invalid JSON' }); } };
+        reader.readAsText(file);
+      };
+      input.click();
+    });
+  };
   const fetchNotes      = ()  => apiGet('/api/notes');
   const postNotes       = (n) => apiPost('/api/notes', n);
   const fetchFolders    = ()  => apiGet('/api/folders');
@@ -3913,9 +3945,11 @@
                       )}
                       <div className="space-y-1">
                         {(idea.docs || []).map(doc => (
-                          <div key={doc.id} className="flex items-center gap-2 group bg-gray-50 rounded-lg px-2 py-1.5">
+                          <div key={doc.id}
+                            onDoubleClick={() => setOpenDoc({ ideaId: idea.id, docId: doc.id })}
+                            className="flex items-center gap-2 group bg-gray-50 rounded-lg px-2 py-1.5 hover:bg-gray-100 cursor-pointer transition-colors">
                             <span className="text-sm">{doc.template === 'canvas' ? '🎨' : doc.template === 'diagram' ? '🔷' : doc.template === 'calendar' ? '📅' : '📄'}</span>
-                            <span className="flex-1 text-xs text-gray-700 truncate">{doc.title || 'Untitled'}</span>
+                            <span className="flex-1 text-xs text-gray-700 truncate" title="Double-click to open">{doc.title || 'Untitled'}</span>
                             <button onClick={() => setOpenDoc({ ideaId: idea.id, docId: doc.id })}
                               className="shrink-0 text-xs text-indigo-500 hover:text-indigo-700 transition-colors">↗</button>
                             <button onClick={() => onUpdate(idea.id, { docs: (idea.docs || []).filter(d => d.id !== doc.id) })}
@@ -4093,7 +4127,7 @@
                     {cfg.next && (
                       <button
                         onClick={e => { e.stopPropagation(); onMove(idea.id, cfg.next); }}
-                        className={`shrink-0 text-xs font-semibold px-2.5 py-1 rounded-lg transition-colors ${color.btn}`}>
+                        className={'shrink-0 text-xs font-semibold px-2.5 py-1 rounded-lg transition-colors ' + color.btn}>
                         {cfg.nextLabel}
                       </button>
                     )}
@@ -5164,7 +5198,7 @@
         </div>
         <div className="w-full rounded-xl border border-gray-200 divide-y divide-gray-200 text-sm bg-white">
           {[
-            ['Version',     '1.18.0'],
+            ['Version',     '1.19.0'],
             ['Author',      'Ananthu PM'],
             ['Description', 'A personal productivity app for managing tasks, notes, and bookmarks with an AI assistant.'],
             ['License',     'MIT'],
@@ -6260,6 +6294,47 @@
                   className="text-sm font-semibold bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition-colors shadow-sm">
                   + New Secret
                 </button>
+              )}
+              {/* Export / Import for Notes, Bookmarks, Ideas tabs */}
+              {['notes','links','idea','design','implementation','released'].includes(tab) && (
+                <>
+                  <button onClick={async () => {
+                    if (tab === 'notes') {
+                      await exportData('vega-notes.json', { type: 'vega-notes', version: 1, exportedAt: new Date().toISOString(), data: notes });
+                    } else if (tab === 'links') {
+                      await exportData('vega-bookmarks.json', { type: 'vega-bookmarks', version: 1, exportedAt: new Date().toISOString(), data: links });
+                    } else {
+                      await exportData('vega-ideas.json', { type: 'vega-ideas', version: 1, exportedAt: new Date().toISOString(), data: ideas });
+                    }
+                  }} className="text-sm border border-gray-200 rounded-lg px-3 py-2 text-gray-500 hover:text-indigo-600 hover:border-indigo-300 transition-colors">
+                    ⬇ Export
+                  </button>
+                  <button onClick={async () => {
+                    const res = await importData();
+                    if (!res.ok || !res.data) return;
+                    const d = res.data;
+                    if (tab === 'notes' && d.type === 'vega-notes') {
+                      const existingIds = new Set(notes.map(n => n.id));
+                      const fresh = (d.data || []).filter(n => !existingIds.has(n.id)).map(n => ({ ...n, id: uid() }));
+                      if (fresh.length) { setNotes(ns => [...ns, ...fresh]); alert('Imported ' + fresh.length + ' note(s)'); }
+                      else alert('No new notes to import.');
+                    } else if (tab === 'links' && d.type === 'vega-bookmarks') {
+                      const existingUrls = new Set(links.map(l => l.url));
+                      const fresh = (d.data || []).filter(l => !existingUrls.has(l.url)).map(l => ({ ...l, id: uid() }));
+                      if (fresh.length) { setLinks(ls => [...ls, ...fresh]); alert('Imported ' + fresh.length + ' bookmark(s)'); }
+                      else alert('No new bookmarks to import.');
+                    } else if (['idea','design','implementation','released'].includes(tab) && d.type === 'vega-ideas') {
+                      const existingIds = new Set(ideas.map(i => i.id));
+                      const fresh = (d.data || []).filter(i => !existingIds.has(i.id)).map(i => ({ ...i, id: uid() }));
+                      if (fresh.length) { setIdeas(is => [...is, ...fresh]); alert('Imported ' + fresh.length + ' idea(s)'); }
+                      else alert('No new ideas to import.');
+                    } else {
+                      alert('File type does not match current tab.');
+                    }
+                  }} className="text-sm border border-gray-200 rounded-lg px-3 py-2 text-gray-500 hover:text-indigo-600 hover:border-indigo-300 transition-colors">
+                    ⬆ Import
+                  </button>
+                </>
               )}
             </div>
           </div>

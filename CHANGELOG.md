@@ -4,6 +4,24 @@ All notable changes to Vega are documented here.
 
 ---
 
+## [1.19.0] — 2026-07-01
+
+### Added
+
+- **Open doc by double-click** — double-clicking a doc title row in an expanded
+  idea card opens the doc in DocViewer (↗ button still works as before).
+- **Export / Import** — ⬇ Export and ⬆ Import buttons appear in the header
+  toolbar on Notes, Bookmarks, and all Features tabs (Ideas/Design/etc.).
+  Exports a versioned JSON file; import merges without duplicates.
+
+### Changed
+
+- Share buttons removed (not functional in web mode).
+
+---
+
+## [1.18.0] — 2026-06-30
+
 ## [1.18.0] — 2026-06-30
 
 ### Added
