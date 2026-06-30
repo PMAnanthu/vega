@@ -4,6 +4,46 @@ All notable changes to Vega are documented here.
 
 ---
 
+## [1.16.0] — 2026-06-24
+
+### Added
+
+- **Sprint field on tasks** — new Sprint combobox+autocomplete field in the task
+  detail panel (below Type). Free-text with suggestions from existing sprints.
+- **Sprint View tab** — dedicated sprint analytics tab. Includes a sprint selector,
+  Time by Type doughnut chart (actual hours + %), Open Tasks group, and Completed
+  group with total actual vs estimated hours in the header.
+
+---
+
+## [1.10.0] — 2026-05-27
+
+### Added
+
+- **Secrets tab** — full CRUD secrets manager for storing sensitive credentials. Each secret has a name, tags, an optional bookmark (dropdown from saved Bookmarks), and a list of name/value fields. Values are always masked; per-field eye button to reveal, copy button to clipboard.
+- **Secrets encryption** — secrets are encrypted at rest with AES-256-GCM (PBKDF2 key derivation). Set a passphrase in Settings → Secrets to enable; re-encryption on passphrase change is automatic.
+- **Note language selector** — each note has a language dropdown (Markdown, Plain Text, JavaScript, TypeScript, Python, SQL, Bash, and more). Language is persisted per note and shown in the footer.
+- **Line numbers in note editor** — a live line-number gutter scrolls in sync with the textarea. Footer shows total line count and word count.
+
+### Changed
+
+- **Edit / Preview toggle — Markdown only** — the Edit | Preview toggle is now shown only when the note language is Markdown.
+
+---
+
+## [1.9.0] — 2026-05-26
+
+### Added
+
+- **Configurable required fields per state** — Settings → Todos lets you choose which fields (Start Date, End Date, Estimate, Actual Time) must be filled before a task can transition to a given status. Defaults to requiring all four for Completed. Configuration is persisted per-state and respected across the task list, sub-task rows, and the detail panel.
+
+### Changed
+
+- **Notes open as a full page** — clicking a note no longer opens a floating modal overlay. Notes now open inline within the Notes tab with a **← Notes** back button in the header, replacing the modal × close button.
+- **Status change blocking is now per-target-state** — the required-fields check now evaluates against the *target* status (the one being changed to), not the task's current status. This makes per-state configuration work correctly.
+
+---
+
 ## [1.8.0] — 2026-05-17
 
 ### Added
