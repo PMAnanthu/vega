@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "vega": {
+      "command": "node",
+      "args": ["/Users/I757692/Documents/workspace/Tools/vega/mcp/dist/index.js"],
+      "env": {
+        "VEGA_URL": "http://localhost:3690"
+      }
+    }
+  }
+}

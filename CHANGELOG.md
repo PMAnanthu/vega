@@ -4,6 +4,19 @@ All notable changes to Vega are documented here.
 
 ---
 
+## [1.18.0] — 2026-06-30
+
+### Added
+
+- **Vega MCP Server** (`vega/mcp/`) — Model Context Protocol server that exposes
+  Vega data to Claude. 20 tools covering tasks, notes, bookmarks, ideas, stories,
+  and defects. Configured automatically in `.claude/settings.json`. Requires Vega
+  running on `http://localhost:3690` (or `VEGA_URL` env var).
+- **Feature Menu toggles** — Settings → Feature Menus: toggle switches for
+  Sprint View, Notes, Bookmarks, Secrets, and the entire Features section.
+
+---
+
 ## [1.17.0] — 2026-06-30
 
 ### Added
