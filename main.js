@@ -1,22 +1,31 @@
 'use strict';
-const { app, BrowserWindow, shell, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow, shell, ipcMain, dialog, Menu } = require('electron');
 const path = require('node:path');
 const net  = require('node:net');
+const fs   = require('node:fs');
 
 const PORT = 3690;
 
-// Suppress Chromium network-service sandbox crash on startup (safe for localhost-only app)
 app.commandLine.appendSwitch('no-sandbox');
 app.commandLine.appendSwitch('disable-gpu-sandbox');
 
-// Allow multiple instances — each window connects to the shared local server.
-// Do NOT call app.requestSingleInstanceLock().
+let ownedServer = null;
+let pendingOpenFile = null; // file path queued before window is ready
 
-let mainWindow = null;
-let ownedServer = null; // only set if this instance started the server
+// Handle macOS Finder "Open With" — file path arrives before window exists
+app.on('open-file', (event, filePath) => {
+  event.preventDefault();
+  const wins = BrowserWindow.getAllWindows();
+  if (wins.length > 0) {
+    wins[0].webContents.send('vega:open-file', filePath);
+    wins[0].focus();
+  } else {
+    pendingOpenFile = filePath; // will be sent once window is ready
+  }
+});
 
 function createWindow() {
-  mainWindow = new BrowserWindow({
+  const win = new BrowserWindow({
     width: 1280,
     height: 820,
     minWidth: 900,
@@ -30,23 +39,30 @@ function createWindow() {
     },
   });
 
-  // Open all target="_blank" links in the system browser
-  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+  win.webContents.setWindowOpenHandler(({ url }) => {
     shell.openExternal(url);
     return { action: 'deny' };
   });
 
-  // Retry if the network service crashes before the page loads
-  mainWindow.webContents.on('did-fail-load', (_e, errCode) => {
+  win.webContents.on('did-fail-load', (_e, errCode) => {
     if (errCode === -2 || errCode === -6 || errCode === -21) {
-      setTimeout(() => mainWindow?.loadURL(`http://localhost:${PORT}`), 500);
+      setTimeout(() => win.loadURL(`http://localhost:${PORT}`), 500);
     }
   });
 
-  mainWindow.loadURL(`http://localhost:${PORT}`);
+  win.loadURL(`http://localhost:${PORT}`);
+
+  // Send any file that was queued before the window was ready
+  win.webContents.once('did-finish-load', () => {
+    if (pendingOpenFile) {
+      win.webContents.send('vega:open-file', pendingOpenFile);
+      pendingOpenFile = null;
+    }
+  });
+
+  return win;
 }
 
-/** Check whether something is already listening on PORT. */
 function isPortInUse() {
   return new Promise((resolve) => {
     const probe = net.createConnection({ port: PORT, host: '127.0.0.1' });
@@ -55,12 +71,44 @@ function isPortInUse() {
   });
 }
 
+function buildMenu() {
+  const isMac = process.platform === 'darwin';
+  const template = [
+    ...(isMac ? [{ role: 'appMenu' }] : []),
+    {
+      label: 'File',
+      submenu: [
+        {
+          label: 'New Window',
+          accelerator: isMac ? 'Cmd+Shift+N' : 'Ctrl+Shift+N',
+          click: () => createWindow(),
+        },
+        { type: 'separator' },
+        isMac ? { role: 'close' } : { role: 'quit' },
+      ],
+    },
+    { role: 'editMenu' },
+    { role: 'viewMenu' },
+    { role: 'windowMenu' },
+  ];
+  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+}
+
 app.whenReady().then(async () => {
-  // Register IPC handlers (safe to register in every instance — they only serve
-  // the BrowserWindow that belongs to *this* process).
   ipcMain.handle('shell:open-external', (_, url) => shell.openExternal(url));
+
+  // Read a file from disk (used when opening .vega files from Finder)
+  ipcMain.handle('read-file', (_, filePath) => {
+    try {
+      const content = fs.readFileSync(filePath, 'utf8');
+      const name = path.basename(filePath, path.extname(filePath));
+      return { ok: true, content, name };
+    } catch (e) {
+      return { ok: false, error: e.message };
+    }
+  });
   ipcMain.handle('dialog:select-folder', () =>
-    dialog.showOpenDialog(mainWindow, { properties: ['openDirectory', 'createDirectory'] })
+    dialog.showOpenDialog({ properties: ['openDirectory', 'createDirectory'] })
       .then(r => r.canceled ? null : r.filePaths[0])
   );
 
@@ -75,7 +123,7 @@ app.whenReady().then(async () => {
   });
 
   ipcMain.handle('export:data', async (_, { filename, data }) => {
-    const result = await dialog.showSaveDialog(mainWindow, {
+    const result = await dialog.showSaveDialog({
       defaultPath: filename,
       filters: [{ name: 'JSON', extensions: ['json'] }],
     });
@@ -87,7 +135,7 @@ app.whenReady().then(async () => {
   });
 
   ipcMain.handle('import:data', async () => {
-    const result = await dialog.showOpenDialog(mainWindow, {
+    const result = await dialog.showOpenDialog({
       filters: [{ name: 'JSON', extensions: ['json'] }],
       properties: ['openFile'],
     });
@@ -102,29 +150,24 @@ app.whenReady().then(async () => {
     return { ok: false };
   });
 
-  // Set macOS Dock icon explicitly
   if (process.platform === 'darwin' && app.dock) {
     app.dock.setIcon(path.join(__dirname, 'assets', 'icon.png'));
   }
 
-  // Start the HTTP server only if nothing is already listening on PORT.
+  buildMenu();
+
   const alreadyRunning = await isPortInUse();
   if (!alreadyRunning) {
     const { server } = require('./server.js');
     ownedServer = server;
-    // Give the server a moment to bind before opening the window
     await new Promise(resolve => setTimeout(resolve, 400));
   }
-  // If already running, connect immediately — no wait needed.
 
   createWindow();
 
-  // macOS: re-open window when clicking dock icon
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
+  // macOS: clicking the Dock icon always opens a new window
+  app.on('activate', () => createWindow());
 
-  // Only the instance that started the server shuts it down on quit.
   app.on('before-quit', () => {
     if (ownedServer) ownedServer.close();
   });

@@ -5228,7 +5228,7 @@
         </div>
         <div className="w-full rounded-xl border border-gray-200 divide-y divide-gray-200 text-sm bg-white">
           {[
-            ['Version',     '1.25.0'],
+            ['Version',     '1.26.0'],
             ['Author',      'Ananthu PM'],
             ['Description', 'A personal productivity app for managing tasks, notes, and bookmarks with an AI assistant.'],
             ['License',     'MIT'],
@@ -6251,6 +6251,22 @@
       recurringReady.current = true;
       foldersReady.current = true;
       setRefreshing(false);
+    }, []);
+
+    // ── Open file from Finder (macOS "Open With Vega" / .vega files) ──
+    useEffect(() => {
+      if (!window.electronAPI?.onOpenFile) return;
+      window.electronAPI.onOpenFile(async (filePath) => {
+        try {
+          const result = await window.electronAPI.readFile(filePath);
+          if (!result.ok) return;
+          const n = makeNote(null);
+          const newNote = { ...n, title: result.name || 'Imported Note', content: result.content };
+          setNotes(ns => [newNote, ...ns]);
+          setNote(newNote.id);
+          switchTab('notes');
+        } catch {}
+      });
     }, []);
 
     // ── External change detection (MCP / other writers) ──

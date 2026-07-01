@@ -1,6 +1,6 @@
 {
   "name": "vega",
-  "version": "1.25.0",
+  "version": "1.26.0",
   "description": "Personal productivity app — tasks, notes, bookmarks",
   "main": "main.js",
   "scripts": {
@@ -34,7 +34,16 @@
     "mac": {
       "category": "public.app-category.productivity",
       "icon": "assets/icon.png",
-      "target": "dmg"
+      "target": "dmg",
+      "fileAssociations": [
+        {
+          "ext": "vega",
+          "name": "Vega Note",
+          "description": "Vega note file",
+          "role": "Editor",
+          "icon": "assets/icon.png"
+        }
+      ]
     },
     "win": {
       "icon": "assets/icon.png",

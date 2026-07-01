@@ -4,6 +4,21 @@ All notable changes to Vega are documented here.
 
 ---
 
+## [1.26.0] — 2026-07-01
+
+### Added
+
+- **New Window** — File menu has "New Window" (⌘⇧N on Mac, Ctrl+Shift+N on
+  Windows). Clicking the Dock icon always opens a new window (previously it
+  only opened one if none existed).
+- **Open with Vega from Finder** — `.vega` files are registered as a file
+  association. Right-clicking a `.vega` file in Finder shows "Open With →
+  Vega". The file content is imported as a new note automatically.
+
+---
+
+## [1.25.0] — 2026-07-01
+
 ## [1.25.0] — 2026-07-01
 
 ### Added
