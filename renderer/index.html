@@ -4005,10 +4005,12 @@
                               const act = parseFloat(s.actualTime) || 0;
                               const pct = est > 0 && act > 0 ? Math.min(100, Math.round((act / est) * 100)) : null;
                               return (
-                                <div key={s.id} className="flex flex-col gap-0.5 group bg-gray-50 rounded-lg px-2 py-1.5">
+                                <div key={s.id}
+                                  onDoubleClick={() => setOpenStory({ ideaId: idea.id, storyId: s.id })}
+                                  className="flex flex-col gap-0.5 group bg-gray-50 rounded-lg px-2 py-1.5 hover:bg-gray-100 cursor-pointer transition-colors">
                                   <div className="flex items-center gap-2">
                                     <span className={'text-xs font-medium px-1.5 py-0.5 rounded-full shrink-0 ' + sc.bg + ' ' + sc.text}>{sc.label}</span>
-                                    <span className="flex-1 text-xs text-gray-700 truncate">{s.title || 'Untitled'}</span>
+                                    <span className="flex-1 text-xs text-gray-700 truncate" title="Double-click to open">{s.title || 'Untitled'}</span>
                                     {(est > 0 || act > 0) && (
                                       <span className="text-xs text-gray-400 shrink-0">
                                         {act > 0 ? act + 'h' : ''}{act > 0 && est > 0 ? '/' : ''}{est > 0 ? est + 'h est' : ''}
@@ -4050,7 +4052,9 @@
                               const sev = DEFECT_SEVERITY_CONFIG[d.severity] || DEFECT_SEVERITY_CONFIG.medium;
                               const dst = DEFECT_STATUS_CONFIG[d.status]    || DEFECT_STATUS_CONFIG.open;
                               return (
-                                <div key={d.id} className="flex items-center gap-2 group bg-red-50 rounded-lg px-2 py-1.5 border border-red-100">
+                                <div key={d.id}
+                                  onDoubleClick={() => setOpenDefect({ ideaId: idea.id, defectId: d.id })}
+                                  className="flex items-center gap-2 group bg-red-50 rounded-lg px-2 py-1.5 border border-red-100 hover:bg-red-100 cursor-pointer transition-colors">
                                   <span className={'text-xs font-medium px-1.5 py-0.5 rounded-full shrink-0 ' + sev.bg + ' ' + sev.text}>{sev.label}</span>
                                   <span className={'text-xs font-medium px-1.5 py-0.5 rounded-full shrink-0 ' + dst.bg + ' ' + dst.text}>{dst.label}</span>
                                   <span className="flex-1 text-xs text-gray-700 truncate">{d.title || 'Untitled'}</span>
@@ -5224,7 +5228,7 @@
         </div>
         <div className="w-full rounded-xl border border-gray-200 divide-y divide-gray-200 text-sm bg-white">
           {[
-            ['Version',     '1.24.0'],
+            ['Version',     '1.25.0'],
             ['Author',      'Ananthu PM'],
             ['Description', 'A personal productivity app for managing tasks, notes, and bookmarks with an AI assistant.'],
             ['License',     'MIT'],

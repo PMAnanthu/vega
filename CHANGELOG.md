@@ -4,6 +4,23 @@ All notable changes to Vega are documented here.
 
 ---
 
+## [1.25.0] — 2026-07-01
+
+### Added
+
+- **MCP task improvements** — `vega_get_task` now accepts `keyword` for title
+  search; `vega_create_task` and `vega_update_task` expose `parentId` for
+  sub-task nesting; `vega_delete_task` has `deleteSubtasks` option; new
+  `vega_list_subtasks` tool.
+- **MCP idea doc tools** — `vega_list_idea_docs`, `vega_get_idea_doc`,
+  `vega_create_idea_doc`, `vega_update_idea_doc`, `vega_delete_idea_doc`.
+- **Double-click to open story/defect** — double-clicking a story or defect
+  row in the expanded idea card opens the StoryEditor / DefectEditor.
+
+---
+
+## [1.24.0] — 2026-07-01
+
 ## [1.24.0] — 2026-07-01
 
 ### Fixed

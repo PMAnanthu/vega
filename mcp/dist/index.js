@@ -48,14 +48,32 @@ server.tool("vega_list_tasks", "List all tasks from Vega. Optionally filter by s
     }
     return { content: [{ type: "text", text: JSON.stringify(filtered, null, 2) }] };
 });
-server.tool("vega_get_task", "Get full details of a single task by ID.", { id: z.string().describe("Task ID") }, async ({ id }) => {
+server.tool("vega_get_task", "Get full details of a task by ID or title keyword.", {
+    id: z.string().optional().describe("Exact task ID"),
+    keyword: z.string().optional().describe("Search in title (used if id not provided)"),
+}, async ({ id, keyword }) => {
     const tasks = await vegaGet("/api/tasks");
-    const task = tasks.find((t) => t.id === id);
-    if (!task)
-        throw new Error(`Task not found: ${id}`);
+    let task;
+    if (id) {
+        task = tasks.find((t) => t.id === id);
+        if (!task)
+            throw new Error(`Task not found: ${id}`);
+    }
+    else if (keyword) {
+        const q = keyword.toLowerCase();
+        const matches = tasks.filter((t) => (t.title || "").toLowerCase().includes(q));
+        if (matches.length === 0)
+            throw new Error(`No task matching: ${keyword}`);
+        if (matches.length > 1)
+            return { content: [{ type: "text", text: `Multiple matches (${matches.length}) — use id:\n${JSON.stringify(matches.map((t) => ({ id: t.id, title: t.title, status: t.status })), null, 2)}` }] };
+        task = matches[0];
+    }
+    else {
+        throw new Error("Provide id or keyword");
+    }
     return { content: [{ type: "text", text: JSON.stringify(task, null, 2) }] };
 });
-server.tool("vega_create_task", "Create a new task in Vega.", {
+server.tool("vega_create_task", "Create a new task (or sub-task) in Vega.", {
     title: z.string().describe("Task title"),
     priority: z.number().int().min(1).max(5).default(3).describe("Priority 1-5"),
     type: z.string().optional().describe("Task type e.g. Bug, Feature"),
@@ -65,16 +83,19 @@ server.tool("vega_create_task", "Create a new task in Vega.", {
     description: z.string().optional().describe("Markdown description"),
     planStartDate: z.string().optional().describe("YYYY-MM-DD"),
     planEndDate: z.string().optional().describe("YYYY-MM-DD"),
+    parentId: z.string().optional().describe("Parent task ID — set to make this a sub-task"),
 }, async (args) => {
     const tasks = await vegaGet("/api/tasks");
+    const today = new Date().toISOString().slice(0, 10);
     const task = {
         id: uid(), title: args.title, description: args.description || "",
         note: "", priority: args.priority, type: args.type || "",
         sprint: args.sprint || "", tags: args.tags || [], links: [],
-        planStartDate: args.planStartDate || new Date().toISOString().slice(0, 10),
-        planEndDate: args.planEndDate || new Date().toISOString().slice(0, 10),
+        planStartDate: args.planStartDate || today,
+        planEndDate: args.planEndDate || today,
         estimate: args.estimate || "", actualTime: "",
-        status: "ready", completed: false, completedAt: null, parentId: null,
+        status: "ready", completed: false, completedAt: null,
+        parentId: args.parentId || null,
         createdAt: now(),
     };
     tasks.unshift(task);
@@ -92,27 +113,47 @@ server.tool("vega_update_task", "Update fields on an existing task.", {
     estimate: z.string().optional(),
     actualTime: z.string().optional(),
     description: z.string().optional(),
+    note: z.string().optional(),
     planStartDate: z.string().optional(),
     planEndDate: z.string().optional(),
+    parentId: z.string().nullable().optional().describe("Set parent task ID (null to make root task)"),
 }, async ({ id, ...updates }) => {
     const tasks = await vegaGet("/api/tasks");
     const idx = tasks.findIndex((t) => t.id === id);
     if (idx === -1)
         throw new Error(`Task not found: ${id}`);
     const upd = { ...updates };
-    if (updates.status === "completed")
+    if (updates.status === "completed") {
         upd.completedAt = now();
+        upd.completed = true;
+    }
     tasks[idx] = { ...tasks[idx], ...upd };
     await vegaPost("/api/tasks", tasks);
     return { content: [{ type: "text", text: `Updated task ${id}\n${JSON.stringify(tasks[idx], null, 2)}` }] };
 });
-server.tool("vega_delete_task", "Delete a task by ID.", { id: z.string().describe("Task ID") }, async ({ id }) => {
+server.tool("vega_delete_task", "Delete a task (and optionally its sub-tasks) by ID.", {
+    id: z.string().describe("Task ID"),
+    deleteSubtasks: z.boolean().default(false).describe("Also delete all child sub-tasks"),
+}, async ({ id, deleteSubtasks }) => {
     const tasks = await vegaGet("/api/tasks");
-    const filtered = tasks.filter((t) => t.id !== id);
+    const toDelete = new Set([id]);
+    if (deleteSubtasks) {
+        // Collect all descendants
+        const addChildren = (pid) => {
+            tasks.filter((t) => t.parentId === pid).forEach((t) => { toDelete.add(t.id); addChildren(t.id); });
+        };
+        addChildren(id);
+    }
+    const filtered = tasks.filter((t) => !toDelete.has(t.id));
     if (filtered.length === tasks.length)
         throw new Error(`Task not found: ${id}`);
     await vegaPost("/api/tasks", filtered);
-    return { content: [{ type: "text", text: `Deleted task ${id}` }] };
+    return { content: [{ type: "text", text: `Deleted ${toDelete.size} task(s): ${[...toDelete].join(", ")}` }] };
+});
+server.tool("vega_list_subtasks", "List all direct sub-tasks of a parent task.", { parentId: z.string().describe("Parent task ID") }, async ({ parentId }) => {
+    const tasks = await vegaGet("/api/tasks");
+    const subtasks = tasks.filter((t) => t.parentId === parentId);
+    return { content: [{ type: "text", text: JSON.stringify(subtasks, null, 2) }] };
 });
 // ── NOTES ────────────────────────────────────────────────────────────────────
 server.tool("vega_list_notes", "List all notes from Vega.", {}, async () => {
@@ -298,6 +339,85 @@ server.tool("vega_get_summary", "Get a high-level summary of all Vega data: task
         vegaUrl: BASE_URL,
     };
     return { content: [{ type: "text", text: JSON.stringify(summary, null, 2) }] };
+});
+// ── IDEA DOCS ─────────────────────────────────────────────────────────────────
+server.tool("vega_list_idea_docs", "List all documents (markdown, canvas, diagram, calendar) inside an idea.", { ideaId: z.string() }, async ({ ideaId }) => {
+    const ideas = await vegaGet("/api/ideas");
+    const idea = ideas.find((i) => i.id === ideaId);
+    if (!idea)
+        throw new Error(`Idea not found: ${ideaId}`);
+    const docs = (idea.docs || []).map((d) => ({
+        id: d.id, title: d.title, template: d.template,
+        updatedAt: d.updatedAt, historyCount: (d.history || []).length,
+    }));
+    return { content: [{ type: "text", text: JSON.stringify(docs, null, 2) }] };
+});
+server.tool("vega_get_idea_doc", "Get the full content of a document inside an idea.", {
+    ideaId: z.string(),
+    docIdOrTitle: z.string().describe("Doc ID or partial title"),
+}, async ({ ideaId, docIdOrTitle }) => {
+    const ideas = await vegaGet("/api/ideas");
+    const idea = ideas.find((i) => i.id === ideaId);
+    if (!idea)
+        throw new Error(`Idea not found: ${ideaId}`);
+    const doc = (idea.docs || []).find((d) => d.id === docIdOrTitle || (d.title || "").toLowerCase().includes(docIdOrTitle.toLowerCase()));
+    if (!doc)
+        throw new Error(`Doc not found: ${docIdOrTitle}`);
+    return { content: [{ type: "text", text: JSON.stringify(doc, null, 2) }] };
+});
+server.tool("vega_create_idea_doc", "Create a new document inside an idea (markdown, canvas, or diagram template).", {
+    ideaId: z.string(),
+    title: z.string().describe("Document title"),
+    template: z.enum(["markdown", "canvas", "diagram"]).default("markdown"),
+    content: z.string().optional().describe("Initial content (markdown text, JSON array for canvas, or diagram JSON)"),
+}, async ({ ideaId, title, template, content }) => {
+    const ideas = await vegaGet("/api/ideas");
+    const ideaIdx = ideas.findIndex((i) => i.id === ideaId);
+    if (ideaIdx === -1)
+        throw new Error(`Idea not found: ${ideaId}`);
+    const newDoc = { id: uid(), title, template, content: content || "", history: [], createdAt: now(), updatedAt: now() };
+    ideas[ideaIdx] = { ...ideas[ideaIdx], docs: [...(ideas[ideaIdx].docs || []), newDoc], updatedAt: now() };
+    await vegaPost("/api/ideas", ideas);
+    return { content: [{ type: "text", text: `Created doc: ${newDoc.id}\n${JSON.stringify(newDoc, null, 2)}` }] };
+});
+server.tool("vega_update_idea_doc", "Update the title or content of a document inside an idea.", {
+    ideaId: z.string(),
+    docIdOrTitle: z.string(),
+    title: z.string().optional(),
+    content: z.string().optional().describe("New full content"),
+}, async ({ ideaId, docIdOrTitle, ...updates }) => {
+    const ideas = await vegaGet("/api/ideas");
+    const ideaIdx = ideas.findIndex((i) => i.id === ideaId);
+    if (ideaIdx === -1)
+        throw new Error(`Idea not found: ${ideaId}`);
+    const docs = ideas[ideaIdx].docs || [];
+    const docIdx = docs.findIndex((d) => d.id === docIdOrTitle || (d.title || "").toLowerCase().includes(docIdOrTitle.toLowerCase()));
+    if (docIdx === -1)
+        throw new Error(`Doc not found: ${docIdOrTitle}`);
+    docs[docIdx] = { ...docs[docIdx], ...updates, updatedAt: now() };
+    ideas[ideaIdx] = { ...ideas[ideaIdx], docs, updatedAt: now() };
+    await vegaPost("/api/ideas", ideas);
+    return { content: [{ type: "text", text: `Updated doc ${docs[docIdx].id}` }] };
+});
+server.tool("vega_delete_idea_doc", "Delete a document from an idea.", {
+    ideaId: z.string(),
+    docIdOrTitle: z.string(),
+}, async ({ ideaId, docIdOrTitle }) => {
+    const ideas = await vegaGet("/api/ideas");
+    const ideaIdx = ideas.findIndex((i) => i.id === ideaId);
+    if (ideaIdx === -1)
+        throw new Error(`Idea not found: ${ideaId}`);
+    const before = (ideas[ideaIdx].docs || []).length;
+    ideas[ideaIdx] = {
+        ...ideas[ideaIdx],
+        docs: (ideas[ideaIdx].docs || []).filter((d) => d.id !== docIdOrTitle && !(d.title || "").toLowerCase().includes(docIdOrTitle.toLowerCase())),
+        updatedAt: now(),
+    };
+    const after = ideas[ideaIdx].docs.length;
+    if (before === after)
+        throw new Error(`Doc not found: ${docIdOrTitle}`);
+    await vegaPost("/api/ideas", ideas);
+    return { content: [{ type: "text", text: `Deleted ${before - after} doc(s)` }] };
 });
 // ── BOOKMARKS ─────────────────────────────────────────────────────────────────
 server.tool("vega_list_bookmarks", "List all bookmarks.", {}, async () => {
