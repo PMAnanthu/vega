@@ -4,6 +4,21 @@ All notable changes to Vega are documented here.
 
 ---
 
+## [1.27.0] — 2026-07-01
+
+### Fixed
+
+- **Dock click brings app to front** (not open new window). New window only
+  opens when no windows exist — standard macOS behaviour.
+- **Dock right-click shows "New Window"** — right-click the Dock icon to open
+  an additional window.
+- **`.vega` file association** — added `UTExportedTypeDeclarations` UTI so
+  macOS recognises the type and shows Vega in "Open With" for `.vega` files.
+
+---
+
+## [1.26.0] — 2026-07-01
+
 ## [1.26.0] — 2026-07-01
 
 ### Added

@@ -152,6 +152,9 @@ app.whenReady().then(async () => {
 
   if (process.platform === 'darwin' && app.dock) {
     app.dock.setIcon(path.join(__dirname, 'assets', 'icon.png'));
+    app.dock.setMenu(Menu.buildFromTemplate([
+      { label: 'New Window', click: () => createWindow() },
+    ]));
   }
 
   buildMenu();
@@ -165,8 +168,18 @@ app.whenReady().then(async () => {
 
   createWindow();
 
-  // macOS: clicking the Dock icon always opens a new window
-  app.on('activate', () => createWindow());
+  // macOS: clicking the Dock icon brings the last window to front; only opens a
+  // new window if none exist (standard macOS behaviour)
+  app.on('activate', () => {
+    const wins = BrowserWindow.getAllWindows();
+    if (wins.length === 0) {
+      createWindow();
+    } else {
+      // Bring the most recently created window to front
+      wins[wins.length - 1].show();
+      wins[wins.length - 1].focus();
+    }
+  });
 
   app.on('before-quit', () => {
     if (ownedServer) ownedServer.close();

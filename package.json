@@ -1,6 +1,6 @@
 {
   "name": "vega",
-  "version": "1.26.0",
+  "version": "1.27.0",
   "description": "Personal productivity app — tasks, notes, bookmarks",
   "main": "main.js",
   "scripts": {
@@ -41,9 +41,23 @@
           "name": "Vega Note",
           "description": "Vega note file",
           "role": "Editor",
-          "icon": "assets/icon.png"
+          "icon": "assets/icon.png",
+          "mimeType": "application/x-vega"
         }
-      ]
+      ],
+      "extendInfo": {
+        "UTExportedTypeDeclarations": [
+          {
+            "UTTypeIdentifier": "com.vega.productivity.note",
+            "UTTypeDescription": "Vega Note",
+            "UTTypeConformsTo": ["public.data", "public.content"],
+            "UTTypeTagSpecification": {
+              "public.filename-extension": ["vega"],
+              "public.mime-type": ["application/x-vega"]
+            }
+          }
+        ]
+      }
     },
     "win": {
       "icon": "assets/icon.png",
